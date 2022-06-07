@@ -146,14 +146,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asteroid.h" />
-    <ClInclude Include="Background.h" />
     <ClInclude Include="boost_asio.h" />
+    <ClInclude Include="Events.h" />
     <ClInclude Include="InfoToSend.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="GlobalVariables.h" />
     <ClInclude Include="HeadSprite.h" />
-    <ClInclude Include="Interface.h" />
     <ClInclude Include="MapCreator.h" />
+    <ClInclude Include="MovableSprite.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="SuperPower.h" />
   </ItemGroup>

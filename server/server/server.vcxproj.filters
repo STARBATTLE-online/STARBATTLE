@@ -29,9 +29,6 @@
     <ClInclude Include="Asteroid.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>Файлы ресурсов</Filter>
-    </ClInclude>
     <ClInclude Include="InfoToSend.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
@@ -44,9 +41,6 @@
     <ClInclude Include="HeadSprite.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
-    <ClInclude Include="Interface.h">
-      <Filter>Файлы ресурсов</Filter>
-    </ClInclude>
     <ClInclude Include="MapCreator.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
@@ -54,6 +48,12 @@
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
     <ClInclude Include="SuperPower.h">
+      <Filter>Файлы ресурсов</Filter>
+    </ClInclude>
+    <ClInclude Include="MovableSprite.h">
+      <Filter>Файлы ресурсов</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
       <Filter>Файлы ресурсов</Filter>
     </ClInclude>
   </ItemGroup>
