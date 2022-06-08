@@ -66,12 +66,15 @@ public:
 		inter.Draw();
 	}
 	
+	void SetRot(int x, int y) {
+		main_hero.GetRotationByMouse(x, y);
+	}
+	
 	//динамически увеличивать карту и добавлять астероиды при присоединении новых игроков
 protected:
 	std::vector<Asteroid*> asteroids;
 	MainHeroShip main_hero;
 	std::vector<Ship*> ships;
 	Background* background;
-	Interface inter;
-	
+	Interface inter;	
 };

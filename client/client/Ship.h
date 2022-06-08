@@ -2,6 +2,14 @@
 #include "HeadSprite.h"
 #include "SuperPower.h"
 
+enum Rotation
+{
+	Top,
+	Left,
+	Bottom,
+	Right
+};
+
 class Ship : public HeadSprite
 {
 public:
@@ -93,6 +101,32 @@ public:
 		}
 	}
 
+	void SetRotSprite() {
+		switch (rotation)
+		{
+		case 1:
+			SetImage("data/spaceship.png");
+			power->SetImage("data/spaceship_power.png");
+
+			break;
+		case 2:
+			SetImage("data/spaceship_l.png");
+			power->SetImage("data/spaceship_power_l.png");
+
+			break;
+		case 3:
+			SetImage("data/spaceship_b.png");
+			power->SetImage("data/spaceship_power_b.png");
+
+			break;
+		case 4:
+			SetImage("data/spaceship_r.png");
+			power->SetImage("data/spaceship_power_r.png");
+			break;
+		default:
+			break;
+		}
+	}
 
 	void SendMouseMoveEvent(int x, int y) {
 		GetRotationByMouse(x, y);

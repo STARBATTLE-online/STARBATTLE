@@ -13,6 +13,10 @@ public:
 	
 	virtual ~HeadSprite(){};
 
+	void SetImage(const char* sprite_path) {
+		sprite = createSprite(sprite_path);
+	};
+
 	virtual void SetCoords(double new_x, double new_y) {
 		global_x = new_x;
 		global_y = new_y;
@@ -35,9 +39,6 @@ public:
 	double y() {
 		return global_y - WINDOW_Y;
 	}
-
-	
-	
 
 protected:
 	Sprite* sprite;

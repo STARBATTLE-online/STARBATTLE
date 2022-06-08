@@ -1,5 +1,4 @@
-﻿
-#include "boost_asio.h"
+﻿#include "boost_asio.h"
 
 #include <iostream>
 #include <random>
@@ -23,7 +22,6 @@ public:
 
 	virtual void PreInit(int& width, int& height, bool& fullscreen)
 	{
-		//
 		width = WINDOW_WIDTH;
 		height = WINDOW_HEIGHT;
 		if (WINDOW_WIDTH == 0 && WINDOW_HEIGHT == 0)
@@ -49,8 +47,7 @@ public:
 	}
 
 	virtual void onMouseMove(int x, int y, int xrelative, int yrelative) {
-		keep_info->SetCoords(x, y);
-
+		map_manager->SetRot(x, y);
 	}
 
 	virtual void onMouseButtonClick(FRMouseButton button, bool isReleased) {
@@ -87,13 +84,6 @@ private:
 int main()
 {
     setlocale(0, "");
-   /* using std::chrono::high_resolution_clock;
-    using std::chrono::duration_cast;
-    using std::chrono::duration;
-    using std::chrono::milliseconds;
-
-    auto t1 = high_resolution_clock::now();*/
-
     srand(time(NULL));
 
     std::thread t1([]() {
@@ -104,11 +94,15 @@ int main()
         });
 
     std::thread t2([]() {
+        
+
         try
         {
             AsyncTCPClient client(4);
-            tryConnection(client);
-            client.close();
+			/*while (true) {
+				//ждать пакет с сервера
+				когда приняли - парсим его и задаём все координаты
+			}*/
         }
         catch (system::system_error& e)
         {
@@ -116,9 +110,9 @@ int main()
                 << ". Message: " << e.what();
 
             std::cout << e.code().value() << std::endl;
-            //return e.code().value();
         }
-        });
+        return 0;
+    });
 
     t1.join();
     t2.join();
