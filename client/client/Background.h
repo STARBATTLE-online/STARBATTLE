@@ -9,7 +9,7 @@ public:
 		width = 1000;
 		height = 1000;
 	};
-	~Background();
+	~Background() {};
 
 	void Draw() override {
 		for (int i = 1; i <= MAP_WIDTH / width + 1; i++)
@@ -18,6 +18,6 @@ public:
 			{
 				drawSprite(sprite, (global_x - WINDOW_X) * i, (global_y - WINDOW_Y) * i);
 			}
-		}		
+		}
 	}
 };

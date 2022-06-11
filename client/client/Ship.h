@@ -2,12 +2,19 @@
 #include "HeadSprite.h"
 #include "SuperPower.h"
 
-enum Rotation
+
+class Bullet : public HeadSprite
 {
-	Top,
-	Left,
-	Bottom,
-	Right
+public:
+	Bullet(int x, int y) {
+		sprite = createSprite("data/bullet.png");
+		width = 13;
+		height = 13;
+		global_x = x;
+		global_y = y;
+	};
+	~Bullet() {};
+
 };
 
 class Ship : public HeadSprite
@@ -21,7 +28,7 @@ public:
 	};
 	virtual ~Ship() {};
 
-	
+
 	void SetRotation(Rotation rot) {
 		rotation = rot;
 	}
@@ -39,7 +46,7 @@ public:
 		}
 	}
 
-	
+
 
 	void Draw() override {
 		drawSprite(sprite, x(), y());
@@ -51,8 +58,8 @@ public:
 		{
 			bullet->Draw();
 		}
-		
-	} 
+
+	}
 
 
 	void Shoot(int x, int y) {
@@ -61,7 +68,7 @@ public:
 
 protected:
 	HeadSprite* power;  //?
-	Rotation rotation;	
+	Rotation rotation;
 	std::vector<Bullet*> bullets;
 	Sprite* engine;
 };
@@ -104,22 +111,22 @@ public:
 	void SetRotSprite() {
 		switch (rotation)
 		{
-		case 1:
+		case Rotation::Top:
 			SetImage("data/spaceship.png");
 			power->SetImage("data/spaceship_power.png");
 
 			break;
-		case 2:
+		case Rotation::Left:
 			SetImage("data/spaceship_l.png");
 			power->SetImage("data/spaceship_power_l.png");
 
 			break;
-		case 3:
+		case Rotation::Bottom:
 			SetImage("data/spaceship_b.png");
 			power->SetImage("data/spaceship_power_b.png");
 
 			break;
-		case 4:
+		case Rotation::Right:
 			SetImage("data/spaceship_r.png");
 			power->SetImage("data/spaceship_power_r.png");
 			break;
@@ -132,12 +139,12 @@ public:
 		GetRotationByMouse(x, y);
 	};
 
-	
+
 
 
 
 private:
-	
+
 };
 
 class EnemyShip : public Ship
@@ -158,16 +165,3 @@ private:
 };
 
 
-class Bullet : public HeadSprite
-{
-public:
-	Bullet(int x, int y) {
-		sprite = createSprite("data/bullet.png");
-		width = 13;
-		height = 13;
-		global_x = x;
-		global_y = y;
-	};
-	~Bullet() {};
-
-};

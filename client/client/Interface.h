@@ -1,23 +1,8 @@
 #pragma once
 #include "HeadSprite.h"
 
-class Interface
-{
-public:
-	Interface();
-	~Interface();
-	
-	Reticle GetReticle() {
-		return reticle;
-	}
-
-	void Draw() {
-		reticle.Draw();
-	}
-
-private:
-	Reticle reticle;
-};
+class Interface;
+class Reticle;
 
 class Reticle : public HeadSprite
 {
@@ -34,13 +19,32 @@ public:
 		global_y = new_y - width / 2 + WINDOW_Y;
 	}
 
-	void SendMouseMoveEvent(auto x, auto y) {
+	void SendMouseMoveEvent(int x, int y) {
 		SetCoords(x, y);
 	};
 
-	
-	
+
+
 
 private:
 
 };
+
+class Interface
+{
+public:
+	Interface();
+	~Interface();
+
+	Reticle GetReticle() {
+		return reticle;
+	}
+
+	void Draw() {
+		reticle.Draw();
+	}
+
+private:
+	Reticle reticle;
+};
+

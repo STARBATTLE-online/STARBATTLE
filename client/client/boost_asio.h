@@ -1,5 +1,6 @@
-﻿#include <boost/predef.h> // Tools to identify the OS.
-
+﻿#pragma once
+#include <boost/predef.h> // Tools to identify the OS.
+#pragma once
 // We need this to enable cancelling of I/O operations on
 // Windows XP, Windows Server 2003 and earlier.
 // Refer to "http://www.boost.org/doc/libs/1_58_0/

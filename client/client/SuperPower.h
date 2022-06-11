@@ -7,10 +7,10 @@ public:
 	SuperPower() {
 
 
-		
+
 	};
-	
-	~SuperPower(){};
+
+	~SuperPower() {};
 
 private:
 
@@ -30,21 +30,21 @@ private:
 class Shield : public SuperPower
 {
 public:
-	Shield(){
+	Shield() {
 		sprite = createSprite(frames[0]);
 		width = 63;
 		height = 63;
 		shield_duration = 80;
 		start_time = getTickCount();
 	};
-	~Shield(){};
+	~Shield() {};
 
 	void FillFramesVector() {
 		frames.push_back("data/ships/shield.png");
 		frames.push_back("data/ships/shield_02.png");
 		frames.push_back("data/ships/shield_03.png");
 	}
-	
+
 
 	virtual void Draw() override {
 		if (getTickCount() >= start_time + shield_duration)
@@ -61,9 +61,9 @@ public:
 			i++;
 		}
 		sprite = createSprite(frames[i]);
-		
+
 		drawSprite(sprite, x(), y());
-		
+
 
 	}
 
@@ -73,11 +73,12 @@ private:
 	std::vector<const char*> frames;
 };
 
+
 class Rocket : public SuperPower
 {
 public:
-	Rocket(){};
-	~Rocket(){};
+	Rocket() {};
+	~Rocket() {};
 
 private:
 

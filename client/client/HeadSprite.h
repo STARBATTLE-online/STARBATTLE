@@ -5,13 +5,17 @@
 #include "GlobalVariables.h"
 
 class HeadSprite {
-public:	
-	HeadSprite() {};
+public:
+	HeadSprite() {
+		height = 0;
+		width = 0;
+		sprite = NULL;
+	};
 	HeadSprite(const char* sprite_path, double sprite_width, double sprite_height) : width(sprite_width), height(sprite_height) {
 		sprite = createSprite(sprite_path);
 	};
-	
-	virtual ~HeadSprite(){};
+
+	virtual ~HeadSprite() {};
 
 	void SetImage(const char* sprite_path) {
 		sprite = createSprite(sprite_path);

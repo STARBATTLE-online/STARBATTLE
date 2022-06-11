@@ -1,4 +1,4 @@
-п»ї#include "boost_asio.h"
+#include "boost_asio.h"
 
 #include <iostream>
 #include <random>
@@ -11,8 +11,8 @@
 #include <sstream>
 #include <thread>
 
-#include "Framework.h"
 #include "GlobalVariables.h"
+#include "Framework.h"
 #include "MapCreator.h"
 #include "InfoToSend.h"
 
@@ -44,6 +44,8 @@ public:
 		showCursor(false);
 
 		map_manager->DrawAll();
+		//TODO
+		return true;
 	}
 
 	virtual void onMouseMove(int x, int y, int xrelative, int yrelative) {
@@ -80,45 +82,44 @@ private:
 };
 
 
-
 int main()
 {
-    setlocale(0, "");
-    srand(time(NULL));
+	setlocale(0, "");
+	srand(time(NULL));
 
-    std::thread t1([]() {
-        while (true)
-        {
-            run(new MyFramework);
-        }
-        });
+	std::thread t1([]() {
+		while (true)
+		{
+			run(new MyFramework);
+		}
+		});
 
-    std::thread t2([]() {
-        
+	std::thread t2([]() {
 
-        try
-        {
-            AsyncTCPClient client(4);
+
+		try
+		{
+			AsyncTCPClient client(4);
 			/*while (true) {
-				//Р¶РґР°С‚СЊ РїР°РєРµС‚ СЃ СЃРµСЂРІРµСЂР°
-				РєРѕРіРґР° РїСЂРёРЅСЏР»Рё - РїР°СЂСЃРёРј РµРіРѕ Рё Р·Р°РґР°С‘Рј РІСЃРµ РєРѕРѕСЂРґРёРЅР°С‚С‹
+				//ждать пакет с сервера
+				когда приняли - парсим его и задаём все координаты
 			}*/
-        }
-        catch (system::system_error& e)
-        {
-            std::cout << "Error occured! Error code = " << e.code()
-                << ". Message: " << e.what();
+		}
+		catch (system::system_error& e)
+		{
+			std::cout << "Error occured! Error code = " << e.code()
+				<< ". Message: " << e.what();
 
-            std::cout << e.code().value() << std::endl;
-        }
-        return 0;
-    });
+			std::cout << e.code().value() << std::endl;
+		}
+		return 0;
+		});
 
-    t1.join();
-    t2.join();
-   
-    //auto t2 = high_resolution_clock::now();
-    //duration<double, std::milli> ms_double = t2 - t1;
-    //std::cout << ms_double.count() << "ms\n";
-    return 0;
+	t1.join();
+	t2.join();
+
+	//auto t2 = high_resolution_clock::now();
+	//duration<double, std::milli> ms_double = t2 - t1;
+	//std::cout << ms_double.count() << "ms\n";
+	return 0;
 };

@@ -1,6 +1,6 @@
 #pragma once
 #include "MapCreator.h"
-#include "boost_asio.h"
+#include <boost/asio.hpp>
 
 class InfoToSend
 {
@@ -22,7 +22,7 @@ public:
 		to_send += std::to_string(x);
 		to_send += "_";
 		to_send += std::to_string(y);
-		
+
 	}
 
 	void SetKey(FRKey k) {

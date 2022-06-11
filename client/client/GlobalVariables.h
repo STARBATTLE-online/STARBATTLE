@@ -14,3 +14,11 @@ inline int PERSONAL_ID = 333;
 int NUM_ASTEROIDS() {
 	return NUM_ASTEROIDS_BIG + NUM_ASTEROIDS_SMALL;
 }
+
+enum class Rotation
+{
+	Top,
+	Left,
+	Bottom,
+	Right
+};

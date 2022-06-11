@@ -1,22 +1,21 @@
 #pragma once
+#pragma once
 #include "HeadSprite.h"
 
 
-class Asteroid : public HeadSprite 
+class Asteroid : public HeadSprite
 {
 public:
-	Asteroid(){};
+	Asteroid() {};
 	Asteroid(const char* sprite_path, double sprite_width, double sprite_height, int sprite_mass) {
 		sprite = createSprite(sprite_path);
 		width = sprite_width;
 		height = sprite_height;
 	};
 
-	virtual ~Asteroid(){};
+	virtual ~Asteroid() {};
 
-	
-private:
-	
+
 };
 
 class BigAsteroid : public Asteroid
@@ -28,8 +27,8 @@ public:
 		height = 60;
 		SetCoordsByCenter(x, y);
 	};
-	
-	
+
+
 
 private:
 

@@ -1,0 +1,8 @@
+﻿client.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_createSprite в функции "public: __cdecl Background::Background(void)" (??0Background@@QEAA@XZ).
+client.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_drawSprite в функции "public: virtual void __cdecl Background::Draw(void)" (?Draw@Background@@UEAAXXZ).
+client.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_showCursor в функции "public: virtual bool __cdecl MyFramework::Tick(void)" (?Tick@MyFramework@@UEAA_NXZ).
+client.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_run в функции "public: __cdecl `int __cdecl main(void)'::`2'::<lambda_1>::operator()(void)const " (??R<lambda_1>@?1??main@@YAHXZ@QEBA@XZ).
+client.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl Interface::Interface(void)" (??0Interface@@QEAA@XZ) в функции "public: __cdecl MapCreator::MapCreator(void)" (??0MapCreator@@QEAA@XZ).
+client.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl Interface::~Interface(void)" (??1Interface@@QEAA@XZ) в функции "int `public: __cdecl MapCreator::MapCreator(void)'::`1'::dtor$3" (?dtor$3@?0???0MapCreator@@QEAA@XZ@4HA).
+client.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl InfoToSend::~InfoToSend(void)" (??1InfoToSend@@QEAA@XZ) в функции "public: void * __cdecl InfoToSend::`scalar deleting destructor'(unsigned int)" (??_GInfoToSend@@QEAAPEAXI@Z).
+D:\Programming\STARBATTLE\client\x64\Debug\client.exe : fatal error LNK1120: неразрешенных внешних элементов: 7
