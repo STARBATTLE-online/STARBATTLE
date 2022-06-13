@@ -20,38 +20,45 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="boost_asio.h">
+    <ClInclude Include="Framework.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="MainHero.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Asteroid.h">
-      <Filter>Файлы ресурсов</Filter>
+    <ClInclude Include="Object.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>Файлы ресурсов</Filter>
-    </ClInclude>
-    <ClInclude Include="InfoToSend.h">
-      <Filter>Файлы ресурсов</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework.h">
-      <Filter>Файлы ресурсов</Filter>
+    <ClInclude Include="Asteroids.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="GlobalVariables.h">
-      <Filter>Файлы ресурсов</Filter>
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="HeadSprite.h">
-      <Filter>Файлы ресурсов</Filter>
-    </ClInclude>
-    <ClInclude Include="Interface.h">
-      <Filter>Файлы ресурсов</Filter>
-    </ClInclude>
-    <ClInclude Include="MapCreator.h">
-      <Filter>Файлы ресурсов</Filter>
-    </ClInclude>
-    <ClInclude Include="Ship.h">
-      <Filter>Файлы ресурсов</Filter>
-    </ClInclude>
-    <ClInclude Include="SuperPower.h">
-      <Filter>Файлы ресурсов</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FrameworkRelease_x64.dll">
+      <Filter>Исходные файлы</Filter>
+    </None>
+    <None Include="libjpeg-9.dll">
+      <Filter>Исходные файлы</Filter>
+    </None>
+    <None Include="libpng16-16.dll">
+      <Filter>Исходные файлы</Filter>
+    </None>
+    <None Include="SDL2.dll">
+      <Filter>Исходные файлы</Filter>
+    </None>
+    <None Include="SDL2_image.dll">
+      <Filter>Исходные файлы</Filter>
+    </None>
+    <None Include="zlib1.dll">
+      <Filter>Исходные файлы</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="FrameworkRelease_x64.lib">
+      <Filter>Исходные файлы</Filter>
+    </Library>
   </ItemGroup>
 </Project>

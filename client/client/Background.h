@@ -1,7 +1,7 @@
 #pragma once
 #include "HeadSprite.h"
 
-static class Background : public HeadSprite
+class Background : public HeadSprite
 {
 public:
 	Background() {

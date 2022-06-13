@@ -1,8 +1,13 @@
-﻿client.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_createSprite в функции "public: __cdecl Background::Background(void)" (??0Background@@QEAA@XZ).
-client.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_drawSprite в функции "public: virtual void __cdecl Background::Draw(void)" (?Draw@Background@@UEAAXXZ).
-client.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_showCursor в функции "public: virtual bool __cdecl MyFramework::Tick(void)" (?Tick@MyFramework@@UEAA_NXZ).
-client.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_run в функции "public: __cdecl `int __cdecl main(void)'::`2'::<lambda_1>::operator()(void)const " (??R<lambda_1>@?1??main@@YAHXZ@QEBA@XZ).
-client.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl Interface::Interface(void)" (??0Interface@@QEAA@XZ) в функции "public: __cdecl MapCreator::MapCreator(void)" (??0MapCreator@@QEAA@XZ).
-client.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl Interface::~Interface(void)" (??1Interface@@QEAA@XZ) в функции "int `public: __cdecl MapCreator::MapCreator(void)'::`1'::dtor$3" (?dtor$3@?0???0MapCreator@@QEAA@XZ@4HA).
-client.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl InfoToSend::~InfoToSend(void)" (??1InfoToSend@@QEAA@XZ) в функции "public: void * __cdecl InfoToSend::`scalar deleting destructor'(unsigned int)" (??_GInfoToSend@@QEAAPEAXI@Z).
-D:\Programming\STARBATTLE\client\x64\Debug\client.exe : fatal error LNK1120: неразрешенных внешних элементов: 7
+﻿D:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(514,5): warning MSB8028: промежуточный каталог (x64\Debug\) содержит файлы, которые используются совместно с другим проектом (test_game.vcxproj).  Это может привести к ошибкам очистки и перестроения.
+  client.cpp
+D:\Programming\STARBATTLE\client\client\HeadSprite.h(35,28): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+D:\Programming\STARBATTLE\client\client\HeadSprite.h(35,23): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+D:\Programming\STARBATTLE\client\client\Background.h(19,73): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+D:\Programming\STARBATTLE\client\client\Background.h(19,46): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+D:\Programming\STARBATTLE\client\client\SuperPower.h(55,1): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\Programming\STARBATTLE\client\client\SuperPower.h(65,28): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+D:\Programming\STARBATTLE\client\client\SuperPower.h(65,23): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+D:\Programming\STARBATTLE\client\client\Ship.h(52,28): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+D:\Programming\STARBATTLE\client\client\Ship.h(52,23): warning C4244: аргумент: преобразование "double" в "int", возможна потеря данных
+D:\Programming\STARBATTLE\client\client\client.cpp(96,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  client.vcxproj -> D:\Programming\STARBATTLE\client\x64\Debug\client.exe

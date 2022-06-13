@@ -1,6 +1,5 @@
 #pragma once
 #include "MapCreator.h"
-#include <boost/asio.hpp>
 
 class InfoToSend
 {

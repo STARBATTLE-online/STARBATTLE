@@ -1,0 +1,5 @@
+﻿  test_game.cpp
+test_game.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp__drawTestBackground в функции "public: virtual bool __thiscall MyFramework::Tick(void)" (?Tick@MyFramework@@UAE_NXZ).
+test_game.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp__run в функции _main.
+FrameworkRelease_x64.lib : warning LNK4272: тип компьютера библиотеки "x64" конфликтует с типом целевого компьютера "x86"
+D:\Programming\Visual Studio\repos\test_game\Debug\test_game.exe : fatal error LNK1120: неразрешенных внешних элементов: 2
