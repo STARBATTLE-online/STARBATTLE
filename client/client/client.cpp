@@ -17,10 +17,10 @@
 #include "MapCreator.h"
 #include "InfoToSend.h"
 
+
 class MyFramework : public Framework {
 
 public:
-	
 
 	virtual void PreInit(int& width, int& height, bool& fullscreen)
 	{
@@ -36,7 +36,6 @@ public:
 	}
 
 	virtual bool Init() {
-
 		//map_manager = std::make_unique<MapCreator>();
 		return true;
 	}
@@ -46,13 +45,12 @@ public:
 	}
 
 	virtual bool Tick() {
-
 		drawTestBackground();
 		//showCursor(false);
 
 		//map_manager->DrawAll();
 		////TODO
-		return true;
+		return false;
 	}
 
 	virtual void onMouseMove(int x, int y, int xrelative, int yrelative) {
@@ -75,62 +73,58 @@ public:
 		return "asteroids";
 	}
 
-	/*void ParseData() {
-
-	}*/
-	
-	
 private:
 
 	//std::unique_ptr<MapCreator> map_manager;
 	//std::unique_ptr<InfoToSend> keep_info;
 };
-
-
-
-int main()
+int main(int argc, char* argv[])
 {
-
-	
 	setlocale(0, "");
 	srand(time(NULL));
-
-	std::thread t1([]() {
 	
+	std::thread t1([]() {
 		while (true)
 		{
 			run(new MyFramework);
+
 		}
+	});
+
+	std::thread t2([]() {
+
+
+		try
+		{
+			int oplimit = 1;
+			AsyncTCPClient client(4);
+			
+			while (true) {
+				for (int i = 0; i < oplimit; i++) {
+					client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1);
+				}
+
+				Sleep(2000);
+			}
+			
+		}
+		catch (system::system_error& e)
+		{
+			std::cout << "Error occured! Error code = " << e.code()
+				<< ". Message: " << e.what();
+
+			std::cout << e.code().value() << std::endl;
+		}
+	   catch (...) {
+	   }
+		return 0;
+	});
 	
-	 });
 
-	 std::thread t2([]() {
-
-
-	 	try
-	 	{
-	 		AsyncTCPClient client(4);
-	// 		while (true) {
-	// 			//����� ����� � �������
-	// 			//����� ������� - ������ ��� � ����� ��� ����������
-	// 		}
-	 	}
-	 	catch (system::system_error& e)
-	 	{
-	 		std::cout << "Error occured! Error code = " << e.code()
-	 			<< ". Message: " << e.what();
-
-	 		std::cout << e.code().value() << std::endl;
-	 	}
-	 	return 0;
-	 });
-
-	 t1.join();
-	 t2.join();
-
+	t1.join();
+	t2.join();
 	//auto t2 = high_resolution_clock::now();
 	//duration<double, std::milli> ms_double = t2 - t1;
 	//std::cout << ms_double.count() << "ms\n";
 	return 0;
-};
-
+}

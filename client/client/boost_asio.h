@@ -73,6 +73,22 @@ struct Session
     std::mutex m_cancel_guard;
 };
 
+std::string make_string(boost::asio::streambuf& streambuf)
+{
+    return { buffers_begin(streambuf.data()),
+            buffers_end(streambuf.data()) };
+}
+
+std::string convertToString(char* a, int size)
+{
+    int i;
+    std::string s = "";
+    for (i = 0; i < size; i++) {
+        s = s + a[i];
+    }
+    return s;
+}
+
 // class that provides the asynchronous communication functionality.
 class AsyncTCPClient : public boost::noncopyable
 {
@@ -106,7 +122,7 @@ public:
         // preparing a request string and allocating an instance of the Session structure
         // that keeps the data associated with the request including a socket object
         // that is used to communicate with the server.
-        std::string request = "EMULATE_LONG_CALC_OP " + std::to_string(duration_sec) + "\n";
+        std::string request = "NEW_EMULATE_LONG_CALC_OP_V2_ " + std::to_string(duration_sec) + "\n";
         std::shared_ptr<Session> session =
             std::shared_ptr<Session>(new Session(m_ios,
                 raw_ip_address,
@@ -127,7 +143,8 @@ public:
         std::unique_lock<std::mutex> lock(m_active_sessions_guard);
         m_active_sessions[request_id] = session;
         lock.unlock();
-
+		
+        
         //connect the socket to the server
         session->m_sock.async_connect(session->m_ep,
             [this, session](const system::error_code& ec)
@@ -180,12 +197,15 @@ public:
                         }
 
                         // initiate the next asynchronous operation—async_read_until()—in order to receive a response from the server
-                        asio::async_read_until(session->m_sock,
-                            session->m_response_buf,
-                            '\n',
-                            [this, session](const boost::system::error_code& ec,
+                        char ch[512];
+						session->m_sock.async_read_some(
+                            asio::buffer(ch),
+                            [this, session, &ch](const boost::system::error_code& ec,
                                 std::size_t bytes_transferred)
                             {
+
+                               
+
                                 //checks the error code
                                 if (ec.value() != 0)
                                 {
@@ -193,14 +213,22 @@ public:
                                 }
                                 else
                                 {
-                                    std::istream strm(&session->m_response_buf);
-                                    std::getline(strm, session->m_response);
+                                    std::cout << convertToString(ch, bytes_transferred);                                
+
+									
+                                    //std::cout << "!";
+                                    //std::istream strm(&session->m_response_buf);
+                                    //std::getline(strm, session->m_response);
+                                    //std::string str(boost::asio::buffers_begin(session->m_response_buf), boost::asio::buffers_begin(session->m_response_buf) + bytes_transferred);
+                                    //std::cout << make_string(session->m_response_buf) << std::endl;
+
                                 }
 
                                 // the AsyncTCPClient class's private method onRequestComplete() is called
                                 // and the Session object is passed to it as an argument.
                                 onRequestComplete(session);
                             });
+                        //asio::async_read_until(session->m_sock,
                     });
             });
     };
