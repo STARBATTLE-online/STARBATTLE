@@ -12,7 +12,7 @@ public:
 		width = 65;
 		height = 64;
 	};
-	~Reticle();
+	~Reticle(){};
 
 	void SetCoords(double new_x, double new_y) override {
 		global_x = new_x - height / 2 + WINDOW_X;
@@ -33,8 +33,8 @@ private:
 class Interface
 {
 public:
-	Interface();
-	~Interface();
+	Interface(){};
+	~Interface(){};
 
 	Reticle GetReticle() {
 		return reticle;

@@ -116,13 +116,14 @@ public:
         const std::string& raw_ip_address,  //specify the server to which the request should be sent.
         unsigned short port_num,            //specify the server to which the request should be sent.
         Callback callback,                  //callback function, which will be called when the request is complete.
-        unsigned int request_id)    // unique identifier of the request
+        unsigned int request_id,            // unique identifier of the request
+        std::string new_request)    
     {
 
         // preparing a request string and allocating an instance of the Session structure
         // that keeps the data associated with the request including a socket object
         // that is used to communicate with the server.
-        std::string request = "NEW_EMULATE_LONG_CALC_OP_V2_ " + std::to_string(duration_sec) + "\n";
+        std::string request = new_request + "\n";
         std::shared_ptr<Session> session =
             std::shared_ptr<Session>(new Session(m_ios,
                 raw_ip_address,
@@ -197,14 +198,14 @@ public:
                         }
 
                         // initiate the next asynchronous operation—async_read_until()—in order to receive a response from the server
-                        char ch[512];
+                        
 						session->m_sock.async_read_some(
                             asio::buffer(ch),
-                            [this, session, &ch](const boost::system::error_code& ec,
+                            [this, session](const boost::system::error_code& ec,
                                 std::size_t bytes_transferred)
                             {
 
-                               
+                                std::lock_guard lock(ch_guard);
 
                                 //checks the error code
                                 if (ec.value() != 0)
@@ -305,6 +306,9 @@ private:
     std::mutex m_active_sessions_guard;
     std::unique_ptr<boost::asio::io_service::work> m_work;
     std::list<std::unique_ptr<std::thread>> m_threads;
+    char ch[512];
+    std::mutex ch_guard;
+
 };
 
 // a function that will serve as a callback, which we'll pass to the AsyncTCPClient::emulateLongComputationOp() method

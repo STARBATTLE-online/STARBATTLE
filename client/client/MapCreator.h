@@ -3,16 +3,17 @@
 #include "Asteroid.h"
 #include "Ship.h"
 #include "Interface.h"
+#include "InfoToSend.h"
 
-/*
-*/
 
 class MapCreator //�������� ����� ��������� �� �����
 {
 public:
 	MapCreator() {
+		
 		background = new Background();
-
+		keep_info = new InfoToSend();
+		UpdateRequest();
 
 		for (int i = 0; i < NUM_ASTEROIDS(); i++)
 		{
@@ -63,7 +64,22 @@ public:
 
 	void SetRot(int x, int y) {
 		main_hero.GetRotationByMouse(x, y);
+		keep_info->SetCoords(x, y);
 	}
+
+	void SetKeyToRequest(FRKey k) {
+		keep_info->SetKey(k);
+	}
+
+	void SetClickToRequest(FRMouseButton button, bool isReleased) {
+		keep_info->SetClick(button, isReleased);
+	}
+
+	void UpdateRequest() {
+		keep_info->Update();
+	}
+
+	
 
 	//����������� ����������� ����� � ��������� ��������� ��� ������������� ����� �������
 protected:
@@ -72,4 +88,7 @@ protected:
 	std::vector<Ship*> ships;
 	Background* background;
 	Interface inter;
+
+
+	InfoToSend* keep_info;
 };
