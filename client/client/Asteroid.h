@@ -21,13 +21,16 @@ public:
 class BigAsteroid : public Asteroid
 {
 public:
-	BigAsteroid(int x, int y, double speed_x, double speed_y) {
+	BigAsteroid(int x, int y) {
 		sprite = createSprite("data/big_asteroid.png"); // легковес!!
 		width = 68;
 		height = 60;
 		SetCoordsByCenter(x, y);
 	};
-
+	
+	std::string GetName() override {
+		return "BigAsteroid";
+	}
 
 
 private:
@@ -37,12 +40,17 @@ private:
 class SmallAsteroid : public Asteroid
 {
 public:
-	SmallAsteroid(int x, int y, double speed_x, double speed_y) {
+	SmallAsteroid(int x, int y) {
 		sprite = createSprite("data/small_asteroid.png");// легковес!!
 		width = 44;
 		height = 36;
 		SetCoordsByCenter(x, y);
 	};
+
+	std::string GetName() {
+		return "SmallAsteroid";
+	}
+
 
 private:
 

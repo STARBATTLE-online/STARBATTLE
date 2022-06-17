@@ -1,6 +1,7 @@
 #pragma once
 #include "HeadSprite.h"
 #include "SuperPower.h"
+#include <map>
 
 
 class Bullet : public HeadSprite
@@ -46,10 +47,12 @@ public:
 		}
 	}
 
-
+	void SetSprite(const char* sprite_path) {
+		SetImage(sprite_path);
+	}
 
 	void Draw() override {
-		drawSprite(sprite, x(), y());
+		drawSprite(ship_sprites[rotation], x(), y());
 		if (power)
 		{
 			power->Draw();
@@ -67,27 +70,36 @@ public:
 	}
 
 protected:
-	HeadSprite* power;  //?
+	HeadSprite* power = nullptr;  //?
 	Rotation rotation;
 	std::vector<Bullet*> bullets;
 	Sprite* engine;
+
+	std::map<Rotation, Sprite*> ship_sprites;
+
 };
 
 class MainHeroShip : public Ship
 {
 public:
 	MainHeroShip() {
-		sprite = createSprite("data/ships/main_hero/spaceship.png");
+		ship_sprites[Rotation::Left] = createSprite("data/ships/sprites/1/spaceship_l.png");
+		ship_sprites[Rotation::Right] = createSprite("data/ships/sprites/1/spaceship_r.png");
+		ship_sprites[Rotation::Top] = createSprite("data/ships/sprites/1/spaceship.png");
+		ship_sprites[Rotation::Bottom] = createSprite("data/ships/sprites/1/spaceship_b.png");
+
+		rotation = Rotation::Top;
+		sprite = ship_sprites[rotation];
 		engine = createSprite("data/ships/main_hero/engine.png");
 		width = 48;
 		height = 48;
-		rotation = Rotation::Top;
 	};
 	~MainHeroShip() {};
 
-	void GetRotationByMouse(int x_mouse, int y_mouse) {
+	bool GetRotationByMouse(int x_mouse, int y_mouse) {
+		Rotation temp_rot = rotation;
 		if (x_mouse <= WINDOW_WIDTH / 2) {
-			if (abs(x_mouse - WINDOW_WIDTH / 2) > abs(y_mouse - WINDOW_WIDTH / 2))
+			if (abs(x_mouse - WINDOW_WIDTH / 2) > abs(y_mouse - WINDOW_HEIGHT / 2))
 				SetRotation(Rotation::Left);
 			else {
 				if (y_mouse <= WINDOW_HEIGHT / 2)
@@ -97,7 +109,7 @@ public:
 			}
 		}
 		else {
-			if (abs(x_mouse - WINDOW_WIDTH / 2) > abs(y_mouse - WINDOW_WIDTH / 2))
+			if (abs(x_mouse - WINDOW_WIDTH / 2) > abs(y_mouse - WINDOW_HEIGHT / 2))
 				SetRotation(Rotation::Right);
 			else {
 				if (y_mouse <= WINDOW_HEIGHT / 2)
@@ -106,34 +118,40 @@ public:
 					SetRotation(Rotation::Bottom);
 			}
 		}
-	}
 
-	void SetRotSprite() {
-		switch (rotation)
+		if (temp_rot!= rotation)
 		{
-		case Rotation::Top:
-			SetImage("data/spaceship.png");
-			power->SetImage("data/spaceship_power.png");
-
-			break;
-		case Rotation::Left:
-			SetImage("data/spaceship_l.png");
-			power->SetImage("data/spaceship_power_l.png");
-
-			break;
-		case Rotation::Bottom:
-			SetImage("data/spaceship_b.png");
-			power->SetImage("data/spaceship_power_b.png");
-
-			break;
-		case Rotation::Right:
-			SetImage("data/spaceship_r.png");
-			power->SetImage("data/spaceship_power_r.png");
-			break;
-		default:
-			break;
+			return 1;
 		}
+		return 0;
 	}
+
+	//void SetRotSprite() {
+	//	switch (rotation)
+	//	{
+	//	case Rotation::Top:
+	//		SetImage("data/ships/sprites/1/spaceship.png");
+	//		//power->SetImage("data/spaceship_power.png");
+
+	//		break;
+	//	case Rotation::Left:
+	//		SetImage("data/ships/sprites/1/spaceship_l.png");
+	//		//power->SetImage("data/spaceship_power_l.png");
+
+	//		break;
+	//	case Rotation::Bottom:
+	//		SetImage("data/ships/sprites/1/spaceship_b.png");
+	//		//power->SetImage("data/spaceship_power_b.png");
+
+	//		break;
+	//	case Rotation::Right:
+	//		SetImage("data/ships/sprites/1/spaceship_r.png");
+	//		//power->SetImage("data/spaceship_power_r.png");
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//}
 
 	void SendMouseMoveEvent(int x, int y) {
 		GetRotationByMouse(x, y);
@@ -144,13 +162,18 @@ public:
 
 
 private:
-
 };
 
 class EnemyShip : public Ship
 {
 public:
 	EnemyShip(int x, int y, Rotation rot) {
+
+		ship_sprites[Rotation::Left] = createSprite("data/ships/sprites/1/spaceship_l.png");
+		ship_sprites[Rotation::Right] = createSprite("data/ships/sprites/1/spaceship_r.png");
+		ship_sprites[Rotation::Top] = createSprite("data/ships/sprites/1/spaceship.png");
+		ship_sprites[Rotation::Bottom] = createSprite("data/ships/sprites/1/spaceship_b.png");
+		
 		sprite = createSprite("data/ships/enemy/spaceship.png");
 		width = 48;
 		height = 48;

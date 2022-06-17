@@ -31,12 +31,11 @@ public:
 		width = WINDOW_WIDTH;
 		height = WINDOW_HEIGHT;
 
-		map_manager = std::make_unique<MapCreator>();
-
 	}
 
 	virtual bool Init() {
-		//map_manager = std::make_unique<MapCreator>();
+		map_manager = std::make_shared<MapCreator>();
+		InfoFromServer::SetMapCreator(map_manager);
 		return true;
 	}
 
@@ -45,12 +44,13 @@ public:
 	}
 
 	virtual bool Tick() {
-		map_manager->UpdateRequest();
-		drawTestBackground();
-		//showCursor(false);
+		if (is_connected)
+		{
+			drawTestBackground();
+			//showCursor(false);
 
-		//map_manager->DrawAll();
-		////TODO
+			map_manager->DrawAll();
+		}
 		return false;
 	}
 
@@ -59,6 +59,7 @@ public:
 	}
 
 	virtual void onMouseButtonClick(FRMouseButton button, bool isReleased) {
+		
 		map_manager->SetClickToRequest(button, isReleased);
 	}
 
@@ -76,7 +77,7 @@ public:
 
 private:
 
-	std::unique_ptr<MapCreator> map_manager;
+	std::shared_ptr<MapCreator> map_manager;
 };
 int main(int argc, char* argv[])
 {
@@ -93,31 +94,34 @@ int main(int argc, char* argv[])
 	});
 
 	std::thread t2([]() {
-
+		Sleep(1000);
 		int oplimit = 500;
-
 		using std::chrono::high_resolution_clock;
 		using std::chrono::duration_cast;
 		using std::chrono::duration;
 		using std::chrono::milliseconds;
 
-		
-		
 		try
 		{
 			int oplimit = 1;
 			AsyncTCPClient client(4);
-			
+			client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, "INIT");
+			Sleep(3000);
+
+			//std::cout << request << std::endl;
+			client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
+			request = "TICK";
 			while (true) {
-				auto t1 = high_resolution_clock::now();
+				auto t1 = high_resolution_clock::now();				
 				for (int i = 0; i < oplimit; i++) {
-
+					//std::cout << request << std::endl;
 					client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
-
+					request = "TICK";
 				}
 				auto t2 = high_resolution_clock::now();
 				duration<double, std::milli> ms_double = t2 - t1;
 				double rest = 1000 / FRAMERATE - ms_double.count();
+
 				Sleep(rest);
 			}
 			

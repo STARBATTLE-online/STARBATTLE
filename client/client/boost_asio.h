@@ -26,6 +26,8 @@
 
 #include <map>
 
+#include "InfoFromServer.h"
+
 using namespace boost;
 
 // Function pointer type that points to the callback
@@ -214,7 +216,8 @@ public:
                                 }
                                 else
                                 {
-                                    std::cout << convertToString(ch, bytes_transferred);                                
+                                    
+                                   InfoFromServer::ProcessRequest(convertToString(ch, bytes_transferred));
 
 									
                                     //std::cout << "!";
@@ -306,7 +309,7 @@ private:
     std::mutex m_active_sessions_guard;
     std::unique_ptr<boost::asio::io_service::work> m_work;
     std::list<std::unique_ptr<std::thread>> m_threads;
-    char ch[512];
+    char ch[65535];
     std::mutex ch_guard;
 
 };

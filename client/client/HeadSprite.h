@@ -35,6 +35,17 @@ public:
 		drawSprite(sprite, x(), y());
 	}
 
+	std::pair<double, double> GetCenterGlobal() {
+		return std::make_pair(global_x + width / 2, global_y + height / 2);
+	}
+
+	double xGlobal() {
+		return global_x;
+	}
+
+	double yGlobal() {
+		return global_y;
+	}
 
 	double x() {
 		return global_x - WINDOW_X;
@@ -42,6 +53,10 @@ public:
 
 	double y() {
 		return global_y - WINDOW_Y;
+	}
+
+	virtual std::string GetName() {
+		return "HeadSprite";
 	}
 
 protected:

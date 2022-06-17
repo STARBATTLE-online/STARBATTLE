@@ -156,11 +156,18 @@
     <ClCompile Include="client.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Asteroids.h" />
+    <ClInclude Include="Asteroid.h" />
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="boost_asio.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="GlobalVariables.h" />
-    <ClInclude Include="MainHero.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="HeadSprite.h" />
+    <ClInclude Include="InfoFromServer.h" />
+    <ClInclude Include="InfoToSend.h" />
+    <ClInclude Include="Interface.h" />
+    <ClInclude Include="MapCreator.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="SuperPower.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FrameworkRelease_x64.dll" />

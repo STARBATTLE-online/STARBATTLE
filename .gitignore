@@ -6,3 +6,5 @@ client/x64
 
 client/client/x64
 client/client/Debug
+
+*.psd

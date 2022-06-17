@@ -1,9 +1,12 @@
 #pragma once
+#include <mutex>
+
 #include "Background.h"
 #include "Asteroid.h"
 #include "Ship.h"
 #include "Interface.h"
 #include "InfoToSend.h"
+#include "InfoFromServer.h"
 
 
 class MapCreator //�������� ����� ��������� �� �����
@@ -15,80 +18,103 @@ public:
 		keep_info = new InfoToSend();
 		UpdateRequest();
 
-		for (int i = 0; i < NUM_ASTEROIDS(); i++)
-		{
-			if (i < NUM_ASTEROIDS() / 2)
-			{
-				asteroids.push_back(new BigAsteroid(rand() % MAP_WIDTH, rand() % MAP_HEIGHT, rand() % 10 - 5, rand() % 10 - 5));
-			}
-			else
-			{
-				asteroids.push_back(new SmallAsteroid(rand() % MAP_WIDTH, rand() % MAP_HEIGHT, rand() % 10 - 5, rand() % 10 - 5));
-			}
-		}
-
-
-
-		main_hero.SetCoords(rand() % MAP_WIDTH, rand() % MAP_HEIGHT);
-
-
 	};
 	~MapCreator() {};
 
+	void AddMainHero(int x, int y, int sprite_id) {
+		const char* path = "data/ships/sprites/1/spaceship.png";
+		/*switch (sprite_id)
+		{
+		case 1:
+			path = "data/ships/sprites/1/spaceship.png";
+			break;
+		case 2:
+			path = "data/ships/main_hero/2.png";
+			break;
+		case 3:
+			path = "data/ships/main_hero/3.png";
+			break;
+		default:
+			break;
+		}*/
+		main_hero.SetCoords(x, y);
+		main_hero.SetRotation(Rotation::Top);
+		main_hero.SetSprite(path);
 
-	void AddShip(int x, int y, Rotation rot) {
+		WINDOW_X = main_hero.GetCenterGlobal().first - WINDOW_WIDTH / 2;
+		WINDOW_Y = main_hero.GetCenterGlobal().second - WINDOW_HEIGHT / 2;
+	}
 
+	void AddEnemyShip(int x, int y, Rotation rot, int sprite_id) {
+		ships.push_back(new EnemyShip(x, y, rot));		
 	}
 
 	void MapResize() {
 
 	}
 
-	void AddAsteroid(int x, int y, Rotation rot) {
-		asteroids.push_back(new BigAsteroid(rand() % MAP_WIDTH, rand() % MAP_HEIGHT, rand() % 10 - 5, rand() % 10 - 5));
+	void AddBigAsteroid(int x, int y) {
+		asteroids.push_back(new BigAsteroid(x, y));
+	}
+
+	void AddSmallAsteroid(int x, int y) {
+		asteroids.push_back(new SmallAsteroid(x, y));
 	}
 
 	void DrawAll() {
-		background->Draw();
+		
+		//background->Draw();
+		std::cout << asteroids.size() << std::endl;
 		for (auto astroid : asteroids)
 		{
 			astroid->Draw();
 		}
-		for (auto ship : ships)
+		/*for (auto ship : ships)
 		{
 			ship->Draw();
-		}
+		}*/
 		main_hero.Draw();
-		inter.Draw();
+		//inter.Draw();
+
 	}
 
 	void SetRot(int x, int y) {
-		main_hero.GetRotationByMouse(x, y);
-		keep_info->SetCoords(x, y);
+		mouse_x = x;
+		mouse_y = y;
+		//std::cout<<mouse_x << " " << mouse_y<<std::endl;
+		if (main_hero.GetRotationByMouse(mouse_x, mouse_y))
+		{
+			keep_info->SetCoords(mouse_x, mouse_y);
+		}
 	}
 
 	void SetKeyToRequest(FRKey k) {
 		keep_info->SetKey(k);
 	}
 
-	void SetClickToRequest(FRMouseButton button, bool isReleased) {
+	void SetClickToRequest(FRMouseButton button, bool isReleased) {		
+		keep_info->SetCoords(mouse_x, mouse_y);
 		keep_info->SetClick(button, isReleased);
 	}
 
 	void UpdateRequest() {
-		keep_info->Update();
 	}
 
 	
 
 	//����������� ����������� ����� � ��������� ��������� ��� ������������� ����� �������
 protected:
-	std::vector<Asteroid*> asteroids;
-	MainHeroShip main_hero;
-	std::vector<Ship*> ships;
 	Background* background;
 	Interface inter;
 
+	int mouse_x = 1;
+	int mouse_y = 1;
 
 	InfoToSend* keep_info;
+	
+public:
+	std::mutex mt;
+	std::vector<Asteroid*> asteroids;
+	std::vector<Ship*> ships;
+	MainHeroShip main_hero;
 };
