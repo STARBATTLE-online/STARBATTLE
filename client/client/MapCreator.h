@@ -78,38 +78,80 @@ public:
 		//std::cout << asteroids.size() << std::endl;
 		for (auto asteroid : asteroids)
 		{
-			if (asteroid->GetCenter().first > -100 && asteroid->GetCenter().first < WINDOW_WIDTH + 100 && asteroid->GetCenter().second > -100 && asteroid->GetCenter().second < WINDOW_HEIGHT + 100)
+			for (int i = -1; i <= 1; i++)
 			{
-				if (asteroid->GetName() == "BigAsteroid")
+				for (int j = -1; j <= 1; j++)
 				{
-					drawSprite(big_asteroid_sprite, asteroid->x(), asteroid->y());
+					int x = asteroid->GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
+					int y = asteroid->GetCenterGlobal().second + MAP_WIDTH *j - WINDOW_Y;
+			
+					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
+					{
+						if (asteroid->GetName() == "BigAsteroid")
+						{
+							drawSprite(big_asteroid_sprite, x, y);
+						}
+						else if (asteroid->GetName() == "SmallAsteroid")
+						{
+							drawSprite(small_asteroid_sprite, x, y);
+						}
+					}		
 				}
-				else if (asteroid->GetName() == "SmallAsteroid")
-				{
-					drawSprite(small_asteroid_sprite, asteroid->x(), asteroid->y());
-				}
-			}			
+			}
 		}
 		for (auto bullet : bullets)
 		{
-			if (bullet->GetCenter().first > -100 && bullet->GetCenter().first < WINDOW_WIDTH + 100 && bullet->GetCenter().second > -100 && bullet->GetCenter().second < WINDOW_HEIGHT + 100)
+
+			for (int i = -1; i <= 1; i++)
 			{
-				drawSprite(bullet_sprite, bullet->x(), bullet->y());
+				for (int j = -1; j <= 1; j++)
+				{
+					int x = bullet->GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
+					int y = bullet->GetCenterGlobal().second + MAP_WIDTH * j - WINDOW_Y;
+
+					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
+					{
+						drawSprite(bullet_sprite, x, y);
+					}
+				}
 			}
+			
 
 		}
 		for (auto ship : ships)
 		{
-			if (ship->GetCenter().first > -100 && ship->GetCenter().first < WINDOW_WIDTH + 100 && ship->GetCenter().second > -100 && ship->GetCenter().second < WINDOW_HEIGHT + 100)
+			for (int i = -1; i <= 1; i++)
 			{
-				ship->Draw();
+				for (int j = -1; j <= 1; j++)
+				{
+					int x = ship->GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
+					int y = ship->GetCenterGlobal().second + MAP_WIDTH * j - WINDOW_Y;
+
+					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
+					{
+						ship->DrawXY(x, y);
+					}
+				}
 			}
+			
 		}
 		main_hero.Draw();
 
 		//inter.Draw();
 
 	}
+
+	/*if (asteroid->GetCenter().first > -100 && asteroid->GetCenter().first < WINDOW_WIDTH + 100 && asteroid->GetCenter().second > -100 && asteroid->GetCenter().second < WINDOW_HEIGHT + 100)
+	{
+		if (asteroid->GetName() == "BigAsteroid")
+		{
+			drawSprite(big_asteroid_sprite, asteroid->x(), asteroid->y());
+		}
+		else if (asteroid->GetName() == "SmallAsteroid")
+		{
+			drawSprite(small_asteroid_sprite, asteroid->x(), asteroid->y());
+		}
+	}*/
 
 	void SetRot(int x, int y) {
 		mouse_x = x;

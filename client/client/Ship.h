@@ -55,6 +55,19 @@ public:
 		}
 	}
 
+	void DrawXY(int x, int y){
+		if (is_engine)
+		{
+			//drawSprite(engine_sprites[rotation], x() - (engine_width - width) / 2, y() - (engine_height - height) / 2);
+			drawSprite(engine_sprites[rotation], (x - ((engine_width - width) / 2)), (y - ((engine_height - height) / 2)));
+		}
+		drawSprite(ship_sprites[rotation], x, y);
+		if (power)
+		{
+			power->Draw();
+		}
+	}
+
 	void SetEngine(bool flag) {
 		is_engine = flag;
 	}

@@ -16,7 +16,16 @@ public:
 		{
 			for (int j = 0; j < MAP_HEIGHT / height; j++)
 			{
-				drawSprite(sprite, -1 * WINDOW_X + i * width, -1 * WINDOW_Y + j * height);
+				for (int k = -1; k <= 1; k++)
+				{
+					for (int t = -1; t <= 1; t++)
+					{
+						int x = -1 * WINDOW_X/4 + i * width + MAP_WIDTH * k;
+						int y = -1 * WINDOW_Y/4 + j * height + MAP_WIDTH * t ;
+
+						drawSprite(sprite, x, y);
+					}
+				}
 			}
 		}
 	}
