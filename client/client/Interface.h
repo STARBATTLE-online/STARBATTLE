@@ -22,7 +22,18 @@ public:
 		global_y = new_y - width / 2 + WINDOW_Y;
 	}
 
+
+	void SetSprite(const char* sprite_path) {
+		sprite = createSprite(sprite_path);
+	}
+
+	void Draw() {
+		drawSprite(sprite, x(), y());
+	}
+
 	const char* sprite_path;
+	Sprite* sprite;
+	
 };
 
 
@@ -102,6 +113,8 @@ public:
 		reticle.Draw();
 	}
 
+
+
 	void SetMouseCoords(int x, int y) {
 		mouse_x = x;
 		mouse_y = y;
@@ -113,7 +126,7 @@ public:
 			if (path != reticle.sprite_path)
 			{
 				reticle.sprite_path = path;
-				reticle.SetImage(reticle.sprite_path);
+				reticle.SetSprite(reticle.sprite_path);
 			}
 			if (button_path != menu.play_sprite_path)
 			{
@@ -127,7 +140,7 @@ public:
 			if (path == reticle.sprite_path)
 			{
 				reticle.sprite_path = "data/reticle2.png";
-				reticle.SetImage(reticle.sprite_path);				
+				reticle.SetSprite(reticle.sprite_path);
 			}
 			if (button_path == menu.play_sprite_path)
 			{

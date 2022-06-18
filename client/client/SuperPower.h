@@ -31,7 +31,7 @@ class Shield : public SuperPower
 {
 public:
 	Shield() {
-		sprite = createSprite(frames[0]);
+		//sprite = createSprite(frames[0]);
 		width = 63;
 		height = 63;
 		shield_duration = 80;
@@ -46,7 +46,7 @@ public:
 	}
 
 
-	virtual void Draw() override {
+	virtual void Draw(){
 		if (getTickCount() >= start_time + shield_duration)
 		{
 			delete this;
@@ -60,9 +60,9 @@ public:
 			temp -= parts;
 			i++;
 		}
-		sprite = createSprite(frames[i]);
+		//sprite = createSprite(frames[i]);
 
-		drawSprite(sprite, x(), y());
+		//drawSprite(sprite, x(), y());
 
 
 	}

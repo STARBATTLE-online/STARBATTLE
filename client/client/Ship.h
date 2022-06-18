@@ -3,15 +3,14 @@
 #include "SuperPower.h"
 #include <map>
 
-
+bool fix = false;
 
 
 class Ship : public HeadSprite
 {
 public:
 	Ship() {};
-	Ship(const char* sprite_path, int sprite_width, int sprite_height, int sprite_mass) {
-		sprite = createSprite(sprite_path);
+	Ship(int sprite_width, int sprite_height, int sprite_mass) {
 		width = sprite_width;
 		height = sprite_height;
 	};
@@ -38,11 +37,8 @@ public:
 		}
 	}
 
-	void SetSprite(const char* sprite_path) {
-		SetImage(sprite_path);
-	}
 
-	void Draw() override {
+	void Draw() {
 		if (is_engine)
 		{
 			//drawSprite(engine_sprites[rotation], x() - (engine_width - width) / 2, y() - (engine_height - height) / 2);
@@ -51,7 +47,7 @@ public:
 		drawSprite(ship_sprites[rotation], x(), y());
 		if (power)
 		{
-			power->Draw();
+			//power->Draw();
 		}
 	}
 
@@ -64,7 +60,7 @@ public:
 		drawSprite(ship_sprites[rotation], x, y);
 		if (power)
 		{
-			power->Draw();
+			//power->Draw();
 		}
 	}
 
@@ -76,11 +72,9 @@ public:
 protected:
 	HeadSprite* power = nullptr;  //?
 	Rotation rotation;
-	std::map<Rotation, Sprite*> engine_sprites;
 	int engine_width;
 	int engine_height;
 	bool is_engine = false;
-	std::map<Rotation, Sprite*> ship_sprites;
 
 };
 
@@ -100,7 +94,6 @@ public:
 		engine_sprites[Rotation::Bottom] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_b.png").c_str());
 
 		rotation = Rotation::Top;
-		sprite = ship_sprites[rotation];
 		width = 96;
 		height = 96;
 		engine_width = 212;
@@ -138,6 +131,13 @@ public:
 		return 0;
 	}
 
+
+
+	void SetSprite(const char* sprite_path) {
+		sprite = createSprite(sprite_path);
+	}
+
+
 	//void SetRotSprite() {
 	//	switch (rotation)
 	//	{
@@ -165,12 +165,8 @@ public:
 	//	}
 	//}
 
-	void SendMouseMoveEvent(int x, int y) {
-		GetRotationByMouse(x, y);
-	};
 
-
-
+	Sprite* sprite;
 
 
 private:
@@ -180,17 +176,22 @@ class EnemyShip : public Ship
 {
 public:
 	EnemyShip(int x, int y, Rotation rot, int sprite_id = 3) {
+		if (!fix)
+		{
+			ship_sprites[Rotation::Left] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_l.png").c_str());
+			ship_sprites[Rotation::Right] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_r.png").c_str());
+			ship_sprites[Rotation::Top] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship.png").c_str());
+			ship_sprites[Rotation::Bottom] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_b.png").c_str());
 
-		ship_sprites[Rotation::Left] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_l.png").c_str());
-		ship_sprites[Rotation::Right] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_r.png").c_str());
-		ship_sprites[Rotation::Top] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship.png").c_str());
-		ship_sprites[Rotation::Bottom] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_b.png").c_str());
 
+			engine_sprites[Rotation::Left] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_l.png").c_str());
+			engine_sprites[Rotation::Right] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_r.png").c_str());
+			engine_sprites[Rotation::Top] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power.png").c_str());
+			engine_sprites[Rotation::Bottom] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_b.png").c_str());
+			fix = true;
 
-		engine_sprites[Rotation::Left] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_l.png").c_str());
-		engine_sprites[Rotation::Right] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_r.png").c_str());
-		engine_sprites[Rotation::Top] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power.png").c_str());
-		engine_sprites[Rotation::Bottom] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_b.png").c_str());
+		}
+		
 		
 		width = 96;
 		height = 96;

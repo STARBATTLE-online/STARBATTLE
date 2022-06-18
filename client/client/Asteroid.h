@@ -2,54 +2,35 @@
 #pragma once
 #include "HeadSprite.h"
 
+enum class AsteroidTypes {
+	Big,
+	Small
+};
 
 class Asteroid : public HeadSprite
 {
 public:
 	Asteroid() {};
-	Asteroid(int sprite_width, int sprite_height, int sprite_mass) {
-		width = sprite_width;
-		height = sprite_height;
+	Asteroid(int x, int y, AsteroidTypes type){
+		if (type == AsteroidTypes::Big)
+		{
+			width = 68;
+			height = 60;
+		}
+		else if (true)
+		{
+			width = 44;
+			height = 36;
+		}
+		global_x = x;
+		global_y = y;
+		name = type;
 	};
 
-	virtual ~Asteroid() {};
+	virtual ~Asteroid() = default;
 
 
+	AsteroidTypes name;
 };
 
-class BigAsteroid : public Asteroid
-{
-public:
-	BigAsteroid(int x, int y) {
-		width = 68;
-		height = 60;
-		SetCoordsByCenter(x, y);
-	};
-	
-	std::string GetName() override {
-		return "BigAsteroid";
-	}
-
-
-private:
-
-};
-
-class SmallAsteroid : public Asteroid
-{
-public:
-	SmallAsteroid(int x, int y) {
-		width = 44;
-		height = 36;
-		SetCoordsByCenter(x, y);
-	};
-
-	std::string GetName() {
-		return "SmallAsteroid";
-	}
-
-
-private:
-
-};
 

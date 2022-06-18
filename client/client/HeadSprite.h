@@ -9,17 +9,12 @@ public:
 	HeadSprite() {
 		height = 0;
 		width = 0;
-		sprite = NULL;
+		
 	};
-	HeadSprite(const char* sprite_path, int sprite_width, int sprite_height) : width(sprite_width), height(sprite_height) {
-		sprite = createSprite(sprite_path);
+	HeadSprite(int sprite_width, int sprite_height) : width(sprite_width), height(sprite_height) {
 	};
 
 	virtual ~HeadSprite() {};
-
-	void SetImage(const char* sprite_path) {
-		sprite = createSprite(sprite_path);
-	};
 
 	virtual void SetCoords(int new_x, int new_y) {
 		global_x = new_x;
@@ -31,9 +26,6 @@ public:
 		global_y = new_y - height / 2;
 	}
 
-	virtual void Draw() {
-		drawSprite(sprite, x(), y());
-	}
 
 	std::pair<int, int> GetCenterGlobal() {
 		return std::make_pair(global_x + width / 2, global_y + height / 2);
@@ -64,7 +56,6 @@ public:
 	}
 
 protected:
-	Sprite* sprite;
 	int width;
 	int height;
 	int global_x;

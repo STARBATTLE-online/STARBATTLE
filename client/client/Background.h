@@ -11,7 +11,7 @@ public:
 	};
 	~Background() {};
 
-	void Draw() override {
+	void Draw() {
 		for (int i = 0; i < MAP_WIDTH / width; i++)
 		{
 			for (int j = 0; j < MAP_HEIGHT / height; j++)
@@ -29,4 +29,6 @@ public:
 			}
 		}
 	}
+
+	Sprite* sprite;
 };

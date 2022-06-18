@@ -56,42 +56,27 @@ public:
 		WINDOW_Y = main_hero.GetCenterGlobal().second - WINDOW_HEIGHT / 2;
 	}
 
-	void AddEnemyShip(int x, int y, Rotation rot, int sprite_id) {
-		ships.push_back(new EnemyShip(x, y, rot));		
-	}
-
-	void MapResize() {
-
-	}
-
-	void AddBigAsteroid(int x, int y) {
-		asteroids.push_back(new BigAsteroid(x, y));
-	}
-
-	void AddSmallAsteroid(int x, int y) {
-		asteroids.push_back(new SmallAsteroid(x, y));
-	}
 
 	void DrawAll() {
 		
 		background->Draw();
 		//std::cout << asteroids.size() << std::endl;
-		for (auto asteroid : asteroids)
+		for (auto& asteroid : asteroids)
 		{
 			for (int i = -1; i <= 1; i++)
 			{
 				for (int j = -1; j <= 1; j++)
 				{
-					int x = asteroid->GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
-					int y = asteroid->GetCenterGlobal().second + MAP_WIDTH *j - WINDOW_Y;
+					int x = asteroid.GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
+					int y = asteroid.GetCenterGlobal().second + MAP_WIDTH *j - WINDOW_Y;
 			
 					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
 					{
-						if (asteroid->GetName() == "BigAsteroid")
+						if (asteroid.name == AsteroidTypes::Big)
 						{
 							drawSprite(big_asteroid_sprite, x, y);
 						}
-						else if (asteroid->GetName() == "SmallAsteroid")
+						else if (asteroid.name == AsteroidTypes::Small)
 						{
 							drawSprite(small_asteroid_sprite, x, y);
 						}
@@ -99,15 +84,15 @@ public:
 				}
 			}
 		}
-		for (auto bullet : bullets)
+		for (auto& bullet : bullets)
 		{
 
 			for (int i = -1; i <= 1; i++)
 			{
 				for (int j = -1; j <= 1; j++)
 				{
-					int x = bullet->GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
-					int y = bullet->GetCenterGlobal().second + MAP_WIDTH * j - WINDOW_Y;
+					int x = bullet.GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
+					int y = bullet.GetCenterGlobal().second + MAP_WIDTH * j - WINDOW_Y;
 
 					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
 					{
@@ -118,18 +103,18 @@ public:
 			
 
 		}
-		for (auto ship : ships)
+		for (auto& ship : ships)
 		{
 			for (int i = -1; i <= 1; i++)
 			{
 				for (int j = -1; j <= 1; j++)
 				{
-					int x = ship->GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
-					int y = ship->GetCenterGlobal().second + MAP_WIDTH * j - WINDOW_Y;
+					int x = ship.GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
+					int y = ship.GetCenterGlobal().second + MAP_WIDTH * j - WINDOW_Y;
 
 					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
 					{
-						ship->DrawXY(x, y);
+						ship.DrawXY(x, y);
 					}
 				}
 			}
@@ -176,7 +161,7 @@ public:
 	}
 
 	void Shoot(int x, int y) {
-		bullets.push_back(new Bullet(x, y));
+		bullets.push_back(Bullet(x, y));
 	}
 
 	//����������� ����������� ����� � ��������� ��������� ��� ������������� ����� �������
@@ -191,11 +176,11 @@ protected:
 	
 public:
 	std::mutex mt;
-	std::vector<Asteroid*> asteroids;
-	std::vector<Ship*> ships;
+	std::vector<Asteroid> asteroids;
+	std::vector<Ship> ships;
 	MainHeroShip main_hero;
 	Sprite* big_asteroid_sprite = createSprite("data/big_asteroid.png");
 	Sprite* small_asteroid_sprite = createSprite("data/small_asteroid.png");
 	Sprite* bullet_sprite = createSprite("data/bullet.png");
-	std::vector<Bullet*> bullets;
+	std::vector<Bullet> bullets;
 };
