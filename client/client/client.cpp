@@ -139,7 +139,7 @@ int main(int argc, char* argv[])
 
 		try
 		{
-			AsyncTCPClient client(10);
+			AsyncTCPClient client(1);
 			client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, "INIT");
 			while (!is_connected)
 			{

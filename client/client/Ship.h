@@ -55,6 +55,11 @@ public:
 	}
 
 	void Draw() override {
+		if (is_engine)
+		{
+			//drawSprite(engine_sprites[rotation], x() - (engine_width - width) / 2, y() - (engine_height - height) / 2);
+			drawSprite(engine_sprites[rotation], (x() - ((engine_width - width) / 2)), (y() - ((engine_height - height) / 2)));
+		}
 		drawSprite(ship_sprites[rotation], x(), y());
 		if (power)
 		{
@@ -64,9 +69,13 @@ public:
 		{
 			bullet->Draw();
 		}
+		
 
 	}
 
+	void SetEngine(bool flag) {
+		is_engine = flag;
+	}
 
 	void Shoot(int x, int y) {
 		bullets.push_back(new Bullet(x, y));
@@ -76,8 +85,10 @@ protected:
 	HeadSprite* power = nullptr;  //?
 	Rotation rotation;
 	std::vector<Bullet*> bullets;
-	Sprite* engine;
-
+	std::map<Rotation, Sprite*> engine_sprites;
+	int engine_width;
+	int engine_height;
+	bool is_engine = false;
 	std::map<Rotation, Sprite*> ship_sprites;
 
 };
@@ -91,11 +102,17 @@ public:
 		ship_sprites[Rotation::Top] = createSprite("data/ships/sprites/1/spaceship.png");
 		ship_sprites[Rotation::Bottom] = createSprite("data/ships/sprites/1/spaceship_b.png");
 
+		engine_sprites[Rotation::Left] = createSprite("data/ships/engines/1/spaceship_power_l.png");
+		engine_sprites[Rotation::Right] = createSprite("data/ships/engines/1/spaceship_power_r.png");
+		engine_sprites[Rotation::Top] = createSprite("data/ships/engines/1/spaceship_power.png");
+		engine_sprites[Rotation::Bottom] = createSprite("data/ships/engines/1/spaceship_power_b.png");
+
 		rotation = Rotation::Top;
 		sprite = ship_sprites[rotation];
-		engine = createSprite("data/ships/main_hero/engine.png");
-		width = 48;
-		height = 48;
+		width = 96;
+		height = 96;
+		engine_width = 212;
+		engine_height = 212;
 	};
 	~MainHeroShip() {};
 
@@ -176,13 +193,20 @@ public:
 		ship_sprites[Rotation::Right] = createSprite("data/ships/sprites/3/spaceship_r.png");
 		ship_sprites[Rotation::Top] = createSprite("data/ships/sprites/3/spaceship.png");
 		ship_sprites[Rotation::Bottom] = createSprite("data/ships/sprites/3/spaceship_b.png");
-		
-		sprite = createSprite("data/ships/enemy/spaceship.png");
-		width = 48;
-		height = 48;
+
+
+		engine_sprites[Rotation::Left] = createSprite("data/ships/engines/1/spaceship_power_l.png");
+		engine_sprites[Rotation::Right] = createSprite("data/ships/engines/1/spaceship_power_r.png");
+		engine_sprites[Rotation::Top] = createSprite("data/ships/engines/1/spaceship_power.png");
+		engine_sprites[Rotation::Bottom] = createSprite("data/ships/engines/1/spaceship_power_b.png");
+
+		width = 96;
+		height = 96;
 		SetRotation(rot);
 		global_x = x;
 		global_y = y;
+		engine_width = 212;
+		engine_height = 212;
 	};
 	~EnemyShip() {};
 

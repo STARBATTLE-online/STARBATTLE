@@ -39,6 +39,10 @@ public:
 		return std::make_pair(global_x + width / 2, global_y + height / 2);
 	}
 
+	std::pair<int, int> GetCenter() {
+		return std::make_pair(x() + width / 2, y() + height / 2);
+	}
+
 	int xGlobal() {
 		return global_x;
 	}
