@@ -96,16 +96,17 @@ protected:
 class MainHeroShip : public Ship
 {
 public:
-	MainHeroShip() {
-		ship_sprites[Rotation::Left] = createSprite("data/ships/sprites/1/spaceship_l.png");
-		ship_sprites[Rotation::Right] = createSprite("data/ships/sprites/1/spaceship_r.png");
-		ship_sprites[Rotation::Top] = createSprite("data/ships/sprites/1/spaceship.png");
-		ship_sprites[Rotation::Bottom] = createSprite("data/ships/sprites/1/spaceship_b.png");
+	MainHeroShip(int sprite_id = 1) {
+		ship_sprites[Rotation::Left] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_l.png").c_str());
+		ship_sprites[Rotation::Right] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_r.png").c_str());
+		ship_sprites[Rotation::Top] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship.png").c_str());
+		ship_sprites[Rotation::Bottom] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_b.png").c_str());
 
-		engine_sprites[Rotation::Left] = createSprite("data/ships/engines/1/spaceship_power_l.png");
-		engine_sprites[Rotation::Right] = createSprite("data/ships/engines/1/spaceship_power_r.png");
-		engine_sprites[Rotation::Top] = createSprite("data/ships/engines/1/spaceship_power.png");
-		engine_sprites[Rotation::Bottom] = createSprite("data/ships/engines/1/spaceship_power_b.png");
+
+		engine_sprites[Rotation::Left] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_l.png").c_str());
+		engine_sprites[Rotation::Right] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_r.png").c_str());
+		engine_sprites[Rotation::Top] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power.png").c_str());
+		engine_sprites[Rotation::Bottom] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_b.png").c_str());
 
 		rotation = Rotation::Top;
 		sprite = ship_sprites[rotation];
@@ -187,19 +188,19 @@ private:
 class EnemyShip : public Ship
 {
 public:
-	EnemyShip(int x, int y, Rotation rot) {
+	EnemyShip(int x, int y, Rotation rot, int sprite_id = 3) {
 
-		ship_sprites[Rotation::Left] = createSprite("data/ships/sprites/3/spaceship_l.png");
-		ship_sprites[Rotation::Right] = createSprite("data/ships/sprites/3/spaceship_r.png");
-		ship_sprites[Rotation::Top] = createSprite("data/ships/sprites/3/spaceship.png");
-		ship_sprites[Rotation::Bottom] = createSprite("data/ships/sprites/3/spaceship_b.png");
+		ship_sprites[Rotation::Left] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_l.png").c_str());
+		ship_sprites[Rotation::Right] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_r.png").c_str());
+		ship_sprites[Rotation::Top] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship.png").c_str());
+		ship_sprites[Rotation::Bottom] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_b.png").c_str());
 
 
-		engine_sprites[Rotation::Left] = createSprite("data/ships/engines/1/spaceship_power_l.png");
-		engine_sprites[Rotation::Right] = createSprite("data/ships/engines/1/spaceship_power_r.png");
-		engine_sprites[Rotation::Top] = createSprite("data/ships/engines/1/spaceship_power.png");
-		engine_sprites[Rotation::Bottom] = createSprite("data/ships/engines/1/spaceship_power_b.png");
-
+		engine_sprites[Rotation::Left] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_l.png").c_str());
+		engine_sprites[Rotation::Right] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_r.png").c_str());
+		engine_sprites[Rotation::Top] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power.png").c_str());
+		engine_sprites[Rotation::Bottom] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_b.png").c_str());
+		
 		width = 96;
 		height = 96;
 		SetRotation(rot);

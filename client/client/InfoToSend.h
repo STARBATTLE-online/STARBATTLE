@@ -30,7 +30,7 @@ public:
 			request += 'T';
 			break;
 		case Rotation::Left:
-			request += 'L';
+			request += 'L';			
 			break;
 		case Rotation::Bottom:
 			request += 'B';
@@ -41,6 +41,7 @@ public:
 		default:
 			break;
 		}
+		
 		request += " " + std::to_string(PERSONAL_ID_PUBLIC) + " ";
 		request += std::to_string(PERSONAL_ID_PRIVATE);
 	}

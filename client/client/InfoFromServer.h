@@ -131,7 +131,7 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
 			uint64_t sprite_id, public_id;
             char rotation;
             bool is_engine;
-            Rotation rot;
+            Rotation rot = Rotation::Top;
 
             ss >> x >> y >> rotation >> sprite_id >> is_engine >> public_id;
 			
@@ -147,6 +147,8 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
                 break;
             case 'R':
                 rot = Rotation::Right;
+                break;
+            default:
                 break;
             }
 
@@ -164,6 +166,9 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
                 while (k < InfoFromServer::m_map_creator->ships.size())
                 {
                     InfoFromServer::m_map_creator->ships[k]->SetCoordsByCenter(x, y);
+
+                    InfoFromServer::m_map_creator->ships[k]->SetRotation(rot);
+                    InfoFromServer::m_map_creator->ships[k]->SetEngine(is_engine);
                     flag = true;
                     k++;
                     break;
@@ -176,7 +181,7 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             }
 		}
     }
-   /*if (i > j)
+  /* if (i > j)
     {
         InfoFromServer::m_map_creator->asteroids.erase(std::remove_if(InfoFromServer::m_map_creator->asteroids.begin() + i,
             InfoFromServer::m_map_creator->asteroids.end(),
