@@ -8,6 +8,17 @@
 #include "InfoToSend.h"
 #include "InfoFromServer.h"
 
+class Bullet : public HeadSprite
+{
+public:
+	Bullet(int x, int y) {
+		width = 13;
+		height = 13;
+		global_x = x;
+		global_y = y;
+	};
+	~Bullet() {};
+};
 
 class MapCreator //�������� ����� ��������� �� �����
 {
@@ -65,15 +76,37 @@ public:
 		
 		background->Draw();
 		//std::cout << asteroids.size() << std::endl;
-		for (auto astroid : asteroids)
+		for (auto asteroid : asteroids)
 		{
-			astroid->Draw();
+			if (asteroid->GetCenter().first > -100 && asteroid->GetCenter().first < WINDOW_WIDTH + 100 && asteroid->GetCenter().second > -100 && asteroid->GetCenter().second < WINDOW_HEIGHT + 100)
+			{
+				if (asteroid->GetName() == "BigAsteroid")
+				{
+					drawSprite(big_asteroid_sprite, asteroid->x(), asteroid->y());
+				}
+				else if (asteroid->GetName() == "SmallAsteroid")
+				{
+					drawSprite(small_asteroid_sprite, asteroid->x(), asteroid->y());
+				}
+			}			
+		}
+		for (auto bullet : bullets)
+		{
+			if (bullet->GetCenter().first > -100 && bullet->GetCenter().first < WINDOW_WIDTH + 100 && bullet->GetCenter().second > -100 && bullet->GetCenter().second < WINDOW_HEIGHT + 100)
+			{
+				drawSprite(bullet_sprite, bullet->x(), bullet->y());
+			}
+
 		}
 		for (auto ship : ships)
 		{
-			ship->Draw();
+			if (ship->GetCenter().first > -100 && ship->GetCenter().first < WINDOW_WIDTH + 100 && ship->GetCenter().second > -100 && ship->GetCenter().second < WINDOW_HEIGHT + 100)
+			{
+				ship->Draw();
+			}
 		}
 		main_hero.Draw();
+
 		//inter.Draw();
 
 	}
@@ -100,7 +133,9 @@ public:
 	void UpdateRequest() {
 	}
 
-	
+	void Shoot(int x, int y) {
+		bullets.push_back(new Bullet(x, y));
+	}
 
 	//����������� ����������� ����� � ��������� ��������� ��� ������������� ����� �������
 protected:
@@ -117,4 +152,8 @@ public:
 	std::vector<Asteroid*> asteroids;
 	std::vector<Ship*> ships;
 	MainHeroShip main_hero;
+	Sprite* big_asteroid_sprite = createSprite("data/big_asteroid.png");
+	Sprite* small_asteroid_sprite = createSprite("data/small_asteroid.png");
+	Sprite* bullet_sprite = createSprite("data/bullet.png");
+	std::vector<Bullet*> bullets;
 };

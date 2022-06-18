@@ -4,19 +4,7 @@
 #include <map>
 
 
-class Bullet : public HeadSprite
-{
-public:
-	Bullet(int x, int y) {
-		sprite = createSprite("data/bullet.png");
-		width = 13;
-		height = 13;
-		global_x = x;
-		global_y = y;
-	};
-	~Bullet() {};
 
-};
 
 class Ship : public HeadSprite
 {
@@ -65,26 +53,16 @@ public:
 		{
 			power->Draw();
 		}
-		for (auto bullet : bullets)
-		{
-			bullet->Draw();
-		}
-		
-
 	}
 
 	void SetEngine(bool flag) {
 		is_engine = flag;
 	}
 
-	void Shoot(int x, int y) {
-		bullets.push_back(new Bullet(x, y));
-	}
 
 protected:
 	HeadSprite* power = nullptr;  //?
 	Rotation rotation;
-	std::vector<Bullet*> bullets;
 	std::map<Rotation, Sprite*> engine_sprites;
 	int engine_width;
 	int engine_height;

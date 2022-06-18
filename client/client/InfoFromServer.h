@@ -34,7 +34,7 @@ void InfoFromServer::SetMapCreator(std::shared_ptr<MapCreator> map_creator) {
 }
 
 std::string InfoFromServer::ProcessRequest(std::string request) {
-    Sleep(20);
+    Sleep(20);//?
     std::lock_guard<std::mutex> lock(InfoFromServer::m_map_creator->mt);
     std::stringstream ss(request);
     std::string output, commandType;
@@ -71,7 +71,7 @@ void InfoFromServer::InitRequest(std::stringstream& ss) {
 void InfoFromServer::TickRequest(std::stringstream& ss) {
 
     std::string commandType;
-    int i = 0, j = 0, k = 0;
+    int i = 0, j = 0, k = 0, t = 0;
 	Ship* ship;
     while (ss >> commandType)
     {
@@ -170,16 +170,39 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
                     InfoFromServer::m_map_creator->ships[k]->SetRotation(rot);
                     InfoFromServer::m_map_creator->ships[k]->SetEngine(is_engine);
                     flag = true;
+                    ship = InfoFromServer::m_map_creator->ships[k];
                     k++;
                     break;
                 }
                 if (k >= InfoFromServer::m_map_creator->ships.size() && !flag)
                 {
                     InfoFromServer::m_map_creator->AddEnemyShip(x, y, rot, sprite_id);
-                    k++;					
+                    ship = InfoFromServer::m_map_creator->ships[k];
+                    k++;										
                 }
             }
 		}
+        else if (commandType == "Bullet")
+        {
+            int x, y;
+            int x_speed, y_speed;
+			ss >> x >> y >> x_speed >> y_speed;
+            bool flag = false;
+            while (t < InfoFromServer::m_map_creator->bullets.size())
+            {
+
+                InfoFromServer::m_map_creator->bullets[t]->SetCoordsByCenter(x, y);
+                flag = true;
+                t++;
+                break;
+            }
+            if (t >= InfoFromServer::m_map_creator->bullets.size() && !flag)
+            {
+
+                InfoFromServer::m_map_creator->Shoot(x, y);
+                t++;
+            }
+        }
     }
   /* if (i > j)
     {
@@ -212,7 +235,11 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
     /*if (InfoFromServer::m_map_creator->ships.size()>0)
     {
         InfoFromServer::m_map_creator->ships.erase(InfoFromServer::m_map_creator->ships.begin() + k);
-    }*/
+    }*/   
+    if (InfoFromServer::m_map_creator->bullets.begin() + t != InfoFromServer::m_map_creator->bullets.end())
+    {
+        InfoFromServer::m_map_creator->bullets.erase(InfoFromServer::m_map_creator->bullets.begin() + t);
+    }
 	
 
   //  for (auto asteroid : InfoFromServer::m_map_creator->asteroids)

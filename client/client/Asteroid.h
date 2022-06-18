@@ -7,8 +7,7 @@ class Asteroid : public HeadSprite
 {
 public:
 	Asteroid() {};
-	Asteroid(const char* sprite_path, int sprite_width, int sprite_height, int sprite_mass) {
-		sprite = createSprite(sprite_path);
+	Asteroid(int sprite_width, int sprite_height, int sprite_mass) {
 		width = sprite_width;
 		height = sprite_height;
 	};
@@ -22,7 +21,6 @@ class BigAsteroid : public Asteroid
 {
 public:
 	BigAsteroid(int x, int y) {
-		sprite = createSprite("data/big_asteroid.png"); // легковес!!
 		width = 68;
 		height = 60;
 		SetCoordsByCenter(x, y);
@@ -41,7 +39,6 @@ class SmallAsteroid : public Asteroid
 {
 public:
 	SmallAsteroid(int x, int y) {
-		sprite = createSprite("data/small_asteroid.png");// легковес!!
 		width = 44;
 		height = 36;
 		SetCoordsByCenter(x, y);
