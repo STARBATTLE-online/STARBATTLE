@@ -216,8 +216,12 @@ public:
                                 }
                                 else
                                 {
-                                    
-                                   InfoFromServer::ProcessRequest(convertToString(ch, bytes_transferred));
+                                    InfoFromServer::ProcessRequest(convertToString(ch, bytes_transferred)); std::cout << "Received: " << ch << std::endl;
+
+                                   /* std::thread t3([this, bytes_transferred]() {
+                                        });
+
+                                    t3.detach();*/
 
 									
                                     //std::cout << "!";

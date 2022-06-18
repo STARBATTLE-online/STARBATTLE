@@ -46,6 +46,14 @@ public:
 	}
 
 	virtual bool Tick() {
+		Sleep(rest);
+		using std::chrono::high_resolution_clock;
+		using std::chrono::duration_cast;
+		using std::chrono::duration;
+		using std::chrono::milliseconds;		
+		auto t1 = high_resolution_clock::now();
+		std::lock_guard<std::mutex> lock(map_manager->mt);
+		std::cout << "1!" << std::endl;
 		if (!is_start_game)
 		{
 			inter->Draw();
@@ -54,10 +62,14 @@ public:
 		else if (is_connected)
 		{
 			drawTestBackground();
-			//showCursor(false);
-
+			showCursor(true);
+			
 			map_manager->DrawAll();
 		}
+		std::cout << "2!" << std::endl;
+		auto t2 = high_resolution_clock::now();
+		duration<double, std::milli> ms_double = t2 - t1;
+		rest = 1000 / FRAMERATE - ms_double.count();
 		return false;
 	}
 
@@ -97,7 +109,7 @@ public:
 	}
 
 private:
-
+	double rest = 0;
 	std::shared_ptr<MapCreator> map_manager;
 	std::shared_ptr<Interface> inter;
 };
@@ -120,9 +132,6 @@ int main(int argc, char* argv[])
 		{
 			Sleep(100);
 		}
-
-		Sleep(1000);
-		int oplimit = 500;
 		using std::chrono::high_resolution_clock;
 		using std::chrono::duration_cast;
 		using std::chrono::duration;
@@ -130,25 +139,25 @@ int main(int argc, char* argv[])
 
 		try
 		{
-			int oplimit = 1;
-			AsyncTCPClient client(4);
+			AsyncTCPClient client(2);
 			client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, "INIT");
-			Sleep(3000);
-
+			while (!is_connected)
+			{
+				Sleep(100);
+			}
+			
 			//std::cout << request << std::endl;
 			client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
 			request = "TICK";
 			while (true) {
-				auto t1 = high_resolution_clock::now();				
-				for (int i = 0; i < oplimit; i++) {
+				auto t1 = high_resolution_clock::now();	
 					//std::cout << request << std::endl;
-					client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
-					request = "TICK";
-				}
+				client.emulateLongComputationOp(1, "178.159.224.36", 3333, handler, 1, request);
+				request = "TICK";
 				auto t2 = high_resolution_clock::now();
 				duration<double, std::milli> ms_double = t2 - t1;
 				double rest = 1000 / FRAMERATE - ms_double.count();
-
+				
 				Sleep(rest);
 			}
 			

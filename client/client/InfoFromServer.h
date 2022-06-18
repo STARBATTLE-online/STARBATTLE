@@ -38,7 +38,7 @@ std::string InfoFromServer::ProcessRequest(std::string request) {
     std::stringstream ss(request);
     std::string output, commandType;
 
-    //std::cout << request << std::endl;
+    std::cout << request << std::endl;
 
     while (ss >> commandType) {
         if (commandType == "INIT") {
@@ -166,7 +166,7 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             }
 		}*/
     }
-    if (i > j)
+   /* if (i > j)
     {
         InfoFromServer::m_map_creator->asteroids.erase(std::remove_if(InfoFromServer::m_map_creator->asteroids.begin() + i,
             InfoFromServer::m_map_creator->asteroids.end(),
@@ -193,12 +193,12 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             [&](auto& asteroid)-> bool
             { return asteroid->GetName() == "BigAsteroid"; }),
             InfoFromServer::m_map_creator->asteroids.end());
-    }
-    if (InfoFromServer::m_map_creator->ships.size()>0)
+    }*/
+ /*   if (InfoFromServer::m_map_creator->ships.size()>0)
     {
         InfoFromServer::m_map_creator->ships.erase(InfoFromServer::m_map_creator->ships.begin() + k);
     }
-	
+	*/
 
     for (auto asteroid : InfoFromServer::m_map_creator->asteroids)
     {
