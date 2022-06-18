@@ -63,16 +63,16 @@ public:
 
 	void DrawAll() {
 		
-		//background->Draw();
-		std::cout << asteroids.size() << std::endl;
+		background->Draw();
+		//std::cout << asteroids.size() << std::endl;
 		for (auto astroid : asteroids)
 		{
 			astroid->Draw();
 		}
-		/*for (auto ship : ships)
+		for (auto ship : ships)
 		{
 			ship->Draw();
-		}*/
+		}
 		main_hero.Draw();
 		//inter.Draw();
 
@@ -84,7 +84,7 @@ public:
 		//std::cout<<mouse_x << " " << mouse_y<<std::endl;
 		if (main_hero.GetRotationByMouse(mouse_x, mouse_y))
 		{
-			keep_info->SetCoords(mouse_x, mouse_y);
+			keep_info->SetCoords(mouse_x, mouse_y, main_hero.GetRotation());
 		}
 	}
 
@@ -93,7 +93,7 @@ public:
 	}
 
 	void SetClickToRequest(FRMouseButton button, bool isReleased) {		
-		keep_info->SetCoords(mouse_x, mouse_y);
+		keep_info->SetCoords(mouse_x, mouse_y, main_hero.GetRotation());
 		keep_info->SetClick(button, isReleased);
 	}
 

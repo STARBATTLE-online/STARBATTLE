@@ -18,11 +18,29 @@ public:
 		
 	}
 
-	void SetCoords(int x, int y) {
+	void SetCoords(int x, int y, Rotation rot) {
 		request += " MM "; // mouse move
 		request += std::to_string(int(x + WINDOW_X));
 		request += " ";
 		request += std::to_string(int(y + WINDOW_Y));
+		request += " ";
+		switch (rot)
+		{
+		case Rotation::Top:
+			request += 'T';
+			break;
+		case Rotation::Left:
+			request += 'L';
+			break;
+		case Rotation::Bottom:
+			request += 'B';
+			break;
+		case Rotation::Right:
+			request += 'R';
+			break;
+		default:
+			break;
+		}
 		request += " " + std::to_string(PERSONAL_ID_PUBLIC) + " ";
 		request += std::to_string(PERSONAL_ID_PRIVATE);
 	}

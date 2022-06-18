@@ -12,11 +12,11 @@ public:
 	~Background() {};
 
 	void Draw() override {
-		for (int i = 1; i <= MAP_WIDTH / width + 1; i++)
+		for (int i = 0; i < MAP_WIDTH / width; i++)
 		{
-			for (int i = 1; i <= MAP_HEIGHT / height + 1; i++)
+			for (int j = 0; j < MAP_HEIGHT / height; j++)
 			{
-				drawSprite(sprite, (global_x - WINDOW_X) * i, (global_y - WINDOW_Y) * i);
+				drawSprite(sprite, -1 * WINDOW_X + i * width, -1 * WINDOW_Y + j * height);
 			}
 		}
 	}

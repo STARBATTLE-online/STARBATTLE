@@ -22,7 +22,7 @@ class Ship : public HeadSprite
 {
 public:
 	Ship() {};
-	Ship(const char* sprite_path, double sprite_width, double sprite_height, int sprite_mass) {
+	Ship(const char* sprite_path, int sprite_width, int sprite_height, int sprite_mass) {
 		sprite = createSprite(sprite_path);
 		width = sprite_width;
 		height = sprite_height;
@@ -35,6 +35,9 @@ public:
 	}
 
 
+	Rotation GetRotation() {
+		return rotation;
+	}
 
 	void PowersHandler(int x, int y) {
 		if (dynamic_cast<Shield*>(power))
@@ -169,10 +172,10 @@ class EnemyShip : public Ship
 public:
 	EnemyShip(int x, int y, Rotation rot) {
 
-		ship_sprites[Rotation::Left] = createSprite("data/ships/sprites/1/spaceship_l.png");
-		ship_sprites[Rotation::Right] = createSprite("data/ships/sprites/1/spaceship_r.png");
-		ship_sprites[Rotation::Top] = createSprite("data/ships/sprites/1/spaceship.png");
-		ship_sprites[Rotation::Bottom] = createSprite("data/ships/sprites/1/spaceship_b.png");
+		ship_sprites[Rotation::Left] = createSprite("data/ships/sprites/3/spaceship_l.png");
+		ship_sprites[Rotation::Right] = createSprite("data/ships/sprites/3/spaceship_r.png");
+		ship_sprites[Rotation::Top] = createSprite("data/ships/sprites/3/spaceship.png");
+		ship_sprites[Rotation::Bottom] = createSprite("data/ships/sprites/3/spaceship_b.png");
 		
 		sprite = createSprite("data/ships/enemy/spaceship.png");
 		width = 48;

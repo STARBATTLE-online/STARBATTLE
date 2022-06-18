@@ -17,6 +17,10 @@
 #include "MapCreator.h"
 #include "Interface.h"
 
+using std::chrono::high_resolution_clock;
+using std::chrono::duration_cast;
+using std::chrono::duration;
+using std::chrono::milliseconds;
 
 class MyFramework : public Framework {
 
@@ -46,14 +50,13 @@ public:
 	}
 
 	virtual bool Tick() {
-		Sleep(rest);
-		using std::chrono::high_resolution_clock;
-		using std::chrono::duration_cast;
-		using std::chrono::duration;
-		using std::chrono::milliseconds;		
 		auto t1 = high_resolution_clock::now();
+		if (rest > 0)
+		{
+			Sleep(rest);
+		}
 		std::lock_guard<std::mutex> lock(map_manager->mt);
-		std::cout << "1!" << std::endl;
+		
 		if (!is_start_game)
 		{
 			inter->Draw();
@@ -61,15 +64,15 @@ public:
 		}
 		else if (is_connected)
 		{
-			drawTestBackground();
+			//drawTestBackground();
 			showCursor(true);
 			
 			map_manager->DrawAll();
 		}
-		std::cout << "2!" << std::endl;
 		auto t2 = high_resolution_clock::now();
 		duration<double, std::milli> ms_double = t2 - t1;
 		rest = 1000 / FRAMERATE - ms_double.count();
+		//std::cout << "ms_double " << ms_double << " rest " << rest << std::endl;
 		return false;
 	}
 
@@ -118,13 +121,14 @@ int main(int argc, char* argv[])
 	setlocale(0, "");
 	srand(time(NULL));
 
+
 	
 	std::thread t1([]() {
 		while (true)
 		{
 			run(new MyFramework);
 
-		}
+		} 
 	});
 
 	std::thread t2([]() {
@@ -132,14 +136,10 @@ int main(int argc, char* argv[])
 		{
 			Sleep(100);
 		}
-		using std::chrono::high_resolution_clock;
-		using std::chrono::duration_cast;
-		using std::chrono::duration;
-		using std::chrono::milliseconds;
 
 		try
 		{
-			AsyncTCPClient client(2);
+			AsyncTCPClient client(10);
 			client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, "INIT");
 			while (!is_connected)
 			{
@@ -157,7 +157,8 @@ int main(int argc, char* argv[])
 				auto t2 = high_resolution_clock::now();
 				duration<double, std::milli> ms_double = t2 - t1;
 				double rest = 1000 / FRAMERATE - ms_double.count();
-				
+				//std::cout << "boost rest " << rest << std::endl;
+
 				Sleep(rest);
 			}
 			

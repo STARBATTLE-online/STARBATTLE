@@ -1,6 +1,7 @@
 #pragma once
 #include "HeadSprite.h"
 #include "Framework.h"
+#include <map>
 
 class Interface;
 class Reticle;
@@ -16,7 +17,7 @@ public:
 	};
 	~Reticle(){};
 
-	void SetCoords(double new_x, double new_y) override {
+	void SetCoords(int new_x, int new_y) override {
 		global_x = new_x - height / 2 + WINDOW_X;
 		global_y = new_y - width / 2 + WINDOW_Y;
 	}

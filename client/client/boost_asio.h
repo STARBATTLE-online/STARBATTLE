@@ -200,14 +200,15 @@ public:
                         }
 
                         // initiate the next asynchronous operation—async_read_until()—in order to receive a response from the server
-                        
+                        char ch[65535] = {};
+
 						session->m_sock.async_read_some(
                             asio::buffer(ch),
-                            [this, session](const boost::system::error_code& ec,
+                            [this, session, &ch](const boost::system::error_code& ec,
                                 std::size_t bytes_transferred)
                             {
 
-                                std::lock_guard lock(ch_guard);
+                                //std::lock_guard lock(ch_guard);
 
                                 //checks the error code
                                 if (ec.value() != 0)
@@ -216,7 +217,8 @@ public:
                                 }
                                 else
                                 {
-                                    InfoFromServer::ProcessRequest(convertToString(ch, bytes_transferred)); std::cout << "Received: " << ch << std::endl;
+                                    InfoFromServer::ProcessRequest(convertToString(ch, bytes_transferred)); 
+                                    //std::cout << "Received: " << ch << std::endl;
 
                                    /* std::thread t3([this, bytes_transferred]() {
                                         });
@@ -313,7 +315,6 @@ private:
     std::mutex m_active_sessions_guard;
     std::unique_ptr<boost::asio::io_service::work> m_work;
     std::list<std::unique_ptr<std::thread>> m_threads;
-    char ch[65535];
     std::mutex ch_guard;
 
 };

@@ -11,7 +11,7 @@ public:
 		width = 0;
 		sprite = NULL;
 	};
-	HeadSprite(const char* sprite_path, double sprite_width, double sprite_height) : width(sprite_width), height(sprite_height) {
+	HeadSprite(const char* sprite_path, int sprite_width, int sprite_height) : width(sprite_width), height(sprite_height) {
 		sprite = createSprite(sprite_path);
 	};
 
@@ -21,12 +21,12 @@ public:
 		sprite = createSprite(sprite_path);
 	};
 
-	virtual void SetCoords(double new_x, double new_y) {
+	virtual void SetCoords(int new_x, int new_y) {
 		global_x = new_x;
 		global_y = new_y;
 	}
 
-	virtual void SetCoordsByCenter(double new_x, double new_y) {
+	virtual void SetCoordsByCenter(int new_x, int new_y) {
 		global_x = new_x - width / 2;
 		global_y = new_y - height / 2;
 	}
@@ -35,23 +35,23 @@ public:
 		drawSprite(sprite, x(), y());
 	}
 
-	std::pair<double, double> GetCenterGlobal() {
+	std::pair<int, int> GetCenterGlobal() {
 		return std::make_pair(global_x + width / 2, global_y + height / 2);
 	}
 
-	double xGlobal() {
+	int xGlobal() {
 		return global_x;
 	}
 
-	double yGlobal() {
+	int yGlobal() {
 		return global_y;
 	}
 
-	double x() {
+	int x() {
 		return global_x - WINDOW_X;
 	}
 
-	double y() {
+	int y() {
 		return global_y - WINDOW_Y;
 	}
 
@@ -61,8 +61,8 @@ public:
 
 protected:
 	Sprite* sprite;
-	double width;
-	double height;
-	double global_x;
-	double global_y;
+	int width;
+	int height;
+	int global_x;
+	int global_y;
 };

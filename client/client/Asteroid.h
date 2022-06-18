@@ -7,7 +7,7 @@ class Asteroid : public HeadSprite
 {
 public:
 	Asteroid() {};
-	Asteroid(const char* sprite_path, double sprite_width, double sprite_height, int sprite_mass) {
+	Asteroid(const char* sprite_path, int sprite_width, int sprite_height, int sprite_mass) {
 		sprite = createSprite(sprite_path);
 		width = sprite_width;
 		height = sprite_height;

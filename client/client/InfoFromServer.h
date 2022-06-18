@@ -34,21 +34,22 @@ void InfoFromServer::SetMapCreator(std::shared_ptr<MapCreator> map_creator) {
 }
 
 std::string InfoFromServer::ProcessRequest(std::string request) {
+    Sleep(20);
     std::lock_guard<std::mutex> lock(InfoFromServer::m_map_creator->mt);
     std::stringstream ss(request);
     std::string output, commandType;
 
-    std::cout << request << std::endl;
+    //std::cout << request << std::endl;
 
     while (ss >> commandType) {
         if (commandType == "INIT") {
 
-            std::cout << "INIT" << std::endl;
+            //std::cout << "INIT" << std::endl;
             InitRequest(ss);
         }
         else if (commandType == "TICK") {
 
-            std::cout << "TICK" << std::endl;
+            //std::cout << "TICK" << std::endl;
             TickRequest(ss);
         }
     }
@@ -57,7 +58,7 @@ std::string InfoFromServer::ProcessRequest(std::string request) {
 }
 
 void InfoFromServer::InitRequest(std::stringstream& ss) {
-    double x, y;
+    int x, y;
     uint64_t sprite_id;
     ss >> PERSONAL_ID_PUBLIC >> PERSONAL_ID_PRIVATE >> x >> y >> sprite_id >> MAP_WIDTH >> MAP_HEIGHT;
 	
@@ -76,8 +77,7 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
     {
         if (commandType == "BigAsteroid")
         {
-			double x, y;
-			uint64_t sprite_id;
+            int x, y;
 			ss >> x >> y ;
             bool flag = false;
             while (i < InfoFromServer::m_map_creator->asteroids.size())
@@ -92,17 +92,17 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
                 }
                 i++;
             }
-            std::cout << i << std::endl;
+            //std::cout << i << std::endl;
             if (i >= InfoFromServer::m_map_creator->asteroids.size() && !flag)
             {
                 InfoFromServer::m_map_creator->AddBigAsteroid(x, y);
+                //std::cout << "newBig" << std::endl;
             }
 			
 		}
 		else if (commandType == "SmallAsteroid")
 		{
-            double x, y;
-            uint64_t sprite_id;
+            int x, y;
             ss >> x >> y;
 
             bool flag = false;
@@ -117,15 +117,17 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
                 }
                 j++;
             }
-            std::cout << j << std::endl;
+            //std::cout << j << std::endl;
             if (j >= InfoFromServer::m_map_creator->asteroids.size() && !flag)
             {
                 InfoFromServer::m_map_creator->AddSmallAsteroid(x, y);
+                //std::cout << "newSmall" << std::endl;
+				
             }
 		}
-		/*else if (commandType == "Ship")
+		else if (commandType == "Ship")
 		{
-			double x, y;
+			int x, y;
 			uint64_t sprite_id, public_id;
             char rotation;
             Rotation rot;
@@ -151,20 +153,26 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             {
                 InfoFromServer::m_map_creator->main_hero.SetCoordsByCenter(x, y);				
                 ship = &(InfoFromServer::m_map_creator->main_hero);
+                WINDOW_X = InfoFromServer::m_map_creator->main_hero.GetCenterGlobal().first - WINDOW_WIDTH / 2;
+                WINDOW_Y = InfoFromServer::m_map_creator->main_hero.GetCenterGlobal().second - WINDOW_HEIGHT / 2;
             }
             else
             {
-                while (k < InfoFromServer::m_map_creator->asteroids.size())
+                bool flag = false;
+                while (k < InfoFromServer::m_map_creator->ships.size())
                 {
-                    InfoFromServer::m_map_creator->asteroids[i]->SetCoordsByCenter(x, y);
+                    InfoFromServer::m_map_creator->ships[k]->SetCoordsByCenter(x, y);
+                    flag = true;
                     k++;
+                    break;
                 }
-                if (k >= InfoFromServer::m_map_creator->asteroids.size() - 1)
+                if (k >= InfoFromServer::m_map_creator->ships.size() && !flag)
                 {
                     InfoFromServer::m_map_creator->AddEnemyShip(x, y, rot, sprite_id);
+                    k++;					
                 }
             }
-		}*/
+		}
     }
    /* if (i > j)
     {
@@ -200,9 +208,9 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
     }
 	*/
 
-    for (auto asteroid : InfoFromServer::m_map_creator->asteroids)
-    {
-		std::cout << asteroid->GetName() << " " << asteroid->GetCenterGlobal().first << " " << asteroid->GetCenterGlobal().second << std::endl;
-		
-    }
+  //  for (auto asteroid : InfoFromServer::m_map_creator->asteroids)
+  //  {
+		////std::cout << asteroid->GetName() << " " << asteroid->GetCenterGlobal().first << " " << asteroid->GetCenterGlobal().second << std::endl;
+		//
+  //  }
 }
