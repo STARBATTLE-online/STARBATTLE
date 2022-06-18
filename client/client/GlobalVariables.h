@@ -16,6 +16,7 @@ inline int PERSONAL_ID_PUBLIC = 333;
 inline int PERSONAL_ID_PRIVATE = 333;
 inline int FRAMERATE = 60;
 std::atomic<bool> is_connected = 0;
+std::atomic<bool> is_start_game = 0;
 
 int NUM_ASTEROIDS() {
 	return NUM_ASTEROIDS_BIG + NUM_ASTEROIDS_SMALL;

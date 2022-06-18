@@ -15,6 +15,7 @@
 #include "GlobalVariables.h"
 
 #include "MapCreator.h"
+#include "Interface.h"
 
 
 class MyFramework : public Framework {
@@ -35,6 +36,7 @@ public:
 
 	virtual bool Init() {
 		map_manager = std::make_shared<MapCreator>();
+		inter = std::make_shared<Interface>();
 		InfoFromServer::SetMapCreator(map_manager);
 		return true;
 	}
@@ -44,7 +46,12 @@ public:
 	}
 
 	virtual bool Tick() {
-		if (is_connected)
+		if (!is_start_game)
+		{
+			inter->Draw();
+			showCursor(false);
+		}
+		else if (is_connected)
 		{
 			drawTestBackground();
 			//showCursor(false);
@@ -55,12 +62,26 @@ public:
 	}
 
 	virtual void onMouseMove(int x, int y, int xrelative, int yrelative) {
-		map_manager->SetRot(x, y);
+		if (!is_start_game)
+		{
+			inter->SetMouseCoords(x, y);
+		}
+		else
+		{
+			map_manager->SetRot(x, y);
+		}
 	}
 
 	virtual void onMouseButtonClick(FRMouseButton button, bool isReleased) {
 		
-		map_manager->SetClickToRequest(button, isReleased);
+		if (!is_start_game)
+		{
+			is_start_game = inter->StartGame(button);
+		}
+		else
+		{
+			map_manager->SetClickToRequest(button, isReleased);
+		}
 	}
 
 	virtual void onKeyPressed(FRKey k) {
@@ -78,6 +99,7 @@ public:
 private:
 
 	std::shared_ptr<MapCreator> map_manager;
+	std::shared_ptr<Interface> inter;
 };
 int main(int argc, char* argv[])
 {
@@ -94,6 +116,11 @@ int main(int argc, char* argv[])
 	});
 
 	std::thread t2([]() {
+		while (!is_start_game)
+		{
+			Sleep(100);
+		}
+
 		Sleep(1000);
 		int oplimit = 500;
 		using std::chrono::high_resolution_clock;
