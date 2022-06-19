@@ -8,8 +8,7 @@ class HeadSprite {
 public:
 	HeadSprite() {
 		height = 0;
-		width = 0;
-		
+		width = 0;		
 	};
 	HeadSprite(int sprite_width, int sprite_height) : width(sprite_width), height(sprite_height) {
 	};
@@ -54,6 +53,11 @@ public:
 	virtual std::string GetName() {
 		return "HeadSprite";
 	}
+	
+	std::pair<int, int> GetSize() {
+		return std::make_pair(width, height);
+	}
+	
 
 protected:
 	int width;

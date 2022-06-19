@@ -21,9 +21,9 @@ public:
 		{
 			width = 60;
 			height = 49;
-		}
-		global_x = x;
-		global_y = y;
+		}		
+		SetCoordsByCenter(x, y);
+
 		name = type;
 	};
 

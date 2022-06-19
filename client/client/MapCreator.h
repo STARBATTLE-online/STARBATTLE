@@ -13,9 +13,8 @@ class Bullet : public HeadSprite
 public:
 	Bullet(int x, int y) {
 		width = 20;
-		height = 20;
-		global_x = x;
-		global_y = y;
+		height = 20;		
+		SetCoordsByCenter(x, y);
 	};
 	~Bullet() {};
 };
@@ -48,9 +47,9 @@ public:
 		default:
 			break;
 		}*/
-		main_hero.SetCoords(x, y);
+		main_hero.SetCoordsByCenter(x, y);
 		main_hero.SetRotation(Rotation::Top);
-		main_hero.SetSprite(path);
+		main_hero.SetSpriteById(sprite_id);
 
 		WINDOW_X = main_hero.GetCenterGlobal().first - WINDOW_WIDTH / 2;
 		WINDOW_Y = main_hero.GetCenterGlobal().second - WINDOW_HEIGHT / 2;
@@ -67,8 +66,8 @@ public:
 			{
 				for (int j = -1; j <= 1; j++)
 				{
-					int x = asteroid.GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
-					int y = asteroid.GetCenterGlobal().second + MAP_WIDTH *j - WINDOW_Y;
+					int x = asteroid.xGlobal() + MAP_WIDTH * i - WINDOW_X;
+					int y = asteroid.yGlobal() + MAP_WIDTH *j - WINDOW_Y;
 			
 					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
 					{
@@ -84,6 +83,8 @@ public:
 				}
 			}
 		}
+
+
 		for (auto& bullet : bullets)
 		{
 
@@ -91,8 +92,8 @@ public:
 			{
 				for (int j = -1; j <= 1; j++)
 				{
-					int x = bullet.GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
-					int y = bullet.GetCenterGlobal().second + MAP_WIDTH * j - WINDOW_Y;
+					int x = bullet.xGlobal() + MAP_WIDTH * i - WINDOW_X;
+					int y = bullet.yGlobal() + MAP_WIDTH * j - WINDOW_Y;
 
 					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
 					{
@@ -109,8 +110,8 @@ public:
 			{
 				for (int j = -1; j <= 1; j++)
 				{
-					int x = ship.GetCenterGlobal().first + MAP_WIDTH * i - WINDOW_X;
-					int y = ship.GetCenterGlobal().second + MAP_WIDTH * j - WINDOW_Y;
+					int x = ship.xGlobal() + MAP_WIDTH * i - WINDOW_X;
+					int y = ship.yGlobal() + MAP_WIDTH * j - WINDOW_Y;
 
 					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
 					{

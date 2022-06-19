@@ -15,7 +15,7 @@ int WINDOW_X = 200;
 int WINDOW_Y = 200;
 int PERSONAL_ID_PUBLIC = 333;
 int PERSONAL_ID_PRIVATE = 333;
-int FRAMERATE = 100;
+int FRAMERATE = 60;
 
 std::atomic<bool> is_connected = 0;
 std::atomic<bool> is_start_game = 0;

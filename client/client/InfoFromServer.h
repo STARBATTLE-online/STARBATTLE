@@ -84,7 +84,6 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
         {
             int x, y;
 			ss >> x >> y ;
-
             InfoFromServer::m_map_creator->asteroids.emplace_back(Asteroid(x, y, AsteroidTypes::Big));
 		}
 		else if (commandType == "SmallAsteroid")
@@ -131,7 +130,7 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             }
             else
             {
-                InfoFromServer::m_map_creator->ships.push_back(EnemyShip(x, y, rot));
+                InfoFromServer::m_map_creator->ships.push_back(EnemyShip(x, y, rot, sprite_id));
                 InfoFromServer::m_map_creator->ships.back().SetRotation(rot);
                 InfoFromServer::m_map_creator->ships.back().SetEngine(is_engine);
                 ship = &InfoFromServer::m_map_creator->ships.back();
