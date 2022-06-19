@@ -14,13 +14,13 @@ public:
 	Asteroid(int x, int y, AsteroidTypes type){
 		if (type == AsteroidTypes::Big)
 		{
-			width = 136;
-			height = 120;
+			width = 100;
+			height = 88;
 		}
 		else if (true)
 		{
-			width = 88;
-			height = 72;
+			width = 60;
+			height = 49;
 		}
 		global_x = x;
 		global_y = y;
