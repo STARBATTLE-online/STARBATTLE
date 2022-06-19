@@ -132,15 +132,22 @@ public:
 				}
 			}
 		}
+		
+		drawSprite(hp_sprites[hit_points], (x - ((engine_width - width) / 2)), (y - ((engine_height - height) / 2)));
 	}
 
 	void SetHP(int hp) {
-		if (hit_points != hp)
-		{
-			std::cout << "HP: " << hp << "\n";
-		}
+		//if (hit_points != hp)
+		//{
+		//	////std::cout << "HP: " << hp << "\n";
+		//}
 		hit_points = hp;
 	}
+
+	int GetHP() {
+		return hit_points;
+	}
+
 
 	void SetEngine(bool flag) {
 		is_engine = flag;
@@ -167,7 +174,7 @@ public:
 		{
 			if (power->GetPowerName() == PowerTypes::Shield)
 			{
-				std::cout << "shield: " << t << "\n";
+				////std::cout << "shield: " << t << "\n";
 				
 				power->time = t;
 			}

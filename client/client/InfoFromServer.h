@@ -39,17 +39,17 @@ std::string InfoFromServer::ProcessRequest(const std::string& request) {
     std::stringstream ss(request);
     std::string output, commandType;
 
-    //std::cout << request << std::endl;
+    ////std::cout << request << std::endl;
 
     while (ss >> commandType) {
         if (commandType == "INIT") {
 
-            //std::cout << "INIT" << std::endl;
+            ////std::cout << "INIT" << std::endl;
             InitRequest(ss);
         }
         else if (commandType == "TICK") {
 
-            //std::cout << "TICK" << std::endl;
+            ////std::cout << "TICK" << std::endl;
             TickRequest(ss);
         }
     }
@@ -183,10 +183,19 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
     }
     if (!i_am_here)
     {
-        is_start_game = 0;
-        is_game_over = 1;
-        is_connected = 0;
+       
+        death_ticks++;
+        if (death_ticks > 70)
+        {
+             is_start_game = 0;
+             is_game_over = 1;
+             is_connected = 0;
+             death_ticks = 0;
+        }
+        //is_start_game = 0;
+        //is_game_over = 1;
+        //is_connected = 0;
     }
-    //std::cout << InfoFromServer::m_map_creator->asteroids.size() << " " << InfoFromServer::m_map_creator->ships.size() << " " << InfoFromServer::m_map_creator->bullets.size() << "\n";
+    ////std::cout << InfoFromServer::m_map_creator->asteroids.size() << " " << InfoFromServer::m_map_creator->ships.size() << " " << InfoFromServer::m_map_creator->bullets.size() << "\n";
    
 }

@@ -2,6 +2,8 @@
 #include "HeadSprite.h"
 #include "Framework.h"
 #include <map>
+#include <windows.h>
+#include <shellapi.h>
 
 class Interface;
 class Reticle;
@@ -44,6 +46,7 @@ public:
 		main_menu_background = createSprite("data/interface/main_menu/background.png");
 		play_button = createSprite("data/interface/main_menu/play_button.png");
 		about_button = createSprite("data/interface/main_menu/about_button.png");
+		exit_button = createSprite("data/interface/game_over/exit_button.png");
 		score_button = createSprite("data/interface/main_menu/score_button.png");
 	};
 	~MainMenu() {};
@@ -52,13 +55,21 @@ public:
 	void Draw() {
 		drawSprite(main_menu_background, 0, 0);
 		drawSprite(play_button, 830, 634);
-		if (is_hover["score_button"])
+		/*if (is_hover["score_button"])
 		{
 			drawSprite(score_button, 127, 935);
 		}
 		else
 		{
 			drawSprite(score_button, 127, 940);
+		}*/
+		if (is_hover["exit_button"])
+		{
+			drawSprite(exit_button, 127, 926);
+		}
+		else
+		{
+			drawSprite(exit_button, 127, 931);
 		}
 		if (is_hover["about_button"])
 		{
@@ -83,6 +94,8 @@ private:
 	Sprite* main_menu_background;
 	Sprite* about_button;
 	Sprite* score_button;
+	Sprite* exit_button;
+	
 
 };
 
@@ -161,6 +174,7 @@ public:
 				reticle.sprite_path = "data/reticle2.png";
 				reticle.SetSprite(reticle.sprite_path);
 			}
+			
 		}
 		reticle.SetCoords(mouse_x, mouse_y);
 		reticle.Draw();
@@ -217,37 +231,33 @@ public:
 				game_over.play_button = createSprite(game_over.play_sprite_path);
 			}
 		}
-		if (x > 127 && x < 320 && y > 940 && y < 985)
+		/*if (x > 127 && x < 320 && y > 940 && y < 985)
 		{
 			menu.is_hover["score_button"] = true;
 		}
 		else
 		{
 			menu.is_hover["score_button"] = false;
-		}
+		}*/
 		if (x > 1595 && x < 1793 && y > 931 && y < 985)
 		{
+			game_over.is_hover["about_button"] = true;
 			menu.is_hover["about_button"] = true;
 		}
 		else
 		{
+			game_over.is_hover["about_button"] = false;
 			menu.is_hover["about_button"] = false;
 		}
 		if (x > 127 && x < 253 && y > 931 && y < 985)
 		{
 			game_over.is_hover["exit_button"] = true;
+			menu.is_hover["exit_button"] = true;
 		}
 		else
 		{
 			game_over.is_hover["exit_button"] = false;
-		}
-		if (x > 1595 && x < 1793 && y > 931 && y < 985)
-		{
-			game_over.is_hover["about_button"] = true;
-		}
-		else
-		{
-			game_over.is_hover["about_button"] = false;
+			menu.is_hover["exit_button"] = false;
 		}
 	}
 
@@ -267,11 +277,28 @@ public:
 		return false;
 	}
 
+	bool IsAbout(FRMouseButton button, int x, int y) {
+		if (button == FRMouseButton::LEFT && x > 1595 && x < 1793 && y > 931 && y < 985)
+		{
+			return true;
+		}
+		return false;
+	}
+
 
 	void ButtonClick(FRMouseButton button) {
 		is_start_game = IsStart(button, mouse_x, mouse_y);
 		exit_game = IsExit(button, mouse_x, mouse_y);
-		is_game_over = !IsStart(button, mouse_x, mouse_y);
+		if (is_game_over)
+		{
+			death_ticks = 0;
+			is_game_over = !IsStart(button, mouse_x, mouse_y);
+		}
+		if (IsAbout(button, mouse_x, mouse_y))
+		{
+			ShellExecute(0, 0, L"https://github.com/STARBATTLE-online", 0, 0, SW_SHOW);
+			Sleep(100);
+		}
 		
 	}
 
@@ -281,6 +308,8 @@ protected:
 	GameOver game_over;
 	int mouse_x;
 	int mouse_y;
+
+	
 };
 
 //D:/Programming/STARBATTLE/client/client/data/interface/main_menu

@@ -82,13 +82,10 @@ public:
 		keep_info = new InfoToSend();
 		UpdateRequest();
 
-		big_explosion_sprites[1] = createSprite("data/ships/explosions/big/1.png");
-		big_explosion_sprites[2] = createSprite("data/ships/explosions/big/2.png");
-		big_explosion_sprites[3] = createSprite("data/ships/explosions/big/3.png");
-		big_explosion_sprites[4] = createSprite("data/ships/explosions/big/4.png");
-		big_explosion_sprites[5] = createSprite("data/ships/explosions/big/5.png");
-		big_explosion_sprites[6] = createSprite("data/ships/explosions/big/6.png");
-		big_explosion_sprites[7] = createSprite("data/ships/explosions/big/7.png");
+		for (int i = 1; i <= 7; i++)
+		{
+			big_explosion_sprites[i] = createSprite(("data/ships/explosions/big/" + std::to_string(i) + ".png").c_str());
+		}
 
 		shield_sprites[1] = createSprite("data/ships/shields/1.png");
 		shield_sprites[2] = createSprite("data/ships/shields/2.png");
@@ -107,6 +104,17 @@ public:
 			engine_sprites[{i, Rotation::Top}] = createSprite(("data/ships/engines/" + std::to_string(i) + "/spaceship_power.png").c_str());
 			engine_sprites[{i, Rotation::Bottom}] = createSprite(("data/ships/engines/" + std::to_string(i) + "/spaceship_power_b.png").c_str());
 		}
+		
+		for (int i = 1; i <= 10; i++)
+		{
+			hp_sprites[i] = createSprite(("data/ships/hp/" + std::to_string(i) + ".png").c_str());
+		}
+
+		for (int i = 0; i <= 10; i++)
+		{
+			self_hp_sprites[i] = createSprite(("data/interface/self_hp/" + std::to_string(i) + ".png").c_str());
+		}
+		
 	};
 	~MapCreator() {};
 
@@ -163,7 +171,7 @@ public:
 				}
 			}
 		}
-		//std::cout << asteroids.size() << std::endl;
+		////std::cout << asteroids.size() << std::endl;
 		for (auto& asteroid : asteroids)
 		{
 			for (int i = -1; i <= 1; i++)
@@ -224,8 +232,11 @@ public:
 			}
 			
 		}
-		main_hero.Draw();
-		std::cerr << tick_number << "\n";
+		if (death_ticks == 0)
+		{
+			main_hero.Draw();
+		}
+		//std::cerr << tick_number << "\n";
 
 		for (auto& explosion : explosions)
 		{
@@ -239,7 +250,7 @@ public:
 					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
 					{
 						int temp = tick_number - explosion.start_tick;
-						std::cerr << temp << "\n";
+						//std::cerr << temp << "\n";
 						if (temp >= 4 && temp <= 28)
 						{
 							if (explosion.name == ExplosionTypes::Big)
@@ -256,14 +267,24 @@ public:
 			}
 		}
 
-		//inter.Draw();
-
+		if (death_ticks == 0)
+		{
+			if (main_hero.GetHP() > 0 && main_hero.GetHP() <= 10)
+			{
+				drawSprite(self_hp_sprites[main_hero.GetHP()], 600, 1000);
+			}
+		}
+		else
+		{
+			drawSprite(self_hp_sprites[0], 600, 1000);
+		}
 	}
+
 
 	void SetRot(int x, int y) {
 		mouse_x = x;
 		mouse_y = y;
-		//std::cout<<mouse_x << " " << mouse_y<<std::endl;
+		////std::cout<<mouse_x << " " << mouse_y<<std::endl;
 		if (main_hero.GetRotationByMouse(mouse_x, mouse_y))
 		{
 			keep_info->SetCoords(mouse_x, mouse_y, main_hero.GetRotation());

@@ -50,6 +50,7 @@ public:
 	}
 
 	virtual bool Tick() {
+	
 		if (exit_game)
 		{
 			Close();
@@ -70,16 +71,16 @@ public:
 		else if (is_connected && !is_game_over)
 		{
 			//drawTestBackground();
-			showCursor(false);
-
+			showCursor(false);			
 			
 			map_manager->DrawAll();
 			inter->Draw();
+
 		}
 		auto t2 = high_resolution_clock::now();
 		duration<double, std::milli> ms_double = t2 - t1;
 		rest = 1000 / framerate - ms_double.count();
-		//std::cout << "ms_double " << ms_double << " rest " << rest << std::endl;
+		////std::cout << "ms_double " << ms_double << " rest " << rest << std::endl;
 		return false;
 	}
 
@@ -99,8 +100,7 @@ public:
 		
 		if (!is_start_game)
 		{
-			inter->ButtonClick(button);
-			
+			inter->ButtonClick(button);			
 		}
 		else
 		{
@@ -161,18 +161,18 @@ int main(int argc, char* argv[])
 					Sleep(100);
 				}
 			
-				//std::cout << request << std::endl;
+				////std::cout << request << std::endl;
 				client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
 				request = "TICK";
 				while (is_connected) {
 					auto t1 = high_resolution_clock::now();	
-						//std::cout << request << std::endl;
+						////std::cout << request << std::endl;
 					client.emulateLongComputationOp(1, "178.159.224.36", 3333, handler, 1, request);
 					request = "TICK";
 					auto t2 = high_resolution_clock::now();
 					duration<double, std::milli> ms_double = t2 - t1;
 					double rest = 1000 / framerate - ms_double.count();
-					//std::cout << "boost rest " << rest << std::endl;
+					////std::cout << "boost rest " << rest << std::endl;
 
 					Sleep(rest);
 				}
@@ -183,10 +183,9 @@ int main(int argc, char* argv[])
 		}
 		catch (system::system_error& e)
 		{
-			std::cout << "Error occured! Error code = " << e.code()
-				<< ". Message: " << e.what();
+			//std::cout << "Error occured! Error code = " << e.code()				<< ". Message: " << e.what();
 
-			std::cout << e.code().value() << std::endl;
+			//std::cout << e.code().value() << std::endl;
 		}
 	   catch (...) {
 	   }
@@ -198,6 +197,6 @@ int main(int argc, char* argv[])
 	t2.join();
 	
 	//duration<double, std::milli> ms_double = t2 - t1;
-	//std::cout << ms_double.count() << "ms\n";
+	////std::cout << ms_double.count() << "ms\n";
 	return 0;
 }
