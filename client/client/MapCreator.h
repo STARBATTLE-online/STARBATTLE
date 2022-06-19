@@ -300,6 +300,10 @@ public:
 		keep_info->SetClick(button, isReleased);
 	}
 
+	void SetClosed() {
+		keep_info->SetClose();
+	}
+
 	void UpdateRequest() {
 	}
 

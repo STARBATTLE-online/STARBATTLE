@@ -38,6 +38,30 @@ public:
 	
 };
 
+class Close : public HeadSprite
+{
+public:
+	Close() {
+		sprite_path = "data/interface/close.png";
+		sprite = createSprite(sprite_path);
+		width = 58;
+		height = 58;
+
+		
+	};
+	~Close() {};
+
+
+	void Draw() {
+		drawSprite(sprite, 1814, 48);
+	}
+
+	const char* sprite_path;
+	Sprite* sprite;
+
+};
+
+
 
 class MainMenu
 {
@@ -169,6 +193,11 @@ public:
 		}
 		else
 		{
+			if (is_connected)
+			{
+				cross.Draw();
+			}
+			
 			if (reticle.sprite_path != "data/reticle2.png")
 			{
 				reticle.sprite_path = "data/reticle2.png";
@@ -285,10 +314,20 @@ public:
 		return false;
 	}
 
+	bool IsCross(FRMouseButton button) {
+		if (button == FRMouseButton::LEFT && mouse_x > 1814 && mouse_x < 1872 && mouse_y > 48 && mouse_y < 106)
+		{
+			return true;
+		}
+		return false;
+	}
+
 
 	void ButtonClick(FRMouseButton button) {
 		is_start_game = IsStart(button, mouse_x, mouse_y);
 		exit_game = IsExit(button, mouse_x, mouse_y);
+		
+		
 		if (is_game_over)
 		{
 			death_ticks = 0;
@@ -306,6 +345,7 @@ protected:
 	Reticle reticle;
 	MainMenu menu;
 	GameOver game_over;
+	Close cross;
 	int mouse_x;
 	int mouse_y;
 

@@ -53,6 +53,7 @@ public:
 	
 		if (exit_game)
 		{
+			map_manager->SetClosed();
 			Close();
 			return true;
 		}
@@ -65,8 +66,19 @@ public:
 		
 		if (!is_start_game || is_game_over)
 		{
+			death_ticks = 0;
+			
 			inter->Draw();
 			showCursor(false);
+		}
+		else if (is_start_game && !is_connected)
+		{
+			Sprite* load = createSprite("data/interface/connecting.png");
+			drawSprite(load, 0, 0);
+
+			inter->Draw();
+			showCursor(false);
+
 		}
 		else if (is_connected && !is_game_over)
 		{
@@ -100,10 +112,26 @@ public:
 		
 		if (!is_start_game)
 		{
-			inter->ButtonClick(button);			
+			if (isReleased)
+			{
+				inter->ButtonClick(button);
+			}
 		}
 		else
 		{
+			if (is_start_game && is_connected)
+			{
+				if (isReleased)
+				{
+					if (inter->IsCross(button))
+					{
+						is_game_over = 1;
+						is_start_game = 0;
+						is_connected = 0;
+						map_manager->SetClosed();
+					}
+				}
+			}
 			map_manager->SetClickToRequest(button, isReleased);
 		}
 	}
@@ -175,6 +203,12 @@ int main(int argc, char* argv[])
 					////std::cout << "boost rest " << rest << std::endl;
 
 					Sleep(rest);
+				}
+				if (is_game_over == 1 &&
+					is_start_game == 0 &&
+					is_connected == 0)
+				{
+					client.emulateLongComputationOp(1, "178.159.224.36", 3333, handler, 1, request);
 				}
 			}
 			client.close();

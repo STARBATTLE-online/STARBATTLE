@@ -137,6 +137,7 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
                 window_y = InfoFromServer::m_map_creator->main_hero.GetCenterGlobal().second - window_height / 2;
                 my_score = score;
                 i_am_here = true;
+                death_ticks = 0;
             }
             else
             {

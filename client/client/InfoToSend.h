@@ -89,4 +89,10 @@ public:
 		request += std::to_string(personal_id_private);
 	}
 
+	void SetClose() {
+		request += " CLOSE"; 
+		request += " " + std::to_string(personal_id_public) + " ";
+		request += std::to_string(personal_id_private);
+	}
+
 };
