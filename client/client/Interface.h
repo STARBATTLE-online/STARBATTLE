@@ -70,13 +70,7 @@ public:
 		}
 	}
 
-	bool IsStart(FRMouseButton button, int x, int y) {
-		if (button == FRMouseButton::LEFT && x > 830 && x < 1091 && y > 634 && y < 924)
-		{
-			return true;
-		}
-		return false;
-	}
+	
 
 public:
 	
@@ -96,54 +90,46 @@ class GameOver
 {
 public:
 	GameOver() {
-		main_menu_background = createSprite("data/interface/game_over/background.png");
+		game_over_background = createSprite("data/interface/game_over/background.png");
 		play_button = createSprite("data/interface/game_over/play_button.png");
 		exit_button = createSprite("data/interface/game_over/exit_button.png");
-		score_button = createSprite("data/interface/game_over/score_button.png");
+		about_button = createSprite("data/interface/game_over/about_button.png");
 	};
 	~GameOver() {};
 
 
 	void Draw() {
-		drawSprite(main_menu_background, 0, 0);
+		drawSprite(game_over_background, 0, 0);
 		drawSprite(play_button, 830, 634);
-		if (is_hover["score_button"])
-		{
-			drawSprite(score_button, 127, 935);
-		}
-		else
-		{
-			drawSprite(score_button, 127, 940);
-		}
 		if (is_hover["exit_button"])
 		{
-			drawSprite(exit_button, 1595, 926);
+			drawSprite(exit_button, 127, 926);
 		}
 		else
 		{
-			drawSprite(exit_button, 1595, 931);
+			drawSprite(exit_button, 127, 931);
 		}
-	}
-
-	bool IsStart(FRMouseButton button, int x, int y) {
-		if (button == FRMouseButton::LEFT && x > 830 && x < 1091 && y > 634 && y < 924)
+		if (is_hover["about_button"])
 		{
-			return true;
+			drawSprite(about_button, 1595, 926);
 		}
-		return false;
+		else
+		{
+			drawSprite(about_button, 1595, 931);
+		}
 	}
 
 public:
 
-	const char* play_sprite_path = "data/interface/main_menu/play_button.png";
+	const char* play_sprite_path = "data/interface/game_over/play_button.png";
 	Sprite* play_button;
 	std::map <std::string, bool> is_hover;
 
 private:
 
-	Sprite* main_menu_background;
+	Sprite* game_over_background;
 	Sprite* exit_button;
-	Sprite* score_button;
+	Sprite* about_button;
 
 };
 
@@ -191,6 +177,7 @@ public:
 		mouse_y = y;
 		const char* path = "data/reticle2_dark.png";
 		const char* button_path = "data/interface/main_menu/play_button_hover.png";
+		const char* game_over_button_path = "data/interface/game_over/play_button_hover.png";
 
 		if (x > 830 && x < 1091 && y > 634 && y < 924)
 		{
@@ -205,6 +192,12 @@ public:
 				menu.play_button = createSprite(menu.play_sprite_path);
 
 			}
+			if (game_over_button_path != game_over.play_sprite_path)
+			{
+				game_over.play_sprite_path = game_over_button_path;
+				game_over.play_button = createSprite(game_over.play_sprite_path);
+
+			}
 		}
 		else
 		{
@@ -217,6 +210,11 @@ public:
 			{
 				menu.play_sprite_path = "data/interface/main_menu/play_button.png";
 				menu.play_button = createSprite(menu.play_sprite_path);
+			}
+			if (game_over_button_path == game_over.play_sprite_path)
+			{
+				game_over.play_sprite_path = "data/interface/game_over/play_button.png";
+				game_over.play_button = createSprite(game_over.play_sprite_path);
 			}
 		}
 		if (x > 127 && x < 320 && y > 940 && y < 985)
@@ -235,10 +233,46 @@ public:
 		{
 			menu.is_hover["about_button"] = false;
 		}
+		if (x > 127 && x < 253 && y > 931 && y < 985)
+		{
+			game_over.is_hover["exit_button"] = true;
+		}
+		else
+		{
+			game_over.is_hover["exit_button"] = false;
+		}
+		if (x > 1595 && x < 1793 && y > 931 && y < 985)
+		{
+			game_over.is_hover["about_button"] = true;
+		}
+		else
+		{
+			game_over.is_hover["about_button"] = false;
+		}
 	}
 
-	bool StartGame(FRMouseButton button) {
-		return menu.IsStart(button, mouse_x, mouse_y);
+	bool IsStart(FRMouseButton button, int x, int y) {
+		if (button == FRMouseButton::LEFT && x > 830 && x < 1091 && y > 634 && y < 924)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool IsExit(FRMouseButton button, int x, int y) {
+		if (button == FRMouseButton::LEFT && x > 127 && x < 253 && y > 931 && y < 985)
+		{
+			return true;
+		}
+		return false;
+	}
+
+
+	void ButtonClick(FRMouseButton button) {
+		is_start_game = IsStart(button, mouse_x, mouse_y);
+		exit_game = IsExit(button, mouse_x, mouse_y);
+		is_game_over = !IsStart(button, mouse_x, mouse_y);
+		
 	}
 
 protected:

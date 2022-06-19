@@ -288,6 +288,7 @@ private:
         session->m_sock.shutdown(asio::ip::tcp::socket::shutdown_both, ignored_ec);
 
         // Remove session form the map of active sessions.
+		
         std::unique_lock<std::mutex>
             lock(m_active_sessions_guard);
 

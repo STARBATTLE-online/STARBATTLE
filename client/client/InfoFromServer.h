@@ -70,7 +70,7 @@ void InfoFromServer::InitRequest(std::stringstream& ss) {
 
 void InfoFromServer::TickRequest(std::stringstream& ss) {
 
-    //ss >> tick_number;
+    ss >> tick_number;
     bool i_am_here = false;
     std::string commandType;
     InfoFromServer::m_map_creator->asteroids.clear();
@@ -101,14 +101,13 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
 		}
 		else if (commandType == "Ship")
 		{
-			int x, y, score;
+			int x, y, score, hp, shield;
 			uint64_t sprite_id, public_id;
             char rotation;
             bool is_engine;
             Rotation rot = Rotation::Top;
 
-            ss >> x >> y >> rotation >> sprite_id >> is_engine >> public_id;
-            //ss >> x >> y >> rotation >> sprite_id >> is_engine >> public_id >> score;
+            ss >> x >> y >> rotation >> sprite_id >> shield >> hp >> is_engine >> public_id >> score;
 			
             switch (rotation) {
             case 'T':
@@ -131,10 +130,12 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             {
                 InfoFromServer::m_map_creator->main_hero.SetCoordsByCenter(x, y);	
                 InfoFromServer::m_map_creator->main_hero.SetEngine(is_engine);
+                InfoFromServer::m_map_creator->main_hero.SetShield(shield);
+                InfoFromServer::m_map_creator->main_hero.SetHP(hp);
                 ship = &(InfoFromServer::m_map_creator->main_hero);
                 window_x = InfoFromServer::m_map_creator->main_hero.GetCenterGlobal().first - window_width / 2;
                 window_y = InfoFromServer::m_map_creator->main_hero.GetCenterGlobal().second - window_height / 2;
-                //my_score = score;
+                my_score = score;
                 i_am_here = true;
             }
             else
@@ -142,6 +143,8 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
                 InfoFromServer::m_map_creator->ships.push_back(EnemyShip(x, y, rot, sprite_id));
                 InfoFromServer::m_map_creator->ships.back().SetRotation(rot);
                 InfoFromServer::m_map_creator->ships.back().SetEngine(is_engine);
+                InfoFromServer::m_map_creator->ships.back().SetShield(shield);
+                InfoFromServer::m_map_creator->ships.back().SetHP(hp);
                 ship = &InfoFromServer::m_map_creator->ships.back();
             }
 		}
@@ -170,12 +173,19 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             ss >> x >> y;
             InfoFromServer::m_map_creator->powers.emplace_back(Power(x, y, PowerTypes::Shield));
         }
-        /*if (!i_am_here)
+        else if (commandType == "Barrage")
         {
-            is_start_game = 0;
-            is_game_over = 1;
-            is_connected = 0;
-        }*/
+            int x, y;
+            ss >> x >> y;
+            InfoFromServer::m_map_creator->powers.emplace_back(Power(x, y, PowerTypes::Barrage));
+        }
+        
+    }
+    if (!i_am_here)
+    {
+        is_start_game = 0;
+        is_game_over = 1;
+        is_connected = 0;
     }
     //std::cout << InfoFromServer::m_map_creator->asteroids.size() << " " << InfoFromServer::m_map_creator->ships.size() << " " << InfoFromServer::m_map_creator->bullets.size() << "\n";
    

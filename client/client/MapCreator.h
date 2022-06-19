@@ -14,11 +14,6 @@ enum class ExplosionTypes {
 	Small
 };
 
-enum class PowerTypes {
-	Shield,
-	Rocket,
-	Speed
-};
 
 
 class Bullet : public HeadSprite
@@ -60,6 +55,12 @@ class Power : public HeadSprite
 public:
 	Power(int x, int y, PowerTypes type) {
 		if (type == PowerTypes::Shield)
+		{
+			width = 126;
+			height = 126;
+			SetCoordsByCenter(x, y);
+		}
+		else if (type == PowerTypes::Barrage)
 		{
 			width = 126;
 			height = 126;
@@ -153,6 +154,10 @@ public:
 						{
 							drawSprite(small_shield_sprite, x, y);
 						}
+						else if (power.name == PowerTypes::Barrage)
+						{
+							drawSprite(small_barrage_sprite, x, y);
+						}
 						////////
 					}
 				}
@@ -211,8 +216,9 @@ public:
 					int y = ship.yGlobal() + map_width * j - window_y;
 
 					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
-					{
+					{						
 						ship.DrawXY(x, y);
+						
 					}
 				}
 			}
@@ -234,15 +240,15 @@ public:
 					{
 						int temp = tick_number - explosion.start_tick;
 						std::cerr << temp << "\n";
-						if (temp >= 2 && temp <= 14)
+						if (temp >= 4 && temp <= 28)
 						{
 							if (explosion.name == ExplosionTypes::Big)
 							{
-								drawSprite(big_explosion_sprites[temp/2], x, y);
+								drawSprite(big_explosion_sprites[temp/4], x, y);
 							}
 							else if (explosion.name == ExplosionTypes::Small)
 							{
-								drawSprite(small_explosion_sprites[temp/2], x, y);
+								drawSprite(small_explosion_sprites[temp/4], x, y);
 							}
 						}
 					}		
@@ -301,6 +307,7 @@ public:
 	Sprite* small_asteroid_sprite = createSprite("data/small_asteroid.png");
 	Sprite* bullet_sprite = createSprite("data/bullet.png");
 	Sprite* small_shield_sprite = createSprite("data/ships/shield_icon_small.png");
+	Sprite* small_barrage_sprite = createSprite("data/ships/barrage_icon_small.png");
 	int buffer = 200;
 	std::vector<Bullet> bullets;
 	

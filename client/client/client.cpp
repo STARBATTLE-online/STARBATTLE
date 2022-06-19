@@ -50,6 +50,11 @@ public:
 	}
 
 	virtual bool Tick() {
+		if (exit_game)
+		{
+			Close();
+			return true;
+		}
 		auto t1 = high_resolution_clock::now();
 		if (rest > 0)
 		{
@@ -57,12 +62,12 @@ public:
 		}
 		std::lock_guard<std::mutex> lock(map_manager->mt);
 		
-		if (!is_start_game)
+		if (!is_start_game || is_game_over)
 		{
 			inter->Draw();
 			showCursor(false);
 		}
-		else if (is_connected)
+		else if (is_connected && !is_game_over)
 		{
 			//drawTestBackground();
 			showCursor(false);
@@ -94,7 +99,8 @@ public:
 		
 		if (!is_start_game)
 		{
-			is_start_game = inter->StartGame(button);
+			inter->ButtonClick(button);
+			
 		}
 		else
 		{
@@ -107,6 +113,7 @@ public:
 	}
 
 	virtual void onKeyReleased(FRKey k) {
+		
 	}
 
 	virtual const char* GetTitle() override
@@ -126,13 +133,13 @@ int main(int argc, char* argv[])
 
 	bool end = false;
 	
-	std::thread t1([&end]() {
+	std::thread t1([]() {
 		run(new MyFramework);
-		end = true;
+		exit_game = true;
 		return 0;
 	});
 
-	std::thread t2([&end]() {
+	std::thread t2([]() {
 		while (!is_start_game)
 		{
 			Sleep(100);
@@ -141,27 +148,36 @@ int main(int argc, char* argv[])
 		try
 		{
 			AsyncTCPClient client(1);
-			client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, "INIT");
-			while (!is_connected)
+			while (!exit_game)
 			{
-				Sleep(100);
-			}
+				while (!is_start_game)
+				{
+					Sleep(100);
+				}
+				
+				client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, "INIT");
+				while (!is_connected)
+				{
+					Sleep(100);
+				}
 			
-			//std::cout << request << std::endl;
-			client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
-			request = "TICK";
-			while (!end) {
-				auto t1 = high_resolution_clock::now();	
-					//std::cout << request << std::endl;
-				client.emulateLongComputationOp(1, "178.159.224.36", 3333, handler, 1, request);
+				//std::cout << request << std::endl;
+				client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
 				request = "TICK";
-				auto t2 = high_resolution_clock::now();
-				duration<double, std::milli> ms_double = t2 - t1;
-				double rest = 1000 / framerate - ms_double.count();
-				//std::cout << "boost rest " << rest << std::endl;
+				while (is_connected) {
+					auto t1 = high_resolution_clock::now();	
+						//std::cout << request << std::endl;
+					client.emulateLongComputationOp(1, "178.159.224.36", 3333, handler, 1, request);
+					request = "TICK";
+					auto t2 = high_resolution_clock::now();
+					duration<double, std::milli> ms_double = t2 - t1;
+					double rest = 1000 / framerate - ms_double.count();
+					//std::cout << "boost rest " << rest << std::endl;
 
-				Sleep(rest);
+					Sleep(rest);
+				}
 			}
+			client.close();
 			return 0;
 			
 		}

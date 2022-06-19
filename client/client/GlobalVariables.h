@@ -18,6 +18,7 @@ int my_score = 0;
 std::atomic<bool> is_connected = 0;
 std::atomic<bool> is_start_game = 0;
 std::atomic<bool> is_game_over = 0;
+std::atomic<bool> exit_game = 0;
 
 
 enum class Rotation
