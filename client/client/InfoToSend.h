@@ -20,9 +20,9 @@ public:
 
 	void SetCoords(int x, int y, Rotation rot) {
 		request += " MM "; // mouse move
-		request += std::to_string(int(x + WINDOW_X));
+		request += std::to_string(int(x + window_x));
 		request += " ";
-		request += std::to_string(int(y + WINDOW_Y));
+		request += std::to_string(int(y + window_y));
 		request += " ";
 		switch (rot)
 		{
@@ -42,8 +42,8 @@ public:
 			break;
 		}
 		
-		request += " " + std::to_string(PERSONAL_ID_PUBLIC) + " ";
-		request += std::to_string(PERSONAL_ID_PRIVATE);
+		request += " " + std::to_string(personal_id_public) + " ";
+		request += std::to_string(personal_id_private);
 	}
 
 	void SetKey(FRKey k) {
@@ -65,8 +65,8 @@ public:
 		default:
 			break;
 		}
-		request += " " + std::to_string(PERSONAL_ID_PUBLIC) + " ";
-		request += std::to_string(PERSONAL_ID_PRIVATE);
+		request += " " + std::to_string(personal_id_public) + " ";
+		request += std::to_string(personal_id_private);
 	}
 
 	void SetClick(FRMouseButton button, bool isReleased) {
@@ -85,8 +85,8 @@ public:
 		default:
 			break;
 		}
-		request += " " + std::to_string(PERSONAL_ID_PUBLIC) + " ";
-		request += std::to_string(PERSONAL_ID_PRIVATE);
+		request += " " + std::to_string(personal_id_public) + " ";
+		request += std::to_string(personal_id_private);
 	}
 
 };

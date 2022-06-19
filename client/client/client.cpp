@@ -28,13 +28,13 @@ public:
 
 	virtual void PreInit(int& width, int& height, bool& fullscreen)
 	{
-		if (WINDOW_WIDTH == 0 && WINDOW_HEIGHT == 0)
+		if (window_width == 0 && window_height == 0)
 			fullscreen = true;
 		else
 			fullscreen = false;
 
-		width = WINDOW_WIDTH;
-		height = WINDOW_HEIGHT;
+		width = window_width;
+		height = window_height;
 
 	}
 
@@ -73,7 +73,7 @@ public:
 		}
 		auto t2 = high_resolution_clock::now();
 		duration<double, std::milli> ms_double = t2 - t1;
-		rest = 1000 / FRAMERATE - ms_double.count();
+		rest = 1000 / framerate - ms_double.count();
 		//std::cout << "ms_double " << ms_double << " rest " << rest << std::endl;
 		return false;
 	}
@@ -124,17 +124,15 @@ int main(int argc, char* argv[])
 	setlocale(0, "");
 	srand(time(NULL));
 
-
+	bool end = false;
 	
-	std::thread t1([]() {
-		while (true)
-		{
-			run(new MyFramework);
-
-		} 
+	std::thread t1([&end]() {
+		run(new MyFramework);
+		end = true;
+		return 0;
 	});
 
-	std::thread t2([]() {
+	std::thread t2([&end]() {
 		while (!is_start_game)
 		{
 			Sleep(100);
@@ -152,18 +150,19 @@ int main(int argc, char* argv[])
 			//std::cout << request << std::endl;
 			client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
 			request = "TICK";
-			while (true) {
+			while (!end) {
 				auto t1 = high_resolution_clock::now();	
 					//std::cout << request << std::endl;
 				client.emulateLongComputationOp(1, "178.159.224.36", 3333, handler, 1, request);
 				request = "TICK";
 				auto t2 = high_resolution_clock::now();
 				duration<double, std::milli> ms_double = t2 - t1;
-				double rest = 1000 / FRAMERATE - ms_double.count();
+				double rest = 1000 / framerate - ms_double.count();
 				//std::cout << "boost rest " << rest << std::endl;
 
 				Sleep(rest);
 			}
+			return 0;
 			
 		}
 		catch (system::system_error& e)

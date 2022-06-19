@@ -110,21 +110,21 @@ public:
 
 	bool GetRotationByMouse(int x_mouse, int y_mouse) {
 		Rotation temp_rot = rotation;
-		if (x_mouse <= WINDOW_WIDTH / 2) {
-			if (abs(x_mouse - WINDOW_WIDTH / 2) > abs(y_mouse - WINDOW_HEIGHT / 2))
+		if (x_mouse <= window_width / 2) {
+			if (abs(x_mouse - window_width / 2) > abs(y_mouse - window_height / 2))
 				SetRotation(Rotation::Left);
 			else {
-				if (y_mouse <= WINDOW_HEIGHT / 2)
+				if (y_mouse <= window_height / 2)
 					SetRotation(Rotation::Top);
 				else
 					SetRotation(Rotation::Bottom);
 			}
 		}
 		else {
-			if (abs(x_mouse - WINDOW_WIDTH / 2) > abs(y_mouse - WINDOW_HEIGHT / 2))
+			if (abs(x_mouse - window_width / 2) > abs(y_mouse - window_height / 2))
 				SetRotation(Rotation::Right);
 			else {
-				if (y_mouse <= WINDOW_HEIGHT / 2)
+				if (y_mouse <= window_height / 2)
 					SetRotation(Rotation::Top);
 				else
 					SetRotation(Rotation::Bottom);
@@ -137,43 +137,6 @@ public:
 		}
 		return 0;
 	}
-
-
-
-	void SetSprite(const char* sprite_path) {
-		sprite = createSprite(sprite_path);
-	}
-
-
-	//void SetRotSprite() {
-	//	switch (rotation)
-	//	{
-	//	case Rotation::Top:
-	//		SetImage("data/ships/sprites/1/spaceship.png");
-	//		//power->SetImage("data/spaceship_power.png");
-
-	//		break;
-	//	case Rotation::Left:
-	//		SetImage("data/ships/sprites/1/spaceship_l.png");
-	//		//power->SetImage("data/spaceship_power_l.png");
-
-	//		break;
-	//	case Rotation::Bottom:
-	//		SetImage("data/ships/sprites/1/spaceship_b.png");
-	//		//power->SetImage("data/spaceship_power_b.png");
-
-	//		break;
-	//	case Rotation::Right:
-	//		SetImage("data/ships/sprites/1/spaceship_r.png");
-	//		//power->SetImage("data/spaceship_power_r.png");
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//}
-
-
-	Sprite* sprite;
 
 
 private:

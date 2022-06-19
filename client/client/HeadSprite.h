@@ -43,11 +43,11 @@ public:
 	}
 
 	int x() {
-		return global_x - WINDOW_X;
+		return global_x - window_x;
 	}
 
 	int y() {
-		return global_y - WINDOW_Y;
+		return global_y - window_y;
 	}
 
 	virtual std::string GetName() {

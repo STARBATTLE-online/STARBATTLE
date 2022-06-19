@@ -60,7 +60,7 @@ std::string InfoFromServer::ProcessRequest(const std::string& request) {
 void InfoFromServer::InitRequest(std::stringstream& ss) {
     int x, y;
     uint64_t sprite_id;
-    ss >> PERSONAL_ID_PUBLIC >> PERSONAL_ID_PRIVATE >> x >> y >> sprite_id >> MAP_WIDTH >> MAP_HEIGHT;
+    ss >> personal_id_public >> personal_id_private >> x >> y >> sprite_id >> map_width >> map_height;
 	
     InfoFromServer::m_map_creator->AddMainHero(x, y, sprite_id);
 
@@ -70,6 +70,7 @@ void InfoFromServer::InitRequest(std::stringstream& ss) {
 
 void InfoFromServer::TickRequest(std::stringstream& ss) {
 
+    ss >> tick_number;
     std::string commandType;
     InfoFromServer::m_map_creator->asteroids.clear();
     InfoFromServer::m_map_creator->asteroids.reserve(50);
@@ -77,6 +78,8 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
     InfoFromServer::m_map_creator->ships.reserve(50);
     InfoFromServer::m_map_creator->bullets.clear();
     InfoFromServer::m_map_creator->bullets.reserve(50);
+	InfoFromServer::m_map_creator->explosions.clear();
+	InfoFromServer::m_map_creator->explosions.reserve(50);
 	Ship* ship;
     while (ss >> commandType)
     {
@@ -120,13 +123,13 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
                 break;
             }
 
-            if (PERSONAL_ID_PUBLIC == public_id)
+            if (personal_id_public == public_id)
             {
                 InfoFromServer::m_map_creator->main_hero.SetCoordsByCenter(x, y);	
                 InfoFromServer::m_map_creator->main_hero.SetEngine(is_engine);
                 ship = &(InfoFromServer::m_map_creator->main_hero);
-                WINDOW_X = InfoFromServer::m_map_creator->main_hero.GetCenterGlobal().first - WINDOW_WIDTH / 2;
-                WINDOW_Y = InfoFromServer::m_map_creator->main_hero.GetCenterGlobal().second - WINDOW_HEIGHT / 2;
+                window_x = InfoFromServer::m_map_creator->main_hero.GetCenterGlobal().first - window_width / 2;
+                window_y = InfoFromServer::m_map_creator->main_hero.GetCenterGlobal().second - window_height / 2;
             }
             else
             {
@@ -142,6 +145,18 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             int x_speed, y_speed;
 			ss >> x >> y >> x_speed >> y_speed;
             InfoFromServer::m_map_creator->Shoot(x, y);
+        }
+        else if (commandType == "BigExplosion")
+        {
+            int x, y, start_tick;
+            ss >> x >> y >> start_tick;
+            InfoFromServer::m_map_creator->explosions.emplace_back(Explosion(x, y, start_tick, ExplosionTypes::Big));
+        }
+        else if (commandType == "SmallExplosion")
+        {
+            int x, y, start_tick;
+            ss >> x >> y >> start_tick;
+            InfoFromServer::m_map_creator->explosions.emplace_back(Explosion(x, y, start_tick, ExplosionTypes::Small));
         }
     }
     //std::cout << InfoFromServer::m_map_creator->asteroids.size() << " " << InfoFromServer::m_map_creator->ships.size() << " " << InfoFromServer::m_map_creator->bullets.size() << "\n";

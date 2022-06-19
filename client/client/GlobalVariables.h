@@ -3,26 +3,20 @@
 #include <string>
 #include <map>
 
-int WINDOW_WIDTH = 1920;
-int WINDOW_HEIGHT = 1080;
-int MAP_WIDTH = 1000;
-int MAP_HEIGHT = 1000;
-int NUM_ASTEROIDS_BIG = 5;
-int NUM_ASTEROIDS_SMALL = 5;
-int NUM_AMMO = 3;
-double ABILITY_PROBABILITY = 0.5;
-int WINDOW_X = 200;
-int WINDOW_Y = 200;
-int PERSONAL_ID_PUBLIC = 333;
-int PERSONAL_ID_PRIVATE = 333;
-int FRAMERATE = 60;
+int window_width = 1920;
+int window_height = 1080;
+int map_width = 1000;
+int map_height = 1000;
+int window_x = 200;
+int window_y = 200;
+int personal_id_public = 333;
+int personal_id_private = 333;
+int framerate = 60;
+int tick_number = 1;
 
 std::atomic<bool> is_connected = 0;
 std::atomic<bool> is_start_game = 0;
 
-int NUM_ASTEROIDS() {
-	return NUM_ASTEROIDS_BIG + NUM_ASTEROIDS_SMALL;
-}
 
 enum class Rotation
 {
@@ -35,4 +29,6 @@ enum class Rotation
 
 std::map<Rotation, Sprite*> engine_sprites;
 std::map<Rotation, Sprite*> ship_sprites;
+std::map<int, Sprite*> big_explosion_sprites;
+std::map<int, Sprite*> small_explosion_sprites;
 std::string request = "";

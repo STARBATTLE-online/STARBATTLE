@@ -8,16 +8,49 @@
 #include "InfoToSend.h"
 #include "InfoFromServer.h"
 
+
+enum class ExplosionTypes {
+	Big,
+	Small
+};
+
 class Bullet : public HeadSprite
 {
 public:
 	Bullet(int x, int y) {
 		width = 20;
-		height = 20;		
+		height = 20;
 		SetCoordsByCenter(x, y);
 	};
-	~Bullet() {};
+	~Bullet() override {};
 };
+
+class Explosion : public HeadSprite
+{
+public:
+	Explosion(int x, int y, int start, ExplosionTypes type) {
+		if (type == ExplosionTypes::Big)
+		{
+			width = 384;
+			height = 384;
+		}
+		else if (true)
+		{
+			width = 200;
+			height = 200;
+		}
+		SetCoordsByCenter(x, y);
+		start_tick = start;
+		name = type;
+	};
+	~Explosion() override {};
+	int start_tick;
+	ExplosionTypes name;
+};
+
+
+
+
 
 class MapCreator //�������� ����� ��������� �� �����
 {
@@ -27,6 +60,14 @@ public:
 		background = new Background();
 		keep_info = new InfoToSend();
 		UpdateRequest();
+
+		big_explosion_sprites[1] = createSprite("data/ships/explosions/big/1.png");
+		big_explosion_sprites[2] = createSprite("data/ships/explosions/big/2.png");
+		big_explosion_sprites[3] = createSprite("data/ships/explosions/big/3.png");
+		big_explosion_sprites[4] = createSprite("data/ships/explosions/big/4.png");
+		big_explosion_sprites[5] = createSprite("data/ships/explosions/big/5.png");
+		big_explosion_sprites[6] = createSprite("data/ships/explosions/big/6.png");
+		big_explosion_sprites[7] = createSprite("data/ships/explosions/big/7.png");
 
 	};
 	~MapCreator() {};
@@ -51,8 +92,8 @@ public:
 		main_hero.SetRotation(Rotation::Top);
 		main_hero.SetSpriteById(sprite_id);
 
-		WINDOW_X = main_hero.GetCenterGlobal().first - WINDOW_WIDTH / 2;
-		WINDOW_Y = main_hero.GetCenterGlobal().second - WINDOW_HEIGHT / 2;
+		window_x = main_hero.GetCenterGlobal().first - window_width / 2;
+		window_y = main_hero.GetCenterGlobal().second - window_height / 2;
 	}
 
 
@@ -66,10 +107,10 @@ public:
 			{
 				for (int j = -1; j <= 1; j++)
 				{
-					int x = asteroid.xGlobal() + MAP_WIDTH * i - WINDOW_X;
-					int y = asteroid.yGlobal() + MAP_WIDTH *j - WINDOW_Y;
+					int x = asteroid.xGlobal() + map_width * i - window_x;
+					int y = asteroid.yGlobal() + map_width *j - window_y;
 			
-					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
+					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
 					{
 						if (asteroid.name == AsteroidTypes::Big)
 						{
@@ -92,10 +133,10 @@ public:
 			{
 				for (int j = -1; j <= 1; j++)
 				{
-					int x = bullet.xGlobal() + MAP_WIDTH * i - WINDOW_X;
-					int y = bullet.yGlobal() + MAP_WIDTH * j - WINDOW_Y;
+					int x = bullet.xGlobal() + map_width * i - window_x;
+					int y = bullet.yGlobal() + map_width * j - window_y;
 
-					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
+					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
 					{
 						drawSprite(bullet_sprite, x, y);
 					}
@@ -110,10 +151,10 @@ public:
 			{
 				for (int j = -1; j <= 1; j++)
 				{
-					int x = ship.xGlobal() + MAP_WIDTH * i - WINDOW_X;
-					int y = ship.yGlobal() + MAP_WIDTH * j - WINDOW_Y;
+					int x = ship.xGlobal() + map_width * i - window_x;
+					int y = ship.yGlobal() + map_width * j - window_y;
 
-					if (x > -100 && x < WINDOW_WIDTH + 100 && y > -100 && y < WINDOW_HEIGHT + 100)
+					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
 					{
 						ship.DrawXY(x, y);
 					}
@@ -122,22 +163,40 @@ public:
 			
 		}
 		main_hero.Draw();
+		std::cerr << tick_number << "\n";
+
+		for (auto& explosion : explosions)
+		{
+			for (int i = -1; i <= 1; i++)
+			{
+				for (int j = -1; j <= 1; j++)
+				{
+					int x = explosion.xGlobal() + map_width * i - window_x;
+					int y = explosion.yGlobal() + map_width *j - window_y;
+			
+					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
+					{
+						int temp = tick_number - explosion.start_tick;
+						std::cerr << temp << "\n";
+						if (temp >= 2 && temp <= 14)
+						{
+							if (explosion.name == ExplosionTypes::Big)
+							{
+								drawSprite(big_explosion_sprites[temp/2], x, y);
+							}
+							else if (explosion.name == ExplosionTypes::Small)
+							{
+								drawSprite(small_explosion_sprites[temp/2], x, y);
+							}
+						}
+					}		
+				}
+			}
+		}
 
 		//inter.Draw();
 
 	}
-
-	/*if (asteroid->GetCenter().first > -100 && asteroid->GetCenter().first < WINDOW_WIDTH + 100 && asteroid->GetCenter().second > -100 && asteroid->GetCenter().second < WINDOW_HEIGHT + 100)
-	{
-		if (asteroid->GetName() == "BigAsteroid")
-		{
-			drawSprite(big_asteroid_sprite, asteroid->x(), asteroid->y());
-		}
-		else if (asteroid->GetName() == "SmallAsteroid")
-		{
-			drawSprite(small_asteroid_sprite, asteroid->x(), asteroid->y());
-		}
-	}*/
 
 	void SetRot(int x, int y) {
 		mouse_x = x;
@@ -179,9 +238,12 @@ public:
 	std::mutex mt;
 	std::vector<Asteroid> asteroids;
 	std::vector<Ship> ships;
+	std::vector<Explosion> explosions;
 	MainHeroShip main_hero;
 	Sprite* big_asteroid_sprite = createSprite("data/big_asteroid.png");
 	Sprite* small_asteroid_sprite = createSprite("data/small_asteroid.png");
 	Sprite* bullet_sprite = createSprite("data/bullet.png");
+	int buffer = 200;
 	std::vector<Bullet> bullets;
+	
 };

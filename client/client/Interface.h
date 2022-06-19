@@ -18,8 +18,8 @@ public:
 	~Reticle(){};
 
 	void SetCoords(int new_x, int new_y) override {
-		global_x = new_x - height / 2 + WINDOW_X;
-		global_y = new_y - width / 2 + WINDOW_Y;
+		global_x = new_x - height / 2 + window_x;
+		global_y = new_y - width / 2 + window_y;
 	}
 
 

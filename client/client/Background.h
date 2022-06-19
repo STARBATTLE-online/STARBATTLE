@@ -12,16 +12,16 @@ public:
 	~Background() {};
 
 	void Draw() {
-		for (int i = 0; i < MAP_WIDTH / width; i++)
+		for (int i = 0; i < map_width / width; i++)
 		{
-			for (int j = 0; j < MAP_HEIGHT / height; j++)
+			for (int j = 0; j < map_height / height; j++)
 			{
 				for (int k = -1; k <= 1; k++)
 				{
 					for (int t = -1; t <= 1; t++)
 					{
-						int x = -1 * WINDOW_X/4 + i * width + MAP_WIDTH * k;
-						int y = -1 * WINDOW_Y/4 + j * height + MAP_WIDTH * t ;
+						int x = -1 * window_x/4 + i * width + map_width * k;
+						int y = -1 * window_y/4 + j * height + map_width * t ;
 
 						drawSprite(sprite, x, y);
 					}
