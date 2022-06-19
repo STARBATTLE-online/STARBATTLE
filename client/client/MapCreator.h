@@ -12,8 +12,8 @@ class Bullet : public HeadSprite
 {
 public:
 	Bullet(int x, int y) {
-		width = 13;
-		height = 13;
+		width = 20;
+		height = 20;
 		global_x = x;
 		global_y = y;
 	};

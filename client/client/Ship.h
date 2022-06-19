@@ -81,7 +81,7 @@ protected:
 class MainHeroShip : public Ship
 {
 public:
-	MainHeroShip(int sprite_id = 1) {
+	MainHeroShip(int sprite_id = 4) {
 		ship_sprites[Rotation::Left] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_l.png").c_str());
 		ship_sprites[Rotation::Right] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship_r.png").c_str());
 		ship_sprites[Rotation::Top] = createSprite(("data/ships/sprites/" + std::to_string(sprite_id) + "/spaceship.png").c_str());
@@ -94,10 +94,10 @@ public:
 		engine_sprites[Rotation::Bottom] = createSprite(("data/ships/engines/" + std::to_string(sprite_id) + "/spaceship_power_b.png").c_str());
 
 		rotation = Rotation::Top;
-		width = 96;
-		height = 96;
-		engine_width = 212;
-		engine_height = 212;
+		width = 192;
+		height = 192;
+		engine_width = 424;
+		engine_height = 424;
 	};
 	~MainHeroShip() {};
 
@@ -193,13 +193,13 @@ public:
 		}
 		
 		
-		width = 96;
-		height = 96;
+		width = 192;
+		height = 192;
 		SetRotation(rot);
 		global_x = x;
 		global_y = y;
-		engine_width = 212;
-		engine_height = 212;
+		engine_width = 424;
+		engine_height = 424;
 	};
 	~EnemyShip() {};
 

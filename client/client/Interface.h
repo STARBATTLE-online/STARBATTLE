@@ -12,8 +12,8 @@ public:
 	Reticle() {
 		sprite_path = "data/reticle2.png";
 		sprite = createSprite(sprite_path);		
-		width = 63;
-		height = 63;
+		width = 126;
+		height = 126;
 	};
 	~Reticle(){};
 
@@ -109,11 +109,23 @@ public:
 		{
 			menu.Draw();
 		}
+		else
+		{
+			if (reticle.sprite_path != "data/reticle2.png")
+			{
+				reticle.sprite_path = "data/reticle2.png";
+				reticle.SetSprite(reticle.sprite_path);
+			}
+		}
 		reticle.SetCoords(mouse_x, mouse_y);
 		reticle.Draw();
 	}
 
 
+	void SimpleSetMouseCoords(int x, int y) {
+		mouse_x = x;
+		mouse_y = y;
+	}
 
 	void SetMouseCoords(int x, int y) {
 		mouse_x = x;

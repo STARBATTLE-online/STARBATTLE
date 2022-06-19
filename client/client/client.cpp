@@ -65,9 +65,11 @@ public:
 		else if (is_connected)
 		{
 			//drawTestBackground();
-			showCursor(true);
+			showCursor(false);
+
 			
 			map_manager->DrawAll();
+			inter->Draw();
 		}
 		auto t2 = high_resolution_clock::now();
 		duration<double, std::milli> ms_double = t2 - t1;
@@ -84,6 +86,7 @@ public:
 		else
 		{
 			map_manager->SetRot(x, y);
+			inter->SimpleSetMouseCoords(x, y);
 		}
 	}
 
