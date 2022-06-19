@@ -31,4 +31,5 @@ std::map<Rotation, Sprite*> engine_sprites;
 std::map<Rotation, Sprite*> ship_sprites;
 std::map<int, Sprite*> big_explosion_sprites;
 std::map<int, Sprite*> small_explosion_sprites;
+std::map<int, Sprite*> shield_sprites;
 std::string request = "";

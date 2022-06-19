@@ -14,6 +14,13 @@ enum class ExplosionTypes {
 	Small
 };
 
+enum class PowerTypes {
+	Shield,
+	Rocket,
+	Speed
+};
+
+
 class Bullet : public HeadSprite
 {
 public:
@@ -48,8 +55,21 @@ public:
 	ExplosionTypes name;
 };
 
-
-
+class Power : public HeadSprite
+{
+public:
+	Power(int x, int y, PowerTypes type) {
+		if (type == PowerTypes::Shield)
+		{
+			width = 126;
+			height = 126;
+			SetCoordsByCenter(x, y);
+		}
+		name = type;
+	};
+	~Power() override {};
+	PowerTypes name;
+};
 
 
 class MapCreator //�������� ����� ��������� �� �����
@@ -68,6 +88,11 @@ public:
 		big_explosion_sprites[5] = createSprite("data/ships/explosions/big/5.png");
 		big_explosion_sprites[6] = createSprite("data/ships/explosions/big/6.png");
 		big_explosion_sprites[7] = createSprite("data/ships/explosions/big/7.png");
+
+		shield_sprites[1] = createSprite("data/ships/shields/1.png");
+		shield_sprites[2] = createSprite("data/ships/shields/2.png");
+		shield_sprites[3] = createSprite("data/ships/shields/3.png");
+
 
 	};
 	~MapCreator() {};
@@ -100,6 +125,27 @@ public:
 	void DrawAll() {
 		
 		background->Draw();
+
+		for (auto& power : powers)
+		{
+			for (int i = -1; i <= 1; i++)
+			{
+				for (int j = -1; j <= 1; j++)
+				{
+					int x = power.xGlobal() + map_width * i - window_x;
+					int y = power.yGlobal() + map_width * j - window_y;
+
+					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
+					{
+						if (power.name == PowerTypes::Shield)
+						{
+							drawSprite(small_shield_sprite, x, y);
+						}
+						////////
+					}
+				}
+			}
+		}
 		//std::cout << asteroids.size() << std::endl;
 		for (auto& asteroid : asteroids)
 		{
@@ -142,8 +188,6 @@ public:
 					}
 				}
 			}
-			
-
 		}
 		for (auto& ship : ships)
 		{
@@ -239,10 +283,12 @@ public:
 	std::vector<Asteroid> asteroids;
 	std::vector<Ship> ships;
 	std::vector<Explosion> explosions;
+	std::vector<Power> powers;
 	MainHeroShip main_hero;
 	Sprite* big_asteroid_sprite = createSprite("data/big_asteroid.png");
 	Sprite* small_asteroid_sprite = createSprite("data/small_asteroid.png");
 	Sprite* bullet_sprite = createSprite("data/bullet.png");
+	Sprite* small_shield_sprite = createSprite("data/ships/shield_icon_small.png");
 	int buffer = 200;
 	std::vector<Bullet> bullets;
 	

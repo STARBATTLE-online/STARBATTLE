@@ -80,6 +80,8 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
     InfoFromServer::m_map_creator->bullets.reserve(50);
 	InfoFromServer::m_map_creator->explosions.clear();
 	InfoFromServer::m_map_creator->explosions.reserve(50);
+    InfoFromServer::m_map_creator->powers.clear();
+    InfoFromServer::m_map_creator->powers.reserve(50);
 	Ship* ship;
     while (ss >> commandType)
     {
@@ -157,6 +159,12 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             int x, y, start_tick;
             ss >> x >> y >> start_tick;
             InfoFromServer::m_map_creator->explosions.emplace_back(Explosion(x, y, start_tick, ExplosionTypes::Small));
+        }
+        else if (commandType == "Shield")
+        {
+            int x, y;
+            ss >> x >> y;
+            InfoFromServer::m_map_creator->powers.emplace_back(Power(x, y, PowerTypes::Shield));
         }
     }
     //std::cout << InfoFromServer::m_map_creator->asteroids.size() << " " << InfoFromServer::m_map_creator->ships.size() << " " << InfoFromServer::m_map_creator->bullets.size() << "\n";
