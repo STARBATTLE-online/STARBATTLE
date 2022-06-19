@@ -93,7 +93,19 @@ public:
 		shield_sprites[2] = createSprite("data/ships/shields/2.png");
 		shield_sprites[3] = createSprite("data/ships/shields/3.png");
 
+		for (int i = 1; i <= 4; i++)
+		{
+			ship_sprites[{i, Rotation::Left}] = createSprite(("data/ships/sprites/" + std::to_string(i) + "/spaceship_l.png").c_str());
+			ship_sprites[{i, Rotation::Right}] = createSprite(("data/ships/sprites/" + std::to_string(i) + "/spaceship_r.png").c_str());
+			ship_sprites[{i, Rotation::Top}] = createSprite(("data/ships/sprites/" + std::to_string(i) + "/spaceship.png").c_str());
+			ship_sprites[{i, Rotation::Bottom}] = createSprite(("data/ships/sprites/" + std::to_string(i) + "/spaceship_b.png").c_str());
 
+
+			engine_sprites[{i, Rotation::Left}] = createSprite(("data/ships/engines/" + std::to_string(i) + "/spaceship_power_l.png").c_str());
+			engine_sprites[{i, Rotation::Right}] = createSprite(("data/ships/engines/" + std::to_string(i) + "/spaceship_power_r.png").c_str());
+			engine_sprites[{i, Rotation::Top}] = createSprite(("data/ships/engines/" + std::to_string(i) + "/spaceship_power.png").c_str());
+			engine_sprites[{i, Rotation::Bottom}] = createSprite(("data/ships/engines/" + std::to_string(i) + "/spaceship_power_b.png").c_str());
+		}
 	};
 	~MapCreator() {};
 
@@ -115,7 +127,7 @@ public:
 		}*/
 		main_hero.SetCoordsByCenter(x, y);
 		main_hero.SetRotation(Rotation::Top);
-		main_hero.SetSpriteById(sprite_id);
+		main_hero.sprite_id = sprite_id;
 
 		window_x = main_hero.GetCenterGlobal().first - window_width / 2;
 		window_y = main_hero.GetCenterGlobal().second - window_height / 2;

@@ -92,6 +92,62 @@ private:
 
 };
 
+class GameOver
+{
+public:
+	GameOver() {
+		main_menu_background = createSprite("data/interface/game_over/background.png");
+		play_button = createSprite("data/interface/game_over/play_button.png");
+		exit_button = createSprite("data/interface/game_over/exit_button.png");
+		score_button = createSprite("data/interface/game_over/score_button.png");
+	};
+	~GameOver() {};
+
+
+	void Draw() {
+		drawSprite(main_menu_background, 0, 0);
+		drawSprite(play_button, 830, 634);
+		if (is_hover["score_button"])
+		{
+			drawSprite(score_button, 127, 935);
+		}
+		else
+		{
+			drawSprite(score_button, 127, 940);
+		}
+		if (is_hover["exit_button"])
+		{
+			drawSprite(exit_button, 1595, 926);
+		}
+		else
+		{
+			drawSprite(exit_button, 1595, 931);
+		}
+	}
+
+	bool IsStart(FRMouseButton button, int x, int y) {
+		if (button == FRMouseButton::LEFT && x > 830 && x < 1091 && y > 634 && y < 924)
+		{
+			return true;
+		}
+		return false;
+	}
+
+public:
+
+	const char* play_sprite_path = "data/interface/main_menu/play_button.png";
+	Sprite* play_button;
+	std::map <std::string, bool> is_hover;
+
+private:
+
+	Sprite* main_menu_background;
+	Sprite* exit_button;
+	Sprite* score_button;
+
+};
+
+
 
 
 class Interface
@@ -105,9 +161,12 @@ public:
 	}
 
 	void Draw() {
-		if (!is_start_game)
+		if (!is_start_game && !is_game_over)
 		{
 			menu.Draw();
+		}
+		else if (is_game_over) {
+			game_over.Draw();
 		}
 		else
 		{
@@ -185,6 +244,7 @@ public:
 protected:
 	Reticle reticle;
 	MainMenu menu;
+	GameOver game_over;
 	int mouse_x;
 	int mouse_y;
 };
