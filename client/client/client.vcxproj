@@ -78,13 +78,15 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <ExternalIncludePath>D:\Programming\Visual Studio\boost_1_79_0\boost_1_79_0;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>D:\Programming\Visual Studio\boost_1_79_0\boost_1_79_0\libs;$(LibraryPath)</LibraryPath>
+    <ExternalIncludePath>D:\ProgramFiles\boost_1_79_0;$(ExternalIncludePath)</ExternalIncludePath>
+    <LibraryPath>$(ProjectDir)\lib\x64; D:\ProgramFiles\boost_1_79_0\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <ExternalIncludePath>D:\Programming\Visual Studio\boost_1_79_0\boost_1_79_0;$(ExternalIncludePath)</ExternalIncludePath>
-    <LibraryPath>D:\Programming\Visual Studio\boost_1_79_0\boost_1_79_0\libs;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)\lib\x64; D:\Programming\Visual Studio\boost_1_79_0\boost_1_79_0\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -129,8 +131,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\Programming\Visual Studio\boost_1_79_0\boost_1_79_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libboost_atomic-vc143-mt-gd-x64-1_79.lib;libboost_chrono-vc143-mt-gd-x64-1_79.lib;libboost_context-vc143-mt-gd-x64-1_79.lib;libboost_coroutine-vc143-mt-gd-x64-1_79.lib;libboost_date_time-vc143-mt-gd-x64-1_79.lib;libboost_exception-vc143-mt-gd-x64-1_79.lib;libboost_filesystem-vc143-mt-gd-x64-1_79.lib;libboost_graph-vc143-mt-gd-x64-1_79.lib;libboost_iostreams-vc143-mt-gd-x64-1_79.lib;libboost_locale-vc143-mt-gd-x64-1_79.lib;libboost_log-vc143-mt-gd-x64-1_79.lib;libboost_log_setup-vc143-mt-gd-x64-1_79.lib;libboost_math_c99-vc143-mt-gd-x64-1_79.lib;libboost_math_c99f-vc143-mt-gd-x64-1_79.lib;libboost_math_c99l-vc143-mt-gd-x64-1_79.lib;libboost_math_tr1-vc143-mt-gd-x64-1_79.lib;libboost_math_tr1f-vc143-mt-gd-x64-1_79.lib;libboost_math_tr1l-vc143-mt-gd-x64-1_79.lib;libboost_prg_exec_monitor-vc143-mt-gd-x64-1_79.lib;libboost_program_options-vc143-mt-gd-x64-1_79.lib;libboost_random-vc143-mt-gd-x64-1_79.lib;libboost_regex-vc143-mt-gd-x64-1_79.lib;libboost_serialization-vc143-mt-gd-x64-1_79.lib;libboost_system-vc143-mt-gd-x64-1_79.lib;libboost_test_exec_monitor-vc143-mt-gd-x64-1_79.lib;libboost_thread-vc143-mt-gd-x64-1_79.lib;libboost_timer-vc143-mt-gd-x64-1_79.lib;libboost_unit_test_framework-vc143-mt-gd-x64-1_79.lib;libboost_wave-vc143-mt-gd-x64-1_79.lib;libboost_wserialization-vc143-mt-gd-x64-1_79.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\ProgramFiles\boost_1_79_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libboost_atomic-vc143-mt-gd-x64-1_79.lib;libboost_chrono-vc143-mt-gd-x64-1_79.lib;libboost_context-vc143-mt-gd-x64-1_79.lib;libboost_coroutine-vc143-mt-gd-x64-1_79.lib;libboost_date_time-vc143-mt-gd-x64-1_79.lib;libboost_exception-vc143-mt-gd-x64-1_79.lib;libboost_filesystem-vc143-mt-gd-x64-1_79.lib;libboost_graph-vc143-mt-gd-x64-1_79.lib;libboost_iostreams-vc143-mt-gd-x64-1_79.lib;libboost_locale-vc143-mt-gd-x64-1_79.lib;libboost_log-vc143-mt-gd-x64-1_79.lib;libboost_log_setup-vc143-mt-gd-x64-1_79.lib;libboost_math_c99-vc143-mt-gd-x64-1_79.lib;libboost_math_c99f-vc143-mt-gd-x64-1_79.lib;libboost_math_c99l-vc143-mt-gd-x64-1_79.lib;libboost_math_tr1-vc143-mt-gd-x64-1_79.lib;libboost_math_tr1f-vc143-mt-gd-x64-1_79.lib;libboost_math_tr1l-vc143-mt-gd-x64-1_79.lib;libboost_prg_exec_monitor-vc143-mt-gd-x64-1_79.lib;libboost_program_options-vc143-mt-gd-x64-1_79.lib;libboost_random-vc143-mt-gd-x64-1_79.lib;libboost_regex-vc143-mt-gd-x64-1_79.lib;libboost_serialization-vc143-mt-gd-x64-1_79.lib;libboost_system-vc143-mt-gd-x64-1_79.lib;libboost_test_exec_monitor-vc143-mt-gd-x64-1_79.lib;libboost_thread-vc143-mt-gd-x64-1_79.lib;libboost_timer-vc143-mt-gd-x64-1_79.lib;libboost_unit_test_framework-vc143-mt-gd-x64-1_79.lib;libboost_wave-vc143-mt-gd-x64-1_79.lib;libboost_wserialization-vc143-mt-gd-x64-1_79.lib;SDL2.lib;SDL2main.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,12 +153,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\Programming\Visual Studio\boost_1_79_0\boost_1_79_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libboost_atomic-vc143-mt-x64-1_79.lib;libboost_chrono-vc143-mt-x64-1_79.lib;libboost_context-vc143-mt-x64-1_79.lib;libboost_coroutine-vc143-mt-x64-1_79.lib;libboost_date_time-vc143-mt-x64-1_79.lib;libboost_exception-vc143-mt-x64-1_79.lib;libboost_filesystem-vc143-mt-x64-1_79.lib;libboost_graph-vc143-mt-x64-1_79.lib;libboost_iostreams-vc143-mt-x64-1_79.lib;libboost_locale-vc143-mt-x64-1_79.lib;libboost_log_setup-vc143-mt-x64-1_79.lib;libboost_log-vc143-mt-x64-1_79.lib;libboost_math_c99f-vc143-mt-x64-1_79.lib;libboost_math_c99l-vc143-mt-x64-1_79.lib;libboost_math_c99-vc143-mt-x64-1_79.lib;libboost_math_tr1f-vc143-mt-x64-1_79.lib;libboost_math_tr1l-vc143-mt-x64-1_79.lib;libboost_math_tr1-vc143-mt-x64-1_79.lib;libboost_prg_exec_monitor-vc143-mt-x64-1_79.lib;libboost_program_options-vc143-mt-x64-1_79.lib;libboost_random-vc143-mt-x64-1_79.lib;libboost_regex-vc143-mt-x64-1_79.lib;libboost_serialization-vc143-mt-x64-1_79.lib;libboost_system-vc143-mt-x64-1_79.lib;libboost_test_exec_monitor-vc143-mt-x64-1_79.lib;libboost_thread-vc143-mt-x64-1_79.lib;libboost_timer-vc143-mt-x64-1_79.lib;libboost_unit_test_framework-vc143-mt-x64-1_79.lib;libboost_wave-vc143-mt-x64-1_79.lib;libboost_wserialization-vc143-mt-x64-1_79.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libboost_atomic-vc143-mt-x64-1_79.lib;libboost_chrono-vc143-mt-x64-1_79.lib;libboost_context-vc143-mt-x64-1_79.lib;libboost_coroutine-vc143-mt-x64-1_79.lib;libboost_date_time-vc143-mt-x64-1_79.lib;libboost_exception-vc143-mt-x64-1_79.lib;libboost_filesystem-vc143-mt-x64-1_79.lib;libboost_graph-vc143-mt-x64-1_79.lib;libboost_iostreams-vc143-mt-x64-1_79.lib;libboost_locale-vc143-mt-x64-1_79.lib;libboost_log_setup-vc143-mt-x64-1_79.lib;libboost_log-vc143-mt-x64-1_79.lib;libboost_math_c99f-vc143-mt-x64-1_79.lib;libboost_math_c99l-vc143-mt-x64-1_79.lib;libboost_math_c99-vc143-mt-x64-1_79.lib;libboost_math_tr1f-vc143-mt-x64-1_79.lib;libboost_math_tr1l-vc143-mt-x64-1_79.lib;libboost_math_tr1-vc143-mt-x64-1_79.lib;libboost_prg_exec_monitor-vc143-mt-x64-1_79.lib;libboost_program_options-vc143-mt-x64-1_79.lib;libboost_random-vc143-mt-x64-1_79.lib;libboost_regex-vc143-mt-x64-1_79.lib;libboost_serialization-vc143-mt-x64-1_79.lib;libboost_system-vc143-mt-x64-1_79.lib;libboost_test_exec_monitor-vc143-mt-x64-1_79.lib;libboost_thread-vc143-mt-x64-1_79.lib;libboost_timer-vc143-mt-x64-1_79.lib;libboost_unit_test_framework-vc143-mt-x64-1_79.lib;libboost_wave-vc143-mt-x64-1_79.lib;libboost_wserialization-vc143-mt-x64-1_79.lib;SDL2.lib;SDL2main.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="SDL2SoundEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asteroid.h" />
@@ -169,6 +172,7 @@
     <ClInclude Include="InfoToSend.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="MapCreator.h" />
+    <ClInclude Include="SDL2SoundEffect.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="SuperPower.h" />
   </ItemGroup>

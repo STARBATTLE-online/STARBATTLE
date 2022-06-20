@@ -119,6 +119,7 @@ public:
 	~MapCreator() {};
 
 	void AddMainHero(int x, int y, int sprite_id) {
+		//se.playSoundEffect(5);
 		const char* path = "data/ships/sprites/1/spaceship.png";
 		/*switch (sprite_id)
 		{
@@ -171,7 +172,7 @@ public:
 				}
 			}
 		}
-		////std::cout << asteroids.size() << std::endl;
+		//////std::cout << asteroids.size() << std::endl;
 		for (auto& asteroid : asteroids)
 		{
 			for (int i = -1; i <= 1; i++)
@@ -261,6 +262,12 @@ public:
 							{
 								drawSprite(small_explosion_sprites[temp/4], x, y);
 							}
+							if (temp == 4 || temp == 5)
+							{
+
+								se.playSoundEffect(6);
+							}
+							
 						}
 					}		
 				}
@@ -284,7 +291,7 @@ public:
 	void SetRot(int x, int y) {
 		mouse_x = x;
 		mouse_y = y;
-		////std::cout<<mouse_x << " " << mouse_y<<std::endl;
+		//////std::cout<<mouse_x << " " << mouse_y<<std::endl;
 		if (main_hero.GetRotationByMouse(mouse_x, mouse_y))
 		{
 			keep_info->SetCoords(mouse_x, mouse_y, main_hero.GetRotation());
@@ -298,6 +305,8 @@ public:
 	void SetClickToRequest(FRMouseButton button, bool isReleased) {		
 		keep_info->SetCoords(mouse_x, mouse_y, main_hero.GetRotation());
 		keep_info->SetClick(button, isReleased);
+
+		se.playSoundEffect(4);
 	}
 
 	void SetClosed() {

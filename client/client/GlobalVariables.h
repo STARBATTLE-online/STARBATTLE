@@ -1,7 +1,9 @@
 #pragma once
 #include <atomic>
 #include <string>
+#include "SDL2SoundEffect.h"
 #include <map>
+
 
 int window_width = 1920;
 int window_height = 1080;
@@ -18,6 +20,7 @@ int death_ticks = 0;
 
 std::atomic<bool> is_connected = 0;
 std::atomic<bool> is_start_game = 0;
+SDL2SoundEffect se;
 std::atomic<bool> is_game_over = 0;
 std::atomic<bool> exit_game = 0;
 

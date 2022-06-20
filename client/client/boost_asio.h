@@ -218,7 +218,7 @@ public:
                                 else
                                 {
                                     InfoFromServer::ProcessRequest(convertToString(ch, bytes_transferred)); 
-                                    ////std::cout << "Received: " << ch << std::endl;
+                                    //////std::cout << "Received: " << ch << std::endl;
 
                                    /* std::thread t3([this, bytes_transferred]() {
                                         });
@@ -226,11 +226,11 @@ public:
                                     t3.detach();*/
 
 									
-                                    ////std::cout << "!";
+                                    //////std::cout << "!";
                                     //std::istream strm(&session->m_response_buf);
                                     //std::getline(strm, session->m_response);
                                     //std::string str(boost::asio::buffers_begin(session->m_response_buf), boost::asio::buffers_begin(session->m_response_buf) + bytes_transferred);
-                                    ////std::cout << make_string(session->m_response_buf) << std::endl;
+                                    //////std::cout << make_string(session->m_response_buf) << std::endl;
 
                                 }
 
@@ -329,17 +329,17 @@ void handler(unsigned int request_id,
     if (ec.value() == 0)
     {
         //uncomment this
-        /*//std::cout << "Request #" << request_id
+        /*////std::cout << "Request #" << request_id
             << " has completed. Response: "
             << response << std::endl;*/
     }
     else if (ec == asio::error::operation_aborted)
     {
-        //std::cout << "Request #" << request_id            << " has been cancelled by the user."            << std::endl;
+        ////std::cout << "Request #" << request_id            << " has been cancelled by the user."            << std::endl;
     }
     else
     {
-        //std::cout << "Request #" << request_id            << " failed! Error code = " << ec.value()            << ". Error message = " << ec.message()            << std::endl;
+        ////std::cout << "Request #" << request_id            << " failed! Error code = " << ec.value()            << ". Error message = " << ec.message()            << std::endl;
     }
 
     return;
@@ -362,7 +362,7 @@ void handler(unsigned int request_id,
 
     //Getting number of milliseconds as an integer.
     duration<double, std::milli> ms_double = t2 - t1;
-    //std::cout << ms_double.count() << "ms\n";
+    ////std::cout << ms_double.count() << "ms\n";
     // Here we emulate the user's behavior.
 
     // creates an instance of the AsyncTCPClient class and then calls its emulateLongComputationOp() method to initiate three asynchronous requests

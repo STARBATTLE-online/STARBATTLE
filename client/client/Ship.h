@@ -43,6 +43,8 @@ public:
 		is_enable = true;
 		name = PowerTypes::Shield;
 		time = t;
+
+		se.playSoundEffect(5);
 	};
 	~Shield() override {};
 
@@ -139,7 +141,7 @@ public:
 	void SetHP(int hp) {
 		//if (hit_points != hp)
 		//{
-		//	////std::cout << "HP: " << hp << "\n";
+		//	//////std::cout << "HP: " << hp << "\n";
 		//}
 		hit_points = hp;
 	}
@@ -174,7 +176,7 @@ public:
 		{
 			if (power->GetPowerName() == PowerTypes::Shield)
 			{
-				////std::cout << "shield: " << t << "\n";
+				//////std::cout << "shield: " << t << "\n";
 				
 				power->time = t;
 			}
@@ -240,6 +242,26 @@ public:
 			return 1;
 		}
 		return 0;
+	}
+
+	void SetShield(int t) {
+		if (power)
+		{
+			if (power->GetPowerName() == PowerTypes::Shield)
+			{
+				//////std::cout << "shield: " << t << "\n";
+				if (t >= 199)
+				{
+					se.playSoundEffect(5);
+				}
+				power->time = t;
+			}
+		}
+		else
+		{
+			power = new Shield(t);
+
+		}
 	}
 
 

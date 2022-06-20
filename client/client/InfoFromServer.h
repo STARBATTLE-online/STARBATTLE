@@ -39,17 +39,17 @@ std::string InfoFromServer::ProcessRequest(const std::string& request) {
     std::stringstream ss(request);
     std::string output, commandType;
 
-    ////std::cout << request << std::endl;
+    //////std::cout << request << std::endl;
 
     while (ss >> commandType) {
         if (commandType == "INIT") {
 
-            ////std::cout << "INIT" << std::endl;
+            //////std::cout << "INIT" << std::endl;
             InitRequest(ss);
         }
         else if (commandType == "TICK") {
 
-            ////std::cout << "TICK" << std::endl;
+            //////std::cout << "TICK" << std::endl;
             TickRequest(ss);
         }
     }
@@ -155,30 +155,39 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             int x_speed, y_speed;
 			ss >> x >> y >> x_speed >> y_speed;
             InfoFromServer::m_map_creator->Shoot(x, y);
+			
         }
         else if (commandType == "BigExplosion")
         {
             int x, y, start_tick;
             ss >> x >> y >> start_tick;
             InfoFromServer::m_map_creator->explosions.emplace_back(Explosion(x, y, start_tick, ExplosionTypes::Big));
+
+           //how many explosions?
+            //se.playSoundEffect(2);
+			
         }
         else if (commandType == "SmallExplosion")
         {
             int x, y, start_tick;
             ss >> x >> y >> start_tick;
             InfoFromServer::m_map_creator->explosions.emplace_back(Explosion(x, y, start_tick, ExplosionTypes::Small));
+
         }
         else if (commandType == "Shield")
         {
             int x, y;
             ss >> x >> y;
             InfoFromServer::m_map_creator->powers.emplace_back(Power(x, y, PowerTypes::Shield));
+
         }
         else if (commandType == "Barrage")
         {
             int x, y;
             ss >> x >> y;
             InfoFromServer::m_map_creator->powers.emplace_back(Power(x, y, PowerTypes::Barrage));
+
+			
         }
         
     }
@@ -192,11 +201,13 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
              is_game_over = 1;
              is_connected = 0;
              death_ticks = 0;
+
+             se.playMusicEffect(0);
         }
         //is_start_game = 0;
         //is_game_over = 1;
         //is_connected = 0;
     }
-    ////std::cout << InfoFromServer::m_map_creator->asteroids.size() << " " << InfoFromServer::m_map_creator->ships.size() << " " << InfoFromServer::m_map_creator->bullets.size() << "\n";
+    //////std::cout << InfoFromServer::m_map_creator->asteroids.size() << " " << InfoFromServer::m_map_creator->ships.size() << " " << InfoFromServer::m_map_creator->bullets.size() << "\n";
    
 }

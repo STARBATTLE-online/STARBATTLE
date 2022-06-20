@@ -16,6 +16,7 @@
 
 #include "MapCreator.h"
 #include "Interface.h"
+#undef main
 
 using std::chrono::high_resolution_clock;
 using std::chrono::duration_cast;
@@ -92,7 +93,7 @@ public:
 		auto t2 = high_resolution_clock::now();
 		duration<double, std::milli> ms_double = t2 - t1;
 		rest = 1000 / framerate - ms_double.count();
-		////std::cout << "ms_double " << ms_double << " rest " << rest << std::endl;
+		//////std::cout << "ms_double " << ms_double << " rest " << rest << std::endl;
 		return false;
 	}
 
@@ -125,12 +126,17 @@ public:
 				{
 					if (inter->IsCross(button))
 					{
+
 						is_game_over = 1;
 						is_start_game = 0;
 						is_connected = 0;
 						map_manager->SetClosed();
+						se.playMusicEffect(0);
+						
 					}
 				}
+				se.playSoundEffect(4);
+
 			}
 			map_manager->SetClickToRequest(button, isReleased);
 		}
@@ -158,8 +164,17 @@ int main(int argc, char* argv[])
 {
 	setlocale(0, "");
 	srand(time(NULL));
+	se.addSoundEffect(".\\data\\music\\menu_music.wav");		//0
+	se.addSoundEffect(".\\data\\music\\game_music.wav");		//1
+	se.addSoundEffect(".\\data\\music\\another_sound.wav");		//2
+	se.addSoundEffect(".\\data\\music\\powerup_sound.wav");		//3
+	se.addSoundEffect(".\\data\\music\\shoot_sound.wav");		//4
+	se.addSoundEffect(".\\data\\music\\spawn_sound.wav");		//5
+	se.addSoundEffect(".\\data\\music\\damage_sound.wav");		//6
+	se.playMusicEffect(0);
 
-	bool end = false;
+
+
 	
 	std::thread t1([]() {
 		run(new MyFramework);
@@ -182,25 +197,26 @@ int main(int argc, char* argv[])
 				{
 					Sleep(100);
 				}
-				
+
 				client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, "INIT");
 				while (!is_connected)
 				{
 					Sleep(100);
 				}
+				se.playMusicEffect(1);
 			
-				////std::cout << request << std::endl;
+				//////std::cout << request << std::endl;
 				client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
 				request = "TICK";
 				while (is_connected) {
 					auto t1 = high_resolution_clock::now();	
-						////std::cout << request << std::endl;
+						//////std::cout << request << std::endl;
 					client.emulateLongComputationOp(1, "178.159.224.36", 3333, handler, 1, request);
 					request = "TICK";
 					auto t2 = high_resolution_clock::now();
 					duration<double, std::milli> ms_double = t2 - t1;
 					double rest = 1000 / framerate - ms_double.count();
-					////std::cout << "boost rest " << rest << std::endl;
+					//////std::cout << "boost rest " << rest << std::endl;
 
 					Sleep(rest);
 				}
@@ -217,9 +233,9 @@ int main(int argc, char* argv[])
 		}
 		catch (system::system_error& e)
 		{
-			//std::cout << "Error occured! Error code = " << e.code()				<< ". Message: " << e.what();
+			////std::cout << "Error occured! Error code = " << e.code()				<< ". Message: " << e.what();
 
-			//std::cout << e.code().value() << std::endl;
+			////std::cout << e.code().value() << std::endl;
 		}
 	   catch (...) {
 	   }
@@ -231,6 +247,6 @@ int main(int argc, char* argv[])
 	t2.join();
 	
 	//duration<double, std::milli> ms_double = t2 - t1;
-	////std::cout << ms_double.count() << "ms\n";
+	//////std::cout << ms_double.count() << "ms\n";
 	return 0;
 }
