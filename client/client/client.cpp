@@ -135,7 +135,6 @@ public:
 						
 					}
 				}
-				se.playSoundEffect(4);
 
 			}
 			map_manager->SetClickToRequest(button, isReleased);

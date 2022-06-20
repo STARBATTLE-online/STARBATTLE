@@ -44,7 +44,6 @@ public:
 		name = PowerTypes::Shield;
 		time = t;
 
-		se.playSoundEffect(5);
 	};
 	~Shield() override {};
 

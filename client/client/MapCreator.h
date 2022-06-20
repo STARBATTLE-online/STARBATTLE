@@ -307,6 +307,7 @@ public:
 		keep_info->SetClick(button, isReleased);
 
 		se.playSoundEffect(4);
+
 	}
 
 	void SetClosed() {
