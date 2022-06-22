@@ -83,7 +83,6 @@ public:
 		}
 		else if (is_connected && !is_game_over)
 		{
-			//drawTestBackground();
 			showCursor(false);			
 			
 			map_manager->DrawAll();
@@ -93,7 +92,6 @@ public:
 		auto t2 = high_resolution_clock::now();
 		duration<double, std::milli> ms_double = t2 - t1;
 		rest = 1000 / framerate - ms_double.count();
-		//////std::cout << "ms_double " << ms_double << " rest " << rest << std::endl;
 		return false;
 	}
 
@@ -171,10 +169,6 @@ int main(int argc, char* argv[])
 	se.addSoundEffect(".\\data\\music\\spawn_sound.wav");		//5
 	se.addSoundEffect(".\\data\\music\\damage_sound.wav");		//6
 	se.playMusicEffect(0);
-
-
-
-	
 	std::thread t1([]() {
 		run(new MyFramework);
 		exit_game = true;
@@ -203,20 +197,15 @@ int main(int argc, char* argv[])
 					Sleep(100);
 				}
 				se.playMusicEffect(1);
-			
-				//////std::cout << request << std::endl;
 				client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
 				request = "TICK";
 				while (is_connected) {
 					auto t1 = high_resolution_clock::now();	
-						//////std::cout << request << std::endl;
 					client.emulateLongComputationOp(1, "178.159.224.36", 3333, handler, 1, request);
 					request = "TICK";
 					auto t2 = high_resolution_clock::now();
 					duration<double, std::milli> ms_double = t2 - t1;
 					double rest = 1000 / framerate - ms_double.count();
-					//////std::cout << "boost rest " << rest << std::endl;
-
 					Sleep(rest);
 				}
 				if (is_game_over == 1 &&
@@ -232,20 +221,17 @@ int main(int argc, char* argv[])
 		}
 		catch (system::system_error& e)
 		{
-			////std::cout << "Error occured! Error code = " << e.code()				<< ". Message: " << e.what();
+			//std::cout << "Error occured! Error code = " << e.code()				<< ". Message: " << e.what();
 
-			////std::cout << e.code().value() << std::endl;
+			//std::cout << e.code().value() << std::endl;
 		}
 	   catch (...) {
 	   }
 		return 0;
 	});
-	
 
 	t1.join();
 	t2.join();
 	
-	//duration<double, std::milli> ms_double = t2 - t1;
-	//////std::cout << ms_double.count() << "ms\n";
 	return 0;
 }

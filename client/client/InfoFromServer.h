@@ -162,10 +162,8 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             int x, y, start_tick;
             ss >> x >> y >> start_tick;
             InfoFromServer::m_map_creator->explosions.emplace_back(Explosion(x, y, start_tick, ExplosionTypes::Big));
-
            //how many explosions?
-            //se.playSoundEffect(2);
-			
+            //se.playSoundEffect(2);			
         }
         else if (commandType == "SmallExplosion")
         {

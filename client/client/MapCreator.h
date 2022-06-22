@@ -73,7 +73,7 @@ public:
 };
 
 
-class MapCreator //�������� ����� ��������� �� �����
+class MapCreator 
 {
 public:
 	MapCreator() {
@@ -91,7 +91,7 @@ public:
 		shield_sprites[2] = createSprite("data/ships/shields/2.png");
 		shield_sprites[3] = createSprite("data/ships/shields/3.png");
 
-		for (int i = 1; i <= 4; i++)
+		for (int i = 1; i <= 5; i++)
 		{
 			ship_sprites[{i, Rotation::Left}] = createSprite(("data/ships/sprites/" + std::to_string(i) + "/spaceship_l.png").c_str());
 			ship_sprites[{i, Rotation::Right}] = createSprite(("data/ships/sprites/" + std::to_string(i) + "/spaceship_r.png").c_str());
@@ -121,20 +121,6 @@ public:
 	void AddMainHero(int x, int y, int sprite_id) {
 		//se.playSoundEffect(5);
 		const char* path = "data/ships/sprites/1/spaceship.png";
-		/*switch (sprite_id)
-		{
-		case 1:
-			path = "data/ships/sprites/1/spaceship.png";
-			break;
-		case 2:
-			path = "data/ships/main_hero/2.png";
-			break;
-		case 3:
-			path = "data/ships/main_hero/3.png";
-			break;
-		default:
-			break;
-		}*/
 		main_hero.SetCoordsByCenter(x, y);
 		main_hero.SetRotation(Rotation::Top);
 		main_hero.sprite_id = sprite_id;
@@ -167,12 +153,10 @@ public:
 						{
 							drawSprite(small_barrage_sprite, x, y);
 						}
-						////////
 					}
 				}
 			}
 		}
-		//////std::cout << asteroids.size() << std::endl;
 		for (auto& asteroid : asteroids)
 		{
 			for (int i = -1; i <= 1; i++)
@@ -237,7 +221,6 @@ public:
 		{
 			main_hero.Draw();
 		}
-		//std::cerr << tick_number << "\n";
 
 		for (auto& explosion : explosions)
 		{
@@ -251,7 +234,6 @@ public:
 					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
 					{
 						int temp = tick_number - explosion.start_tick;
-						//std::cerr << temp << "\n";
 						if (temp >= 4 && temp <= 28)
 						{
 							if (explosion.name == ExplosionTypes::Big)
@@ -291,7 +273,6 @@ public:
 	void SetRot(int x, int y) {
 		mouse_x = x;
 		mouse_y = y;
-		//////std::cout<<mouse_x << " " << mouse_y<<std::endl;
 		if (main_hero.GetRotationByMouse(mouse_x, mouse_y))
 		{
 			keep_info->SetCoords(mouse_x, mouse_y, main_hero.GetRotation());
@@ -320,8 +301,7 @@ public:
 	void Shoot(int x, int y) {
 		bullets.push_back(Bullet(x, y));
 	}
-
-	//����������� ����������� ����� � ��������� ��������� ��� ������������� ����� �������
+	
 protected:
 	Background* background;
 	Interface inter;
