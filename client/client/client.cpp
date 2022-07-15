@@ -74,8 +74,6 @@ public:
 		}
 		else if (is_start_game && !is_connected)
 		{
-			Sprite* load = createSprite("data/interface/connecting.png");
-			drawSprite(load, 0, 0);
 
 			inter->Draw();
 			showCursor(false);
@@ -109,7 +107,18 @@ public:
 
 	virtual void onMouseButtonClick(FRMouseButton button, bool isReleased) {
 		
-		if (!is_start_game)
+		if (is_start_game && !is_connected)
+		{
+			if (isReleased)
+			{
+				inter->ButtonClick(button);
+				/*std::cout << "is_connected " << is_connected << std::endl;
+				std::cout << "is_start_game " << is_start_game << std::endl;
+				std::cout << "is_game_over " << is_game_over << std::endl;
+				std::cout << "exit_game " << exit_game <<  std::endl;*/
+			}
+		}
+		else if (!is_start_game)
 		{
 			if (isReleased)
 			{

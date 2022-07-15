@@ -176,7 +176,10 @@ private:
 class Interface
 {
 public:
-	Interface(){};
+	Interface(){
+		exit_button_connect = createSprite("data/interface/game_over/exit_button.png");
+		load = createSprite("data/interface/connecting.png");		
+	};
 	~Interface(){};
 
 	Reticle GetReticle() {
@@ -190,6 +193,24 @@ public:
 		}
 		else if (is_game_over) {
 			game_over.Draw();
+		}
+		else if (is_start_game && !is_connected) {
+			if (reticle.sprite_path != "data/reticle2.png")
+			{
+				reticle.sprite_path = "data/reticle2.png";
+				reticle.SetSprite(reticle.sprite_path);
+			}
+			drawSprite(load, 0, 0);
+			if (mouse_x > 127 && mouse_x < 253 && mouse_y > 931 && mouse_y < 985)
+			{
+				drawSprite(exit_button_connect, 127, 926);
+			}
+			else
+			{
+				drawSprite(exit_button_connect, 127, 931);
+
+			}
+			
 		}
 		else
 		{
@@ -324,21 +345,31 @@ public:
 
 
 	void ButtonClick(FRMouseButton button) {
-		is_start_game = IsStart(button, mouse_x, mouse_y);
-		exit_game = IsExit(button, mouse_x, mouse_y);
-		
-		
-		if (is_game_over)
-		{
-			death_ticks = 0;
-			is_game_over = !IsStart(button, mouse_x, mouse_y);
+		if (is_start_game && !is_connected) {
+			if (mouse_x > 127 && mouse_x < 253 && mouse_y > 931 && mouse_y < 985)
+			{
+				is_connected = 0;
+				is_start_game = 0;
+				is_game_over = 0;
+				exit_game = 0;
+				return;
+			}
 		}
-		if (IsAbout(button, mouse_x, mouse_y))
+		else
 		{
-			ShellExecute(0, 0, L"https://github.com/STARBATTLE-online", 0, 0, SW_SHOW);
-			Sleep(100);
+			is_start_game = IsStart(button, mouse_x, mouse_y);
+			exit_game = IsExit(button, mouse_x, mouse_y);
+			if (is_game_over)
+			{
+				death_ticks = 0;
+				is_game_over = !IsStart(button, mouse_x, mouse_y);
+			}
+			if (IsAbout(button, mouse_x, mouse_y))
+			{
+				ShellExecute(0, 0, L"https://github.com/STARBATTLE-online", 0, 0, SW_SHOW);
+				Sleep(100);
+			}
 		}
-		
 	}
 
 protected:
@@ -348,8 +379,8 @@ protected:
 	Close cross;
 	int mouse_x;
 	int mouse_y;
-
-	
+	Sprite* exit_button_connect;	
+	Sprite* load;
 };
 
 //D:/Programming/STARBATTLE/client/client/data/interface/main_menu

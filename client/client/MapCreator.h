@@ -287,7 +287,10 @@ public:
 		keep_info->SetCoords(mouse_x, mouse_y, main_hero.GetRotation());
 		keep_info->SetClick(button, isReleased);
 
-		se.playSoundEffect(4);
+		if (is_connected)
+		{
+			se.playSoundEffect(4);
+		}
 
 	}
 
