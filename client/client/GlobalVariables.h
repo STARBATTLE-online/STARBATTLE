@@ -19,6 +19,7 @@ int my_score = 0;
 int death_ticks = 0;
 
 std::atomic<bool> is_connected = 0;
+std::atomic<bool> is_connection_error = 0;
 std::atomic<bool> is_start_game = 0;
 SDL2SoundEffect se;
 std::atomic<bool> is_game_over = 0;

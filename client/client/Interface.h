@@ -177,8 +177,12 @@ class Interface
 {
 public:
 	Interface(){
-		exit_button_connect = createSprite("data/interface/game_over/exit_button.png");
-		load = createSprite("data/interface/connecting.png");		
+
+		load_background = createSprite("data/interface/connecting.png");
+		Sleep(10);
+		load_error_background = createSprite("data/interface/connection_error.png");
+		Sleep(10);
+		
 	};
 	~Interface(){};
 
@@ -190,17 +194,30 @@ public:
 		if (!is_start_game && !is_game_over)
 		{
 			menu.Draw();
+			
 		}
 		else if (is_game_over) {
 			game_over.Draw();
 		}
 		else if (is_start_game && !is_connected) {
+			
+
 			if (reticle.sprite_path != "data/reticle2.png")
 			{
 				reticle.sprite_path = "data/reticle2.png";
 				reticle.SetSprite(reticle.sprite_path);
 			}
-			drawSprite(load, 0, 0);
+			if (is_connection_error)
+			{
+				drawSprite(load_error_background, 0, 0);
+
+			}
+			else if (!is_connection_error)
+			{
+				drawSprite(load_background, 0, 0);
+			}
+			
+			
 			if (mouse_x > 127 && mouse_x < 253 && mouse_y > 931 && mouse_y < 985)
 			{
 				drawSprite(exit_button_connect, 127, 926);
@@ -314,6 +331,7 @@ public:
 	bool IsStart(FRMouseButton button, int x, int y) {
 		if (button == FRMouseButton::LEFT && x > 830 && x < 1091 && y > 634 && y < 924)
 		{
+			
 			return true;
 		}
 		return false;
@@ -357,6 +375,7 @@ public:
 		}
 		else
 		{
+			
 			is_start_game = IsStart(button, mouse_x, mouse_y);
 			exit_game = IsExit(button, mouse_x, mouse_y);
 			if (is_game_over)
@@ -379,8 +398,9 @@ protected:
 	Close cross;
 	int mouse_x;
 	int mouse_y;
-	Sprite* exit_button_connect;	
-	Sprite* load;
+	Sprite* exit_button_connect = createSprite("data/interface/game_over/exit_button.png");
+	Sprite* load_background = createSprite("data/interface/connecting.png");
+	Sprite* load_error_background = createSprite("data/interface/connection_error.png");
 };
 
 //D:/Programming/STARBATTLE/client/client/data/interface/main_menu

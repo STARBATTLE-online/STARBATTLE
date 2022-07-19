@@ -195,15 +195,32 @@ int main(int argc, char* argv[])
 			AsyncTCPClient client(1);
 			while (!exit_game)
 			{
-				while (!is_start_game)
-				{
-					Sleep(100);
-				}
-
-				client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, "INIT");
 				while (!is_connected)
 				{
-					Sleep(100);
+					is_connection_error = 0;
+
+					while (!is_start_game)
+					{
+						Sleep(100);
+					}			
+					client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, "INIT");
+					int i = 0;
+					
+					while (true)
+					{
+						Sleep(100);
+						i++;
+						//std::cout << i << " ";
+						if (i > 10)
+						{
+							is_connection_error = 1;
+						}
+						if (is_connected || !is_start_game)
+						{
+							is_connection_error = 0;
+							break;
+						}
+					}
 				}
 				se.playMusicEffect(1);
 				client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
