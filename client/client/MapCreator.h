@@ -91,7 +91,7 @@ public:
 		shield_sprites[2] = createSprite("data/ships/shields/2.png");
 		shield_sprites[3] = createSprite("data/ships/shields/3.png");
 
-		for (int i = 1; i <= 5; i++)
+		for (int i = 1; i <= 6; i++)
 		{
 			ship_sprites[{i, Rotation::Left}] = createSprite(("data/ships/sprites/" + std::to_string(i) + "/spaceship_l.png").c_str());
 			ship_sprites[{i, Rotation::Right}] = createSprite(("data/ships/sprites/" + std::to_string(i) + "/spaceship_r.png").c_str());
