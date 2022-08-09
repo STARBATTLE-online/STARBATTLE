@@ -204,7 +204,6 @@ class MainHeroShip : public Ship
 public:
 	MainHeroShip(int id = 4) {
 		sprite_id = id;
-
 		rotation = Rotation::Top;
 		width = 192;
 		height = 192;
@@ -212,6 +211,7 @@ public:
 		engine_height = 424;
 	};
 	~MainHeroShip() {};
+	
 
 	bool GetRotationByMouse(int x_mouse, int y_mouse) {
 		Rotation temp_rot = rotation;
@@ -263,8 +263,6 @@ public:
 		}
 	}
 
-
-private:
 };
 
 class EnemyShip : public Ship

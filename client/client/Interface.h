@@ -179,9 +179,10 @@ public:
 	Interface(){
 
 		load_background = createSprite("data/interface/connecting.png");
-		Sleep(10);
+		//Sleep(10);
 		load_error_background = createSprite("data/interface/connection_error.png");
-		Sleep(10);
+		//Sleep(10);
+		std::cout << "interface" << "\n";
 		
 	};
 	~Interface(){};

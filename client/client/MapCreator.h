@@ -117,6 +117,15 @@ public:
 		
 	};
 	~MapCreator() {};
+	MapCreator(const MapCreator& other){
+		asteroids = other.asteroids;
+		ships = other.ships;
+		explosions = other.explosions;
+		powers = other.powers;
+		bullets = other.bullets;
+		main_hero = other.main_hero;
+	};
+	
 
 	void AddMainHero(int x, int y, int sprite_id) {
 		//se.playSoundEffect(5);
@@ -320,6 +329,7 @@ public:
 	std::vector<Ship> ships;
 	std::vector<Explosion> explosions;
 	std::vector<Power> powers;
+	std::vector<Bullet> bullets;
 	MainHeroShip main_hero;
 	Sprite* big_asteroid_sprite = createSprite("data/big_asteroid.png");
 	Sprite* small_asteroid_sprite = createSprite("data/small_asteroid.png");
@@ -327,6 +337,6 @@ public:
 	Sprite* small_shield_sprite = createSprite("data/ships/shield_icon_small.png");
 	Sprite* small_barrage_sprite = createSprite("data/ships/barrage_icon_small.png");
 	int buffer = 200;
-	std::vector<Bullet> bullets;
+	
 	
 };
