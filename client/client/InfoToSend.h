@@ -9,13 +9,14 @@ public:
 	~InfoToSend(){};
 
 	void AddID() {
-
+		request += " ";
+		request += std::to_string(personal_id_public);
 	}
 
 	void Update() {
 		request.clear();
 		request += "TICK";
-		
+		AddID();		
 	}
 
 	void SetCoords(int x, int y, Rotation rot) {

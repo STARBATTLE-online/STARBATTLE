@@ -5,7 +5,7 @@ class Background : public HeadSprite
 {
 public:
 	Background() {
-		sprite = createSprite("data/background_2.png");
+		sprite = createSprite("data/background_3.png");
 		width = 1000;
 		height = 1000;
 	};

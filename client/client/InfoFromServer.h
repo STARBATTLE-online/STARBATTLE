@@ -63,12 +63,24 @@ std::string InfoFromServer::ProcessRequest(const std::string& request) {
 void InfoFromServer::InitRequest(std::stringstream& ss) {
     int x, y;
     uint64_t sprite_id;
-    ss >> personal_id_public >> personal_id_private >> x >> y >> sprite_id >> map_width >> map_height;
-	
-    InfoFromServer::m_map_creator->AddMainHero(x, y, sprite_id);
+    std::string init_version;
+    ss >> init_version >> personal_id_public >> personal_id_private >> x >> y >> sprite_id >> map_width >> map_height;
 
-    request = "TICK";
-    is_connected = 1;
+    if (init_version == VERSION)
+    {
+        InfoFromServer::m_map_creator->AddMainHero(x, y, sprite_id);
+
+        request = "TICK";
+        request += " ";
+        request += std::to_string(personal_id_public);
+		
+        is_connected = 1;
+    }
+    else
+    {
+        InfoFromServer::m_map_creator->OldVersion();
+    }
+    
 }
 
 void InfoFromServer::TickRequest(std::stringstream& ss) {

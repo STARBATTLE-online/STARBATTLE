@@ -4,6 +4,8 @@
 #include "SDL2SoundEffect.h"
 #include <map>
 
+std::string VERSION = "1.0.0";
+
 
 int window_width = 1920;
 int window_height = 1080;
@@ -33,6 +35,7 @@ enum class Rotation
 	Bottom,
 	Right
 };
+
 
 
 std::map<std::pair<int, Rotation>, Sprite*> engine_sprites;

@@ -225,10 +225,14 @@ int main(int argc, char* argv[])
 				se.playMusicEffect(1);
 				client.emulateLongComputationOp(10, "178.159.224.36", 3333, handler, 1, request);
 				request = "TICK";
+				request += " ";
+				request += std::to_string(personal_id_public);
 				while (is_connected) {
 					auto t1 = high_resolution_clock::now();	
 					client.emulateLongComputationOp(1, "178.159.224.36", 3333, handler, 1, request);
 					request = "TICK";
+					request += " ";
+					request += std::to_string(personal_id_public);
 					auto t2 = high_resolution_clock::now();
 					duration<double, std::milli> ms_double = t2 - t1;
 					double rest = 1000 / framerate - ms_double.count();

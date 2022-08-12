@@ -138,6 +138,10 @@ public:
 		window_y = main_hero.GetCenterGlobal().second - window_height / 2;
 	}
 
+	void OldVersion() {
+		std::cout << "Please update the game" << "\n";
+	}
+
 
 	void DrawAll() {
 		
