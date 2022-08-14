@@ -66,10 +66,166 @@ public:
 			height = 126;
 			SetCoordsByCenter(x, y);
 		}
+		else if (type == PowerTypes::Heal)
+		{
+			width = 126;
+			height = 126;
+			SetCoordsByCenter(x, y);
+		}
 		name = type;
 	};
 	~Power() override {};
 	PowerTypes name;
+};
+
+class Base : public HeadSprite
+{
+public:
+	Base() {
+		width = 876;
+		height = 876;
+	};
+	~Base() override {};
+
+	void Draw(int x, int y) {
+		if (hp > 0)
+		{
+			//std::cout << global_x << " " << global_y << "\n";
+			drawSprite(base_sprites[0], x,y);	
+
+			if (start_animation_time[0] != 0)
+			{
+				BlueLight(x, y, start_animation_time[0]);
+			}
+
+			if (start_animation_time[1] != 0)
+			{
+				RedLight(x, y, start_animation_time[1]);
+			}
+
+			if (start_animation_time[2] != 0)
+			{
+				BlueFace(x, y, start_animation_time[2]);
+			}
+			
+			if (start_animation_time[3] != 0)
+			{
+				RedFace(x, y, start_animation_time[3]);
+			}
+			
+		}
+	}
+
+	void BlueLight(int x, int y, int& start_time) {
+		if (start_time >= tick_number - 20)
+		{
+
+			drawSprite(base_sprites[2], x, y);
+		}
+		else if (start_time >= tick_number - 40)
+		{
+
+			drawSprite(base_sprites[1], x, y);
+		}
+
+		if (start_time < tick_number - 40)
+		{
+			start_time = tick_number;
+		}
+	}
+
+	void RedLight(int x, int y, int& start_time) {
+		if (start_time >= tick_number - 20)
+		{
+
+			drawSprite(base_sprites[4], x, y);
+		}
+		else if (start_time >= tick_number - 40)
+		{
+
+			drawSprite(base_sprites[3], x, y);
+		}
+
+		if (start_time < tick_number - 40)
+		{
+			start_time = tick_number;
+		}
+	}
+
+	void BlueFace(int x, int y, int& start_time) {
+		if (start_time >= tick_number - 20)
+		{
+
+			drawSprite(base_sprites[5], x, y);
+		}
+		else if (start_time >= tick_number - 40)
+		{
+
+			drawSprite(base_sprites[6], x, y);
+		}
+
+		if (start_time < tick_number - 40)
+		{
+			start_time = tick_number;
+		}
+	}
+
+	void RedFace(int x, int y, int& start_time) {
+		if (start_time >= tick_number - 20)
+		{
+
+			drawSprite(base_sprites[7], x, y);
+		}
+		else if (start_time >= tick_number - 40)
+		{
+
+			drawSprite(base_sprites[8], x, y);
+		}
+
+		if (start_time < tick_number - 40)
+		{
+			start_time = tick_number;
+		}
+	}
+
+	void SetHP(int hp_new) {
+		hp = hp_new;
+	}
+
+	void SetStatus(int status_new) {
+		if (status_new != status)
+		{
+			status = status_new;
+				//std::cout << status << "\n";
+			for (auto& time : start_animation_time)
+			{
+				time = 0;
+			}
+			
+			if (status == 1)
+			{
+				start_animation_time[0] = tick_number;
+				start_animation_time[2] = tick_number;
+			}
+			else if (status == 2)
+			{
+				start_animation_time[1] = tick_number;
+				start_animation_time[3] = tick_number;
+			}
+			
+		}
+		else
+		{
+			status = status_new;
+		}
+	}
+	
+
+	int status = 0;
+	int hp;
+
+	std::vector<int> start_animation_time = { 0, 0, 0, 0, 0 };
+	
 };
 
 
@@ -86,6 +242,9 @@ public:
 		{
 			big_explosion_sprites[i] = createSprite(("data/ships/explosions/big/" + std::to_string(i) + ".png").c_str());
 		}
+
+		AddBase();
+		
 
 		shield_sprites[1] = createSprite("data/ships/shields/1.png");
 		shield_sprites[2] = createSprite("data/ships/shields/2.png");
@@ -138,6 +297,22 @@ public:
 		window_y = main_hero.GetCenterGlobal().second - window_height / 2;
 	}
 
+	void AddBase() {
+		base_sprites[0] = createSprite("data/base/base.png");
+
+		base_sprites[1] = createSprite("data/base/blue/bottom_light.png");
+		base_sprites[2] = createSprite("data/base/blue/top_light.png");
+		
+		base_sprites[3] = createSprite("data/base/red/bottom_light.png");
+		base_sprites[4] = createSprite("data/base/red/top_light.png");
+
+		base_sprites[5] = createSprite("data/base/blue/face_1.png");
+		base_sprites[6] = createSprite("data/base/blue/face_2.png");
+		
+		base_sprites[7] = createSprite("data/base/red/face_1.png");
+		base_sprites[8] = createSprite("data/base/red/face_2.png");
+	}
+
 	void OldVersion() {
 		std::cout << "Please update the game" << "\n";
 	}
@@ -145,7 +320,7 @@ public:
 
 	void DrawAll() {
 		
-		background->Draw();
+		background->Draw(main_hero.x_speed, main_hero.y_speed);
 
 		for (auto& power : powers)
 		{
@@ -165,6 +340,10 @@ public:
 						else if (power.name == PowerTypes::Barrage)
 						{
 							drawSprite(small_barrage_sprite, x, y);
+						}
+						else if (power.name == PowerTypes::Heal)
+						{
+							drawSprite(small_heal_sprite, x, y);
 						}
 					}
 				}
@@ -224,7 +403,6 @@ public:
 					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
 					{						
 						ship.DrawXY(x, y);
-						
 					}
 				}
 			}
@@ -234,6 +412,21 @@ public:
 		{
 			main_hero.Draw();
 		}
+		
+		for (int i = -1; i <= 1; i++)
+		{
+			for (int j = -1; j <= 1; j++)
+			{
+				int x = base.xGlobal() + map_width * i - window_x;
+				int y = base.yGlobal() + map_width * j - window_y;
+
+				
+					base.Draw(x, y);
+				
+			}
+		}
+
+		
 
 		for (auto& explosion : explosions)
 		{
@@ -268,6 +461,7 @@ public:
 				}
 			}
 		}
+		
 
 		if (death_ticks == 0)
 		{
@@ -302,7 +496,10 @@ public:
 
 		if (is_connected)
 		{
-			se.playSoundEffect(4);
+			if (button == FRMouseButton::LEFT)
+			{
+				se.playSoundEffect(4);
+			}
 		}
 
 	}
@@ -335,12 +532,15 @@ public:
 	std::vector<Power> powers;
 	std::vector<Bullet> bullets;
 	MainHeroShip main_hero;
+	Base base;
 	Sprite* big_asteroid_sprite = createSprite("data/big_asteroid.png");
 	Sprite* small_asteroid_sprite = createSprite("data/small_asteroid.png");
 	Sprite* bullet_sprite = createSprite("data/bullet.png");
 	Sprite* small_shield_sprite = createSprite("data/ships/shield_icon_small.png");
 	Sprite* small_barrage_sprite = createSprite("data/ships/barrage_icon_small.png");
-	int buffer = 200;
+	Sprite* small_heal_sprite = createSprite("data/ships/heal_icon_small.png");
+	
+	int buffer = 250;
 	
 	
 };

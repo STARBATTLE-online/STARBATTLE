@@ -98,6 +98,7 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
 	InfoFromServer::m_swap_map_creator->explosions.reserve(50);
     InfoFromServer::m_swap_map_creator->powers.clear();
     InfoFromServer::m_swap_map_creator->powers.reserve(50);
+    InfoFromServer::m_swap_map_creator->base.SetHP(0);
 	Ship* ship;
     while (ss >> commandType)
     {
@@ -120,9 +121,10 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
 			uint64_t sprite_id, public_id;
             char rotation;
             bool is_engine;
+            double x_speed, y_speed;
             Rotation rot = Rotation::Top;
 
-            ss >> x >> y >> rotation >> sprite_id >> shield >> hp >> is_engine >> public_id >> score;
+            ss >> x >> y >> rotation >> x_speed >> y_speed >> sprite_id >> shield >> hp >> is_engine >> public_id >> score;
 			
             switch (rotation) {
             case 'T':
@@ -147,12 +149,14 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
                 InfoFromServer::m_swap_map_creator->main_hero.SetEngine(is_engine);
                 InfoFromServer::m_swap_map_creator->main_hero.SetShield(shield);
                 InfoFromServer::m_swap_map_creator->main_hero.SetHP(hp);
+                InfoFromServer::m_swap_map_creator->main_hero.SetSpeed(x_speed, y_speed);
                 ship = &(InfoFromServer::m_swap_map_creator->main_hero);
                 window_x = InfoFromServer::m_swap_map_creator->main_hero.GetCenterGlobal().first - window_width / 2;
                 window_y = InfoFromServer::m_swap_map_creator->main_hero.GetCenterGlobal().second - window_height / 2;
                 my_score = score;
                 i_am_here = true;
                 death_ticks = 0;
+                //std::cout << score << "\n";
             }
             else
             {
@@ -202,6 +206,21 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
 
 			
         }
+        else if (commandType == "Heal")
+        {
+            int x, y;
+            ss >> x >> y;
+            InfoFromServer::m_swap_map_creator->powers.emplace_back(Power(x, y, PowerTypes::Heal));
+        }
+        else if (commandType == "EnemySpawner")
+        {
+            int x, y, hp, status;
+            ss >> x >> y >> hp >> status;
+            InfoFromServer::m_swap_map_creator->base.SetCoordsByCenter(x, y);
+            InfoFromServer::m_swap_map_creator->base.SetStatus(status);
+            InfoFromServer::m_swap_map_creator->base.SetHP(hp);
+            //std::cout << x << y << hp << status << "\n";
+        }
         
     }
     if (!i_am_here)
@@ -233,5 +252,6 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
     InfoFromServer::m_swap_map_creator->main_hero.SetRotation(InfoFromServer::m_map_creator->main_hero.GetRotation());
     InfoFromServer::m_swap_map_creator->main_hero.sprite_id = InfoFromServer::m_map_creator->main_hero.sprite_id;
     InfoFromServer::m_map_creator->main_hero = InfoFromServer::m_swap_map_creator->main_hero;
+	InfoFromServer::m_map_creator->base = InfoFromServer::m_swap_map_creator->base;
 	
 }

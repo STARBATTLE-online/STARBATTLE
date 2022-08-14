@@ -57,7 +57,6 @@ public:
 	std::pair<int, int> GetSize() {
 		return std::make_pair(width, height);
 	}
-	
 
 protected:
 	int width;

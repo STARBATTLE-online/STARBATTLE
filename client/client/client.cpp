@@ -139,6 +139,7 @@ public:
 						is_connected = 0;
 						map_manager->SetClosed();
 						se.playMusicEffect(0);
+									
 						
 					}
 				}

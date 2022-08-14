@@ -7,7 +7,8 @@ bool fix = false;
 enum class PowerTypes {
 	Shield,
 	Barrage,
-	Speed
+	Speed,
+	Heal
 };
 
 
@@ -81,7 +82,8 @@ public:
 
 
 	void Draw() {
-		
+		//std::cout << global_x << " " << global_y << "\n";
+
 		drawSprite(ship_sprites[{sprite_id, rotation}], x(), y());
 		if (is_engine)
 		{
@@ -145,6 +147,11 @@ public:
 		hit_points = hp;
 	}
 
+	void SetSpeed(double x_s, double y_s) {
+		x_speed = x_s;
+		y_speed = y_s;
+	}
+
 	int GetHP() {
 		return hit_points;
 	}
@@ -188,7 +195,8 @@ public:
 
 	int sprite_id;
 
-
+	double x_speed;
+	double y_speed;
 	ShipPower* power = nullptr;
 protected: //?
 	Rotation rotation;
