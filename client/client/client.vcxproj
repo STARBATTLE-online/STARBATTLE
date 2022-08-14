@@ -175,6 +175,7 @@
     <ClInclude Include="SDL2SoundEffect.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="SuperPower.h" />
+    <ClInclude Include="Text.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FrameworkRelease_x64.dll" />

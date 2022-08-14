@@ -3,6 +3,7 @@
 #include <string>
 #include "SDL2SoundEffect.h"
 #include <map>
+#include "Text.h"
 
 std::string VERSION = "1.0.0";
 
@@ -48,5 +49,8 @@ std::map<int, Sprite*> self_hp_sprites;
 std::map<int, Sprite*> backgrounds;
 std::map<int, Sprite*> base_sprites;
 
+Text text;
+
 
 std::string request = "";
+
