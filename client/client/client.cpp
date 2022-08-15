@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <random>
-#include <iostream>
 #include <vector>
 #include <iterator>
 #include <string>
@@ -42,6 +41,7 @@ public:
 	virtual bool Init() {
 		map_manager = std::make_shared<MapCreator>();
 		inter = std::make_shared<Interface>();
+		text = std::make_shared<Text>();
 		InfoFromServer::SetMapCreator(map_manager);
 		return true;
 	}
@@ -68,9 +68,10 @@ public:
 		if (!is_start_game || is_game_over)
 		{
 			death_ticks = 0;
-			
 			inter->Draw();
 			showCursor(false);
+
+			//text->print("Hello world!", 300, 300);
 		}
 		else if (is_start_game && !is_connected)
 		{
