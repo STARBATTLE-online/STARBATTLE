@@ -21,6 +21,11 @@ enum class Decoration { //not added
 	line_through
 };
 
+enum class Size {
+	small,
+	medium
+};
+
 struct Symbol {
 	Sprite* symbol;
 	int height = 27;
@@ -31,78 +36,15 @@ class Text
 {
 public:
 	Text() {
+		InitAlphabet(alphabet_white_25, Size::small, Color::white);
+		InitAlphabet(alphabet_white_72, Size::medium, Color::white);
 		
-		for (int i = 32; i <= 126; i++)
-		{
-			alphabet_white_25[i].symbol = createSprite(("data/text/white/" + std::to_string(i) + ".png").c_str());
-			if (i == 32 || i == 43 || i == 52 || i == 54 || i == 97 || i == 16 || i == 110 ||
-				i == 65 || i == 70 || i == 75 || i == 76 || i == 83 || i == 95 || i == 112)
-			{
-				alphabet_white_25[i].width = 16;
-			}
-			else if (i == 33 || i == 39 || i == 44 || i == 46 || i == 105 || i == 108 || i == 124)
-			{
-				alphabet_white_25[i].width = 5;
-			}
-			else if (i == 34 || i == 36 || i == 47 || i == 48 || i == 50 || i == 92 || i == 100 || i == 102 ||
-				i == 51 || i == 55 || i == 56 || i == 57 || i == 61 || i == 63 || i == 94 || i == 101 ||
-				i == 103 || i == 104 || i == 107 || i == 111 || i == 113 || i == 117 || i == 121 || i == 122)
-			{
-				alphabet_white_25[i].width = 15;
-			}
-			else if (i == 35 || i == 38 || i == 53 || i == 66 || i == 84 || i == 85 || i == 86 || i == 87 ||
-				i == 68 || i == 69 || i == 72 || i == 77 || i == 78 || i == 80 || i == 88 || i == 89 ||
-				i == 90 || i == 98 || i == 118 || i == 120 || i == 126)
-			{
-				alphabet_white_25[i].width = 18;
-			}
-			else if (i == 37)
-			{
-				alphabet_white_25[i].width = 22;
-			}
-			else if (i == 40 || i == 41 || i == 42 || i == 49 || i == 60 || i == 62)
-			{
-				alphabet_white_25[i].width = 11;
-			}
-			else if (i == 45 || i == 73 || i == 116 || i == 123 || i == 125)
-			{
-				alphabet_white_25[i].width = 10;
-			}
-			else if (i == 58 || i == 59)
-			{
-				alphabet_white_25[i].width = 7;
-			}
-			else if (i == 64 || i == 109)
-			{
-				alphabet_white_25[i].width = 24;
-			}
-			else if (i == 67 || i == 71 || i == 119)
-			{
-				alphabet_white_25[i].width = 19;
-			}
-			else if (i == 74)
-			{
-				alphabet_white_25[i].width = 13;
-			}
-			else if (i == 79 || i == 81 || i == 82)
-			{
-				alphabet_white_25[i].width = 21;
-			}
-			else if (i == 91 || i == 93 || i == 96)
-			{
-				alphabet_white_25[i].width = 8;
-			}
-			else if (i == 106 || i == 114 || i == 115)
-			{
-				alphabet_white_25[i].width = 13;
-			}
-		}
 	}
 	~Text() {}
 	
 	void print( std::string text,
 				int x, int y,
-				int font_size = 25,
+				Size font_size = Size::small,
 				Color color = Color::white,
 				int line_height = 27,
 				int letter_spacing = 0,
@@ -111,21 +53,30 @@ public:
 	
 	void println(	std::string text,
 					int x, int y,
-					int font_size,
+					Size font_size,
 					Color color,
 					int letter_spacing);
 
-	void printlnWhite25(std::string& text,
+
+	template <typename T>
+	void printlnTemplate(
+		std::string& text,
 		int x, int y,
-		int letter_spacing);
+		int letter_spacing,
+		T& sprites);
+
+	template <typename T>
+	void InitAlphabet(
+		T& sprites, Size font_size, Color color);
 
 private:
 	std::map<char, Symbol> alphabet_white_25;
+	std::map<char, Symbol> alphabet_white_72;
 };
 
 void Text::print(	std::string text,
 					int x, int y,
-					int font_size,
+					Size font_size,
 					Color color,
 					int line_height,
 					int letter_spacing,
@@ -162,27 +113,131 @@ void Text::print(	std::string text,
 
 void Text::println(	std::string text,
 					int x, int y,
-					int font_size,
+					Size font_size,
 					Color color,
 					int letter_spacing) {
 	if (color == Color::white)
 	{
-		if (font_size == 25)
+		if (font_size == Size::small)
 		{
-			printlnWhite25(text, x, y, letter_spacing);
+			printlnTemplate(text, x, y, letter_spacing, alphabet_white_25);
+		}
+		else if (font_size == Size::medium)
+		{
+			printlnTemplate(text, x, y, letter_spacing, alphabet_white_72);
 		}
 	}
 }
 
-void Text::printlnWhite25(std::string& text,
+template <typename T>
+void Text::printlnTemplate(
+	std::string& text,
 	int x, int y,
-	int letter_spacing) {
+	int letter_spacing,
+	T& sprites) {
 	for (char& ch : text) {
-		if (alphabet_white_25.find(ch) != alphabet_white_25.end()) {
-			drawSprite(alphabet_white_25[ch].symbol, x, y);
-			x += alphabet_white_25[ch].width + letter_spacing;
+		if (sprites.find(ch) != alphabet_white_25.end()) {
+			drawSprite(sprites[ch].symbol, x, y);
+			x += sprites[ch].width + letter_spacing;
 		}
 	}
 }
 
 
+template <typename T>
+void Text::InitAlphabet(
+	T& sprites, Size font_size, Color color) {
+	double factor;
+	int real_size;
+	if (font_size == Size::small)
+	{
+		factor = 1;
+		real_size = 25;
+	}
+	else if (font_size == Size::medium)
+	{
+		factor = 2.777777777777778;
+		real_size = 72;
+	}
+
+	for (int i = 32; i <= 126; i++)
+	{		
+		if (color == Color::white)
+		{
+			sprites[i].symbol = createSprite(("data/text/white/" + std::to_string(real_size) + "/" + std::to_string(i) + ".png").c_str());
+		}
+
+		if (font_size == Size::small)
+		{	
+			sprites[i].height = 27;
+		}
+		else if (font_size == Size::medium)
+		{
+			sprites[i].height = 74;
+		}
+
+		
+		if (i == 32 || i == 43 || i == 52 || i == 54 || i == 97 || i == 16 || i == 110 ||
+			i == 65 || i == 70 || i == 75 || i == 76 || i == 83 || i == 95 || i == 112)
+		{
+			sprites[i].width = int(16 * factor);
+		}
+		else if (i == 33 || i == 39 || i == 44 || i == 46 || i == 105 || i == 108 || i == 124)
+		{
+			sprites[i].width = int(5 * factor);
+		}
+		else if (i == 34 || i == 36 || i == 47 || i == 48 || i == 50 || i == 92 || i == 100 || i == 102 ||
+			i == 51 || i == 55 || i == 56 || i == 57 || i == 61 || i == 63 || i == 94 || i == 101 ||
+			i == 103 || i == 104 || i == 107 || i == 111 || i == 113 || i == 117 || i == 121 || i == 122)
+		{
+			sprites[i].width = int(15 * factor);
+		}
+		else if (i == 35 || i == 38 || i == 53 || i == 66 || i == 84 || i == 85 || i == 86 || i == 87 ||
+			i == 68 || i == 69 || i == 72 || i == 77 || i == 78 || i == 80 || i == 88 || i == 89 ||
+			i == 90 || i == 98 || i == 118 || i == 120 || i == 126)
+		{
+			sprites[i].width = int(18 * factor);
+		}
+		else if (i == 37)
+		{
+			sprites[i].width = int(22 * factor);
+		}
+		else if (i == 40 || i == 41 || i == 42 || i == 49 || i == 60 || i == 62)
+		{
+			sprites[i].width = int(11 * factor);
+		}
+		else if (i == 45 || i == 73 || i == 116 || i == 123 || i == 125)
+		{
+			sprites[i].width = int(10 * factor);
+		}
+		else if (i == 58 || i == 59)
+		{
+			sprites[i].width = int(7 * factor);
+		}
+		else if (i == 64 || i == 109)
+		{
+			sprites[i].width = int(24 * factor);
+		}
+		else if (i == 67 || i == 71 || i == 119)
+		{
+			sprites[i].width = int(19 * factor);
+		}
+		else if (i == 74)
+		{
+			sprites[i].width = int(13 * factor);
+		}
+		else if (i == 79 || i == 81 || i == 82)
+		{
+			sprites[i].width = int(21 * factor);
+		}
+		else if (i == 91 || i == 93 || i == 96)
+		{
+			sprites[i].width = int(8 * factor);
+		}
+		else if (i == 106 || i == 114 || i == 115)
+		{
+			sprites[i].width = int(13 * factor);
+		}
+	}
+	
+}

@@ -71,7 +71,8 @@ public:
 			inter->Draw();
 			showCursor(false);
 
-			//text->print("Hello world!", 300, 300);
+			text->print("Hello world!", 300, 300);
+			text->print("Hello world!", 300, 500, Size::medium);
 		}
 		else if (is_start_game && !is_connected)
 		{
