@@ -136,7 +136,7 @@ void Text::printlnTemplate(
 	int letter_spacing,
 	T& sprites) {
 	for (char& ch : text) {
-		if (sprites.find(ch) != alphabet_white_25.end()) {
+		if (sprites.find(ch) != sprites.end()) {
 			drawSprite(sprites[ch].symbol, x, y);
 			x += sprites[ch].width + letter_spacing;
 		}

@@ -65,6 +65,12 @@
     <ClInclude Include="Text.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="KeyHandling.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="FrameworkRelease_x64.dll">
@@ -85,6 +91,7 @@
     <None Include="zlib1.dll">
       <Filter>Исходные файлы</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="FrameworkRelease_x64.lib">

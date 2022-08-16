@@ -93,6 +93,9 @@ public:
 			//std::cout << global_x << " " << global_y << "\n";
 			drawSprite(base_sprites[0], x,y);	
 
+			//std::cout << start_animation_time[0] << " " << tick_number << "\n";
+
+
 			if (start_animation_time[0] != 0)
 			{
 				BlueLight(x, y, start_animation_time[0]);
@@ -117,74 +120,54 @@ public:
 	}
 
 	void BlueLight(int x, int y, int& start_time) {
-		if (start_time >= tick_number - 20)
+		if ((tick_number - start_time)%40 < 20)
 		{
 
 			drawSprite(base_sprites[2], x, y);
 		}
-		else if (start_time >= tick_number - 40)
+		else
 		{
-
+			
 			drawSprite(base_sprites[1], x, y);
-		}
-
-		if (start_time < tick_number - 40)
-		{
-			start_time = tick_number;
-		}
+		}		
 	}
 
 	void RedLight(int x, int y, int& start_time) {
-		if (start_time >= tick_number - 20)
+		if ((tick_number - start_time) % 40 < 20)
 		{
 
 			drawSprite(base_sprites[4], x, y);
 		}
-		else if (start_time >= tick_number - 40)
+		else
 		{
 
 			drawSprite(base_sprites[3], x, y);
 		}
-
-		if (start_time < tick_number - 40)
-		{
-			start_time = tick_number;
-		}
 	}
 
 	void BlueFace(int x, int y, int& start_time) {
-		if (start_time >= tick_number - 20)
+		if ((tick_number - start_time) % 100 < 30)
 		{
 
 			drawSprite(base_sprites[5], x, y);
 		}
-		else if (start_time >= tick_number - 40)
+		if (start_time >= tick_number - 40)
 		{
 
 			drawSprite(base_sprites[6], x, y);
 		}
-
-		if (start_time < tick_number - 40)
-		{
-			start_time = tick_number;
-		}
 	}
 
 	void RedFace(int x, int y, int& start_time) {
-		if (start_time >= tick_number - 20)
+		if ((tick_number - start_time) % 100 < 30)
 		{
 
 			drawSprite(base_sprites[7], x, y);
 		}
-		else if (start_time >= tick_number - 40)
+		else
 		{
 
 			drawSprite(base_sprites[8], x, y);
-		}
-
-		if (start_time < tick_number - 40)
-		{
-			start_time = tick_number;
 		}
 	}
 
@@ -201,7 +184,8 @@ public:
 			{
 				time = 0;
 			}
-			
+
+
 			if (status == 1)
 			{
 				start_animation_time[0] = tick_number;
@@ -213,10 +197,6 @@ public:
 				start_animation_time[3] = tick_number;
 			}
 			
-		}
-		else
-		{
-			status = status_new;
 		}
 	}
 	

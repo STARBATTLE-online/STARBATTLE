@@ -5,6 +5,8 @@
 #include <map>
 
 #include "Text.h"
+#include "KeyHandling.h"
+#include "Frame.h"
 
 std::string VERSION = "1.0.0";
 
@@ -51,6 +53,8 @@ std::map<int, Sprite*> backgrounds;
 std::map<int, Sprite*> base_sprites;
 
 std::shared_ptr<Text> text;
+std::shared_ptr<KeyHandling> key_handler;
+std::shared_ptr<Frame> frame;
 
 
 std::string request = "";

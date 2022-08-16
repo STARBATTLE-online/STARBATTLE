@@ -11,6 +11,7 @@
 #include <sstream>
 #include <thread>
 
+
 #include "GlobalVariables.h"
 
 #include "MapCreator.h"
@@ -42,6 +43,8 @@ public:
 		map_manager = std::make_shared<MapCreator>();
 		inter = std::make_shared<Interface>();
 		text = std::make_shared<Text>();
+		key_handler = std::make_shared<KeyHandling>();
+		frame = std::make_shared<Frame>();
 		InfoFromServer::SetMapCreator(map_manager);
 		return true;
 	}
@@ -51,7 +54,7 @@ public:
 	}
 
 	virtual bool Tick() {
-	
+			
 		if (exit_game)
 		{
 			map_manager->SetClosed();
@@ -71,8 +74,15 @@ public:
 			inter->Draw();
 			showCursor(false);
 
-			text->print("Hello world!", 300, 300);
-			text->print("Hello world!", 300, 500, Size::medium);
+			//frame->print_frame(200, 200, 2);
+		/*	char key;
+			if (key_handler->key(key))
+			{				
+				text->print(std::string(1, key), 300, 300);
+			}*/
+
+			//text->print("Hello world!", 300, 300);
+			//text->print("Hello world!", 300, 500, Size::medium);
 		}
 		else if (is_start_game && !is_connected)
 		{
@@ -184,6 +194,7 @@ int main(int argc, char* argv[])
 	std::thread t1([]() {
 		run(new MyFramework);
 		exit_game = true;
+		key_handler->exit_game_key_handler = true;
 		return 0;
 	});
 
