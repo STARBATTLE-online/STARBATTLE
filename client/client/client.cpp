@@ -74,7 +74,7 @@ public:
 			inter->Draw();
 			showCursor(false);
 
-			//frame->print_frame(200, 200, 2);
+			frame->print_frame(0, 0, 4, 2);
 		/*	char key;
 			if (key_handler->key(key))
 			{				
