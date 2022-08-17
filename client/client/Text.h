@@ -8,6 +8,17 @@ enum class Color {
 	white
 };
 
+enum class Align {
+	center,
+	left
+};
+
+enum class VAlign {
+	top,
+	center,
+	bottom
+};
+
 enum class Transform {
 	none,
 	uppercase,
@@ -45,17 +56,22 @@ public:
 	void print( std::string text,
 				int x, int y,
 				Size font_size = Size::small,
+				Align align = Align::left,
+				VAlign valign = VAlign::top,
+				Transform text_transform = Transform::none,
 				Color color = Color::white,
 				int line_height = 27,
 				int letter_spacing = 0,
-				Transform text_transform = Transform::none,
 				Decoration text_decoration = Decoration::none);
 	
 	void println(	std::string text,
 					int x, int y,
 					Size font_size,
 					Color color,
-					int letter_spacing);
+					int letter_spacing,
+					int line_height,
+					Align align,
+					VAlign valign);
 
 
 	template <typename T>
@@ -63,7 +79,10 @@ public:
 		std::string& text,
 		int x, int y,
 		int letter_spacing,
-		T& sprites);
+		int line_height,
+		T& sprites,
+		Align align,
+		VAlign valign);
 
 	template <typename T>
 	void InitAlphabet(
@@ -77,11 +96,15 @@ private:
 void Text::print(	std::string text,
 					int x, int y,
 					Size font_size,
+					Align align,
+					VAlign valign,
+					Transform text_transform,
 					Color color,
 					int line_height,
 					int letter_spacing,
-					Transform text_transform,
 					Decoration text_decoration) {
+	
+
 	std::string temp = "";
 	int i = 0;
 	for (char ch : text) {
@@ -97,7 +120,7 @@ void Text::print(	std::string text,
 			default:
 				break;
 			}
-			println(temp, x, y + (line_height * i), font_size, color, letter_spacing);
+			println(temp, x, y + (line_height * i), font_size, color, letter_spacing, line_height, align, valign);
 			i++;
 		}
 		else {
@@ -106,7 +129,7 @@ void Text::print(	std::string text,
 	}
 	if (text[text.size() - 1] != '\n')
 	{
-		println(temp, x, y + (line_height * i), font_size, color, letter_spacing);
+		println(temp, x, y + (line_height * i), font_size, color, letter_spacing, line_height, align, valign);
 	}
 	
 }
@@ -115,16 +138,19 @@ void Text::println(	std::string text,
 					int x, int y,
 					Size font_size,
 					Color color,
-					int letter_spacing) {
+					int letter_spacing,
+					int line_height,
+					Align align,
+					VAlign valign) {
 	if (color == Color::white)
 	{
 		if (font_size == Size::small)
 		{
-			printlnTemplate(text, x, y, letter_spacing, alphabet_white_25);
+			printlnTemplate(text, x, y, letter_spacing, line_height, alphabet_white_25, align, valign);
 		}
 		else if (font_size == Size::medium)
 		{
-			printlnTemplate(text, x, y, letter_spacing, alphabet_white_72);
+			printlnTemplate(text, x, y, letter_spacing, line_height, alphabet_white_72, align, valign);
 		}
 	}
 }
@@ -134,7 +160,43 @@ void Text::printlnTemplate(
 	std::string& text,
 	int x, int y,
 	int letter_spacing,
-	T& sprites) {
+	int line_height,
+	T& sprites,
+	Align align,
+	VAlign valign) {
+
+	if (align == Align::center)
+	{
+		int temp_x = 0;
+		for (char ch : text)
+		{
+			temp_x += sprites[ch].width + letter_spacing;
+		}
+		temp_x /= 2;
+		x -= temp_x;
+	}
+	if (valign == VAlign::center)
+	{
+		if (line_height >= sprites[text[0]].height)
+		{
+			y -= line_height / 2;
+		}
+		else
+		{
+			y -= sprites[text[0]].height / 2;
+		}
+	}
+	else if (valign == VAlign::bottom)
+	{
+		if (line_height >= sprites[text[0]].height)
+		{
+			y -= line_height;
+		}
+		else
+		{
+			y -= sprites[text[0]].height;
+		}
+	}
 	for (char& ch : text) {
 		if (sprites.find(ch) != sprites.end()) {
 			drawSprite(sprites[ch].symbol, x, y);

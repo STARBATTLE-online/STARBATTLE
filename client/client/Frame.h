@@ -68,11 +68,11 @@ public:
 
 	void print_frame(int x, int y,
 		int width_counter = 0,
-		int height_counter = 0, int global_w = 1920, int global_h = 1080) {
+		int height_counter = 0) {
 
 		//by center
-		x = (x + (global_w / 2)) - ((820 - 562) + (width_counter * frame_elements[Elements::top].width)/2);
-		y = (y + (global_h / 2)) - ((820 - 562) + (height_counter * frame_elements[Elements::left].height)/2);
+		x -= ((820 - 562) + (width_counter * frame_elements[Elements::top].width)/2);
+		y -= ((820 - 562) + (height_counter * frame_elements[Elements::left].height)/2);
 		//
 
 		x -= 562;

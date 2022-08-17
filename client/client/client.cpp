@@ -74,7 +74,7 @@ public:
 			inter->Draw();
 			showCursor(false);
 
-			frame->print_frame(0, 0, 4, 2);
+			//frame->print_frame(960, 540, 4, 2);
 		/*	char key;
 			if (key_handler->key(key))
 			{				
@@ -82,7 +82,7 @@ public:
 			}*/
 
 			//text->print("Hello world!", 300, 300);
-			//text->print("Hello world!", 300, 500, Size::medium);
+			//text->print("Hello world!", 960, 540, Size::medium, Align::center, VAlign::center);
 		}
 		else if (is_start_game && !is_connected)
 		{
