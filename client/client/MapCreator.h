@@ -151,7 +151,7 @@ public:
 
 			drawSprite(base_sprites[5], x, y);
 		}
-		if (start_time >= tick_number - 40)
+		else
 		{
 
 			drawSprite(base_sprites[6], x, y);
@@ -225,6 +225,8 @@ public:
 
 		AddBase();
 		
+		no_hp_sprite = createSprite("data/ships/hp/no_hp.png");
+		hp_sprite = createSprite("data/ships/hp/hp.png");
 
 		shield_sprites[1] = createSprite("data/ships/shields/1.png");
 		shield_sprites[2] = createSprite("data/ships/shields/2.png");

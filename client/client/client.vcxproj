@@ -175,6 +175,7 @@
     <ClInclude Include="Interface.h" />
     <ClInclude Include="KeyHandling.h" />
     <ClInclude Include="MapCreator.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SDL2SoundEffect.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="SuperPower.h" />
@@ -191,6 +192,12 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="FrameworkRelease_x64.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="client.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="C:\Users\verni\Downloads\Frame 20.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

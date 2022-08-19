@@ -51,6 +51,8 @@ std::map<int, Sprite*> hp_sprites;
 std::map<int, Sprite*> self_hp_sprites;
 std::map<int, Sprite*> backgrounds;
 std::map<int, Sprite*> base_sprites;
+Sprite* no_hp_sprite;
+Sprite* hp_sprite;
 
 std::shared_ptr<Text> text;
 std::shared_ptr<KeyHandling> key_handler;

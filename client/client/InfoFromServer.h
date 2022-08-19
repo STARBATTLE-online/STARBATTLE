@@ -118,13 +118,14 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
 		else if (commandType == "Ship")
 		{
 			int x, y, score, hp, shield;
+            bool is_hp;
 			uint64_t sprite_id, public_id;
             char rotation;
             bool is_engine;
             double x_speed, y_speed;
             Rotation rot = Rotation::Top;
 
-            ss >> x >> y >> rotation >> x_speed >> y_speed >> sprite_id >> shield >> hp >> is_engine >> public_id >> score;
+            ss >> is_hp >> x >> y >> rotation >> x_speed >> y_speed >> sprite_id >> shield >> hp >> is_engine >> public_id >> score;
 			
             switch (rotation) {
             case 'T':
@@ -164,7 +165,7 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
                 InfoFromServer::m_swap_map_creator->ships.back().SetRotation(rot);
                 InfoFromServer::m_swap_map_creator->ships.back().SetEngine(is_engine);
                 InfoFromServer::m_swap_map_creator->ships.back().SetShield(shield);
-                InfoFromServer::m_swap_map_creator->ships.back().SetHP(hp);
+                InfoFromServer::m_swap_map_creator->ships.back().SetHP(hp, is_hp);
                 ship = &InfoFromServer::m_swap_map_creator->ships.back();
             }
 		}

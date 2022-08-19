@@ -136,15 +136,33 @@ public:
 			}
 		}
 		
-		drawSprite(hp_sprites[hit_points], (x - ((engine_width - width) / 2)), (y - ((engine_height - height) / 2)));
+		if (!is_hp)
+		{
+			drawSprite(hp_sprites[hit_points], (x - ((engine_width - width) / 2)), (y - ((engine_height - height) / 2)));
+		}
+		
+		//152   88  212
+
+		/*int i = 0;
+		for (; i < hit_points; i++)
+		{
+			drawSprite(hp_sprite, (x - ((engine_width - width) / 2) + 212 - (max_hit_points*12)/2 + i*12), (88 + y - ((engine_height - height) / 2)));
+		}
+
+		for (; i < max_hit_points - hit_points; i++)
+		{
+			drawSprite(no_hp_sprite, (x - ((engine_width - width) / 2) + 212 - (max_hit_points * 12) / 2 + i * 12), (88 + y - ((engine_height - height) / 2)));
+		}*/
+		
 	}
 
-	void SetHP(int hp) {
+	void SetHP(int hp, bool is = 0) {
 		//if (hit_points != hp)
 		//{
 		//	//////std::cout << "HP: " << hp << "\n";
 		//}
 		hit_points = hp;
+		is_hp = is;
 	}
 
 	void SetSpeed(double x_s, double y_s) {
@@ -194,7 +212,7 @@ public:
 	}
 
 	int sprite_id;
-
+	bool is_hp = 0;
 	double x_speed;
 	double y_speed;
 	ShipPower* power = nullptr;
@@ -204,6 +222,8 @@ protected: //?
 	int engine_height;
 	bool is_engine = false;
 	int hit_points;
+	int max_hit_points = 10;
+
 
 };
 
