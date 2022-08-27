@@ -216,7 +216,8 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
         else if (commandType == "EnemySpawner")
         {
             int x, y, hp, status;
-            ss >> x >> y >> hp >> status;
+            bool is_hp;
+            ss >> is_hp >> x >> y >> hp >> status;
             InfoFromServer::m_swap_map_creator->base.SetCoordsByCenter(x, y);
             InfoFromServer::m_swap_map_creator->base.SetStatus(status);
             InfoFromServer::m_swap_map_creator->base.SetHP(hp);

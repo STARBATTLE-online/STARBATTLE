@@ -29,7 +29,7 @@ public:
 
 	virtual void PreInit(int& width, int& height, bool& fullscreen)
 	{
-		if (window_width == 0 && window_height == 0)
+		if (is_fullscreen)
 			fullscreen = true;
 		else
 			fullscreen = false;

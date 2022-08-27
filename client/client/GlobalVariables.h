@@ -23,6 +23,7 @@ int framerate = 60;
 int tick_number = 1;
 int my_score = 0;
 int death_ticks = 0;
+bool is_fullscreen = 1;
 
 std::atomic<bool> is_connected = 0;
 std::atomic<bool> is_connection_error = 0;
