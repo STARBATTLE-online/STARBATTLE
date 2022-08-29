@@ -230,8 +230,6 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             InfoFromServer::m_swap_map_creator->base.SetStatus(status);
             InfoFromServer::m_swap_map_creator->base.SetHP(hp);
             //std::cout << x << y << hp << status << "\n";
-            std::cout << "BASE" << "\n";
-
         }
         
     }

@@ -46,7 +46,7 @@ enum class Rotation
 std::map<std::pair<int, Rotation>, Sprite*> engine_sprites;
 std::map<std::pair<int, Rotation>, Sprite*> ship_sprites;
 std::map<int, Sprite*> big_explosion_sprites;
-std::map<int, Sprite*> super_big_explosion_sprites;
+std::map<int, Sprite*> huge_explosion_sprites;
 std::map<int, Sprite*> small_explosion_sprites;
 std::map<int, Sprite*> shield_sprites;
 std::map<int, Sprite*> hp_sprites;

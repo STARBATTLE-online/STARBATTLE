@@ -240,7 +240,7 @@ public:
 
 		for (int i = 1; i <= 50; i++)
 		{
-			super_big_explosion_sprites[i] = createSprite(("data/ships/explosions/huge/" + std::to_string(i) + ".png").c_str());
+			huge_explosion_sprites[i] = createSprite(("data/ships/explosions/huge/" + std::to_string(i) + ".png").c_str());
 		}
 
 		AddBase();
@@ -446,9 +446,13 @@ public:
 						int temp = tick_number - explosion.start_tick;
 						if (explosion.name == ExplosionTypes::Huge)
 						{
+							std::cout << tick_number << "\n";
+							if (temp < 4) {
+								drawSprite(huge_explosion_sprites[1], x, y);
+							}
 							if (temp >= 4 && temp <= 200)
 							{
-								drawSprite(super_big_explosion_sprites[temp / 4], x, y);
+								drawSprite(huge_explosion_sprites[temp / 4], x, y);
 							}
 							if (temp == 4 || temp == 5)
 							{
@@ -461,7 +465,7 @@ public:
 								se.playSoundEffect(6);
 							}
 						}
-						if (temp >= 4 && temp <= 28)
+						else if (temp >= 4 && temp <= 28)
 						{
 							if (explosion.name == ExplosionTypes::Big)
 							{
