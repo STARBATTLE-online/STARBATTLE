@@ -192,6 +192,14 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             InfoFromServer::m_swap_map_creator->explosions.emplace_back(Explosion(x, y, start_tick, ExplosionTypes::Small));
 
         }
+        else if (commandType == "HugeExplosion")
+        {
+            int x, y, start_tick;
+            ss >> x >> y >> start_tick;
+            InfoFromServer::m_swap_map_creator->explosions.emplace_back(Explosion(x, y, start_tick, ExplosionTypes::Huge));
+            std::cout << "BOOM" << "\n";
+
+        }
         else if (commandType == "Shield")
         {
             int x, y;
@@ -222,6 +230,8 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             InfoFromServer::m_swap_map_creator->base.SetStatus(status);
             InfoFromServer::m_swap_map_creator->base.SetHP(hp);
             //std::cout << x << y << hp << status << "\n";
+            std::cout << "BASE" << "\n";
+
         }
         
     }

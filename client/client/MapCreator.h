@@ -11,10 +11,9 @@
 
 enum class ExplosionTypes {
 	Big,
-	Small
+	Small,
+	Huge
 };
-
-
 
 class Bullet : public HeadSprite
 {
@@ -36,7 +35,12 @@ public:
 			width = 384;
 			height = 384;
 		}
-		else if (true)
+		else if (type == ExplosionTypes::Huge)
+		{
+			width = 1660;
+			height = 1660;
+		}
+		else
 		{
 			width = 200;
 			height = 200;
@@ -104,6 +108,7 @@ public:
 			if (start_animation_time[1] != 0)
 			{
 				RedLight(x, y, start_animation_time[1]);
+
 			}
 
 			if (start_animation_time[2] != 0)
@@ -114,6 +119,11 @@ public:
 			if (start_animation_time[3] != 0)
 			{
 				RedFace(x, y, start_animation_time[3]);
+			}
+
+			if (start_animation_time[4] != 0)
+			{
+				RedRoundLights(x, y, start_animation_time[3]);
 			}
 			
 		}
@@ -171,6 +181,10 @@ public:
 		}
 	}
 
+	void RedRoundLights(int x, int y, int& start_time) {
+		drawSprite(base_sprites[9], x, y);
+	}
+
 	void SetHP(int hp_new) {
 		hp = hp_new;
 	}
@@ -195,6 +209,7 @@ public:
 			{
 				start_animation_time[1] = tick_number;
 				start_animation_time[3] = tick_number;
+				start_animation_time[4] = tick_number;
 			}
 			
 		}
@@ -221,6 +236,11 @@ public:
 		for (int i = 1; i <= 7; i++)
 		{
 			big_explosion_sprites[i] = createSprite(("data/ships/explosions/big/" + std::to_string(i) + ".png").c_str());
+		}
+
+		for (int i = 1; i <= 50; i++)
+		{
+			super_big_explosion_sprites[i] = createSprite(("data/ships/explosions/huge/" + std::to_string(i) + ".png").c_str());
 		}
 
 		AddBase();
@@ -292,6 +312,9 @@ public:
 		
 		base_sprites[7] = createSprite("data/base/red/face_1.png");
 		base_sprites[8] = createSprite("data/base/red/face_2.png");
+		
+		base_sprites[9] = createSprite("data/base/red/lights.png");
+
 	}
 
 	void OldVersion() {
@@ -421,6 +444,23 @@ public:
 					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
 					{
 						int temp = tick_number - explosion.start_tick;
+						if (explosion.name == ExplosionTypes::Huge)
+						{
+							if (temp >= 4 && temp <= 200)
+							{
+								drawSprite(super_big_explosion_sprites[temp / 4], x, y);
+							}
+							if (temp == 4 || temp == 5)
+							{
+
+								se.playSoundEffect(6);
+							}
+							if (temp == 100 || temp == 101)
+							{
+
+								se.playSoundEffect(6);
+							}
+						}
 						if (temp >= 4 && temp <= 28)
 						{
 							if (explosion.name == ExplosionTypes::Big)
@@ -429,7 +469,7 @@ public:
 							}
 							else if (explosion.name == ExplosionTypes::Small)
 							{
-								drawSprite(small_explosion_sprites[temp/4], x, y);
+								drawSprite(small_explosion_sprites[temp / 4], x, y);
 							}
 							if (temp == 4 || temp == 5)
 							{

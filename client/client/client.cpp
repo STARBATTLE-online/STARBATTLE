@@ -183,6 +183,8 @@ int main(int argc, char* argv[])
 {
 	setlocale(0, "");
 	srand(time(NULL));
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL);
 	se.addSoundEffect(".\\data\\music\\menu_music.wav");		//0
 	se.addSoundEffect(".\\data\\music\\game_music.wav");		//1
 	se.addSoundEffect(".\\data\\music\\another_sound.wav");		//2
