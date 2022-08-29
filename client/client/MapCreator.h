@@ -439,27 +439,27 @@ public:
 				for (int j = -1; j <= 1; j++)
 				{
 					int x = explosion.xGlobal() + map_width * i - window_x;
-					int y = explosion.yGlobal() + map_width *j - window_y;
+					int y = explosion.yGlobal() + map_width * j - window_y;
 			
 					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
 					{
 						int temp = tick_number - explosion.start_tick;
 						if (explosion.name == ExplosionTypes::Huge)
 						{
-							std::cout << tick_number << "\n";
-							if (temp < 4) {
+							//std::cout << tick_number << "\n";
+							if (temp <= 6) {
 								drawSprite(huge_explosion_sprites[1], x, y);
 							}
-							if (temp >= 4 && temp <= 200)
+							else if (temp >= 6 && temp <= 300)
 							{
-								drawSprite(huge_explosion_sprites[temp / 4], x, y);
+								drawSprite(huge_explosion_sprites[temp / 6], x, y);
 							}
-							if (temp == 4 || temp == 5)
+							if (temp == 6 || temp == 7)
 							{
 
 								se.playSoundEffect(6);
 							}
-							if (temp == 100 || temp == 101)
+							else if (temp == 100 || temp == 101)
 							{
 
 								se.playSoundEffect(6);
@@ -477,7 +477,6 @@ public:
 							}
 							if (temp == 4 || temp == 5)
 							{
-
 								se.playSoundEffect(6);
 							}
 							
@@ -565,7 +564,5 @@ public:
 	Sprite* small_barrage_sprite = createSprite("data/ships/barrage_icon_small.png");
 	Sprite* small_heal_sprite = createSprite("data/ships/heal_icon_small.png");
 	
-	int buffer = 250;
-	
-	
+	int buffer = 1000;
 };

@@ -197,7 +197,7 @@ void InfoFromServer::TickRequest(std::stringstream& ss) {
             int x, y, start_tick;
             ss >> x >> y >> start_tick;
             InfoFromServer::m_swap_map_creator->explosions.emplace_back(Explosion(x, y, start_tick, ExplosionTypes::Huge));
-            std::cout << "BOOM" << "\n";
+            //std::cout << "BOOM" << "\n";
 
         }
         else if (commandType == "Shield")
