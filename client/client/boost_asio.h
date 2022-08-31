@@ -81,16 +81,6 @@ std::string make_string(boost::asio::streambuf& streambuf)
             buffers_end(streambuf.data()) };
 }
 
-std::string convertToString(char* a, int size)
-{
-    int i;
-    std::string s = "";
-    for (i = 0; i < size; i++) {
-        s = s + a[i];
-    }
-    return s;
-}
-
 // class that provides the asynchronous communication functionality.
 class AsyncTCPClient : public boost::noncopyable
 {
@@ -200,7 +190,7 @@ public:
                         }
 
                         // initiate the next asynchronous operation—async_read_until()—in order to receive a response from the server
-                        char ch[65535] = {};
+                        char ch[262143] = {};
 
 						session->m_sock.async_read_some(
                             asio::buffer(ch),
@@ -217,7 +207,7 @@ public:
                                 }
                                 else
                                 {
-                                    InfoFromServer::ProcessRequest(convertToString(ch, bytes_transferred)); 
+                                    InfoFromServer::ProcessRequest(std::string(ch));
                                    //std::cout << "Received: " << ch << std::endl;
 
                                    /* std::thread t3([this, bytes_transferred]() {

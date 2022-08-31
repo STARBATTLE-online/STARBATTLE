@@ -37,7 +37,7 @@ void InfoFromServer::SetMapCreator(std::shared_ptr<MapCreator> map_creator) {
 }
 
 std::string InfoFromServer::ProcessRequest(const std::string& request) {
-    Sleep(0);//?
+    //Sleep(0);//?
     std::stringstream ss(request);
     std::string output, commandType;
 

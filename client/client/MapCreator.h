@@ -335,7 +335,7 @@ public:
 					int x = power.xGlobal() + map_width * i - window_x;
 					int y = power.yGlobal() + map_width * j - window_y;
 
-					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
+					if (x > -BUFFER && x < window_width + BUFFER && y > -BUFFER && y < window_height + BUFFER)
 					{
 						if (power.name == PowerTypes::Shield)
 						{
@@ -362,7 +362,7 @@ public:
 					int x = asteroid.xGlobal() + map_width * i - window_x;
 					int y = asteroid.yGlobal() + map_width *j - window_y;
 			
-					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
+					if (x > -BUFFER && x < window_width + BUFFER && y > -BUFFER && y < window_height + BUFFER)
 					{
 						if (asteroid.name == AsteroidTypes::Big)
 						{
@@ -388,7 +388,7 @@ public:
 					int x = bullet.xGlobal() + map_width * i - window_x;
 					int y = bullet.yGlobal() + map_width * j - window_y;
 
-					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
+					if (x > -BUFFER && x < window_width + BUFFER && y > -BUFFER && y < window_height + BUFFER)
 					{
 						drawSprite(bullet_sprite, x, y);
 					}
@@ -404,7 +404,7 @@ public:
 					int x = ship.xGlobal() + map_width * i - window_x;
 					int y = ship.yGlobal() + map_width * j - window_y;
 
-					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
+					if (x > -BUFFER && x < window_width + BUFFER && y > -BUFFER && y < window_height + BUFFER)
 					{						
 						ship.DrawXY(x, y);
 					}
@@ -441,7 +441,7 @@ public:
 					int x = explosion.xGlobal() + map_width * i - window_x;
 					int y = explosion.yGlobal() + map_width * j - window_y;
 			
-					if (x > -buffer && x < window_width + buffer && y > -buffer && y < window_height + buffer)
+					if (x > -BUFFER && x < window_width + BUFFER && y > -BUFFER && y < window_height + BUFFER)
 					{
 						int temp = tick_number - explosion.start_tick;
 						if (explosion.name == ExplosionTypes::Huge)
@@ -564,5 +564,5 @@ public:
 	Sprite* small_barrage_sprite = createSprite("data/ships/barrage_icon_small.png");
 	Sprite* small_heal_sprite = createSprite("data/ships/heal_icon_small.png");
 	
-	int buffer = 1000;
+	const int BUFFER = 1000;
 };
